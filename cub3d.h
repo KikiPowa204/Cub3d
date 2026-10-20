@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/20 11:55:21 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/20 15:00:06 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,18 @@
 # include <mlx.h>
 # include <unistd.h>
 # include <sys/time.h>
-# include "libft.h"
+# include "libft/libft.h"
+
+char	map[] =
+{ 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 0, 1, 0, 0, 0, 1, 0, 1,
+  1, 0, 0, 0, 1, 1, 1, 0, 1,
+  1, 0, 0, 0, 1, 1, 0, 0, 1,
+  1, 0, 0, 0, 1, 1, 0, 0, 1,
+  1, 0, 1,'N',0, 0, 1, 0, 1,
+  1, 0, 1, 0, 0, 0, 1, 0, 1,
+  1, 0, 0, 0, 1, 0, 0, 0, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1,};
 
 typedef	struct s_player
 {
@@ -32,7 +43,11 @@ typedef	struct s_player
 
 typedef	struct s_constants
 {
-	int something;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
 }	t_constants;
 
 
