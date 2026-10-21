@@ -67,6 +67,7 @@ int main(void)
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	fill_map(&dat);
 	mlx_put_image_to_window(img.mlx_ptr, img.win_ptr, img.img, 0, 0);
+	setup_hooks(&dat);
 	mlx_loop(img.mlx_ptr);
 	mlx_destroy_image(img.mlx_ptr, img.img);
 	mlx_destroy_window(img.mlx_ptr, img.win_ptr);
