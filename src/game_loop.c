@@ -44,16 +44,14 @@ bool	no_collission(t_storage *dat, t_dir dir)
 #include <stdio.h>
 void	recalc_player_pos(t_storage *dat, t_player *player)
 {
+	(void)dat;
 	//printf("here\n");
 	if (player->up)// && no_collission(dat, UP))
-	{
-		printf("here\n");
-		player->y -= 0.5;
-	}
-	if (player->down && no_collission(dat, DOWN))
-		player->y += 0.5;
-	if (player->left && no_collission(dat, LEFT))
-		player->x -= 0.5;
-	if (player->right && no_collission(dat, RIGHT))
-		player->x += 0.5;
+		player->y -= 0.1;
+	if (player->down) //&& no_collission(dat, DOWN))
+		player->y += 0.1;
+	if (player->left) //&& no_collission(dat, LEFT))
+		player->x -= 0.1;
+	if (player->right) //&& no_collission(dat, RIGHT))
+		player->x += 0.1;
 }
