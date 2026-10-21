@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:13:40 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/21 15:17:35 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/21 15:36:56 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,19 @@ bool	no_collission(t_storage *dat, t_dir dir)
 			return (false);
 	return (true);
 }
-
+#include <stdio.h>
 void	recalc_player_pos(t_storage *dat, t_player *player)
 {
-	if (player->up && no_collission(dat, UP))
-		player->y -= 0.1;
+	//printf("here\n");
+	if (player->up)// && no_collission(dat, UP))
+	{
+		printf("here\n");
+		player->y -= 0.5;
+	}
 	if (player->down && no_collission(dat, DOWN))
-		player->y += 0.1;
+		player->y += 0.5;
 	if (player->left && no_collission(dat, LEFT))
-		player->x -= 0.1;
+		player->x -= 0.5;
 	if (player->right && no_collission(dat, RIGHT))
-		player->x += 0.1;
+		player->x += 0.5;
 }
