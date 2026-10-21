@@ -58,7 +58,7 @@ void	fill_tile(int x, int y, int colour, t_constants *img)
 	}
 }
 
-void	fill_map(t_storage *dat)
+int	fill_map(t_storage *dat)
 {
 	int	x;
 	int	y;
@@ -78,4 +78,6 @@ void	fill_map(t_storage *dat)
 		y++;
 	}
 	draw_player(dat->player->x, dat->player->y, dat->img);
+	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr, dat->img->img, 0, 0);
+	return (0);
 }
