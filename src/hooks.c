@@ -45,5 +45,6 @@ int	move_player(int keycode, t_storage *dat)
 void	setup_hooks(t_storage *dat)
 {
 	mlx_hook(dat->img->win_ptr, KEY_PRESS, 1L<<0, move_player, dat);
-	mlx_hook(dat->img->win_ptr, KEY_RELEASE, 1L<<0, stop_player, dat);
+	mlx_hook(dat->img->win_ptr, KEY_RELEASE, 1L<<1, stop_player, dat);
+	mlx_loop_hook(dat->img->mlx_ptr, fill_map, dat);
 }
