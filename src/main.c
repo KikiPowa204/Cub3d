@@ -11,14 +11,6 @@ char	map[] =
   1, 0, 0, 0, 1, 0, 0, 0, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1,};
 
-void	put_pixel(t_constants *img, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
 void	grab_player_coordinates(t_storage *dat)
 {
 	int	x;

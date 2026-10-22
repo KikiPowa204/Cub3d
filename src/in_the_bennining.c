@@ -13,6 +13,14 @@
 #include "cub3d.h"
 #include <stdio.h>
 
+void	put_pixel(t_constants *img, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
+
 void	draw_player(double x, double y, t_constants *img)
 {
 	int	colour;
@@ -30,7 +38,6 @@ void	draw_player(double x, double y, t_constants *img)
 		xo = (unsigned int)(x * TILE_SIZE - PLAYER_SIZE / 2);
 		while(xo < xo_limit - 1)
 		{
-				printf("player x: %d, player y: %d \n", xo, yo);
 			put_pixel(img, xo, yo, colour);
 			xo++;
 		}

@@ -41,26 +41,28 @@ bool	no_collission(t_storage *dat, t_dir dir)
 			return (false);
 	return (true);
 }
-#include <stdio.h>
-void	calculate_rotation(t_player *player)
+
+void	calculate_ray(t_player *player)
 {
-	if (player->turn_right)
+	if (player->turn_right || player->turn_left)
 	{
-		player->a -= 0.1;
-		if (player->a < 0)
-			player->a += 2*PI;
+		if (player->turn_right)
+		{
+			player->a -= 0.1;
+			if (player->a < 0)
+				player->a += 2*PI;
+		}
+		if (player->turn_left)
+		{
+			player->a += 0.1;
+			if (player->a > 2*PI)
+				player->a -= 2*PI;
+		}
 	}
-	if (player->turn_left)
-	{
-		player->a += 0.1;
-		if (player->a > 2*PI)
-			player->a -= 2*PI;
-	}
-	player->p1.x = player->x;
-	player->p1.y = player->y;
-	player->p2.x = player->x + cos(player->a) * 20;
-	player->p2.y = player->y + sin(player->a) * 20;
-	printf("x: %d, %d\n y:%d, %d\n", player->p1.x, player->p2.x, player->p1.y, player->p2.y);
+	player->p1.x = player->x * TILE_SIZE;
+	player->p1.y = player->y * TILE_SIZE;
+	player->p2.x = player->x * TILE_SIZE + cos(player->a) * 20;
+	player->p2.y = player->y * TILE_SIZE + sin(player->a) * 20;
 }
 
 void	recalc_player_pos(t_storage *dat, t_player *player)
@@ -73,6 +75,5 @@ void	recalc_player_pos(t_storage *dat, t_player *player)
 		player->x -= 0.05;
 	if (player->right && !player->left && no_collission(dat, RIGHT))
 		player->x += 0.05;
-	if (player->turn_right || player->turn_left)
-		calculate_rotation(player);
+	calculate_ray(player);
 }
