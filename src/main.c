@@ -65,8 +65,6 @@ int main(void)
 	img.win_ptr = mlx_new_window(img.mlx_ptr, 1920, 1080, "cub3D");
 	img.img = mlx_new_image(img.mlx_ptr, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	fill_map(&dat);
-	mlx_put_image_to_window(img.mlx_ptr, img.win_ptr, img.img, 0, 0);
 	setup_hooks(&dat);
 	mlx_loop(img.mlx_ptr);
 	mlx_destroy_image(img.mlx_ptr, img.img);

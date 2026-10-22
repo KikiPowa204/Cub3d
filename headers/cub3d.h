@@ -79,7 +79,7 @@ void	recalc_player_pos(t_storage *dat, t_player *player);
 int		stop_player(int keycode, t_storage *dat);
 int		move_player(int keycode, t_storage *dat);
 void	setup_hooks(t_storage *dat);
-void	fill_map(t_storage *dat);
+int		fill_map(t_storage *dat);
 void	fill_tile(int x, int y, int colour, t_constants *img);
 void	put_pixel(t_constants *img, int x, int y, int color);
 
