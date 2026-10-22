@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 10:02:37 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/21 14:19:49 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/22 11:45:17 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ int	stop_player(int keycode, t_storage *dat)
 		dat->player->up = false;
 	else if (keycode == XK_s || keycode == XK_S)
 		dat->player->down = false;
+	else if (keycode == XK_Left)
+		dat->player->turn_left = false;
+	else if (keycode == XK_Right)
+		dat->player->turn_right = false;
 	recalc_player_pos(dat, dat->player);
 	return (1);
 }
@@ -30,14 +34,18 @@ int	move_player(int keycode, t_storage *dat)
 {
 	if (keycode == XK_Escape)
 		exit(0);
-	else if (keycode == XK_a || keycode == XK_A)
+	else if ((keycode == XK_a || keycode == XK_A))
 		dat->player->left = true;
-	else if (keycode == XK_d || keycode == XK_D)
+	else if ((keycode == XK_d || keycode == XK_D))
 		dat->player->right = true;
-	else if (keycode == XK_w || keycode == XK_W)
+	else if ((keycode == XK_w || keycode == XK_W))
 		dat->player->up = true;
-	else if (keycode == XK_s || keycode == XK_S)
+	else if ((keycode == XK_s || keycode == XK_S))
 		dat->player->down = true;
+	else if (keycode == XK_Left)
+		dat->player->turn_left = true;
+	else if (keycode == XK_Right)
+		dat->player->turn_right = true;
 	recalc_player_pos(dat, dat->player);
 	return (1);
 }

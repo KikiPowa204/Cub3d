@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:13:40 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/22 10:31:27 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/22 12:50:15 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 unsigned int normalise(t_player *player, int max_d, t_dir type)
 {
 	if (type == UP)
-		return (unsigned int) ((player->y / 0.13) * max_d);
+		return ((unsigned int)(player->y - 0.1) * max_d + (unsigned int)player->x);
 	if (type == DOWN)
-		return (unsigned int) ((player->y) * max_d * 100);
+		return ((unsigned int)(player->y + 0.1) * max_d + (unsigned int)player->x);
 	if (type == LEFT)
-		return (unsigned int) ((player->x / 0.1) * max_d);
+		return ((unsigned int)player->y * max_d + (unsigned int)(player->x - 0.1));
 	if (type == RIGHT)
-		return (unsigned int) (player->x * max_d + player->x + 0.001);
+		return ((unsigned int)player->y * max_d + (unsigned int)(player->x + 0.1));
 	return (0);
 }
 
@@ -42,15 +42,32 @@ bool	no_collission(t_storage *dat, t_dir dir)
 	return (true);
 }
 
+void	calculate_rotation(t_player *player)
+{
+	if (player->turn_right)
+	{
+		player->a -= 0.1;
+		if (player->a < 0)
+			player->a += 2*PI;
+	}
+	if (player->turn_left)
+	{
+		player->a += 0.1;
+		if (player->a > 2*PI)
+			player->a -= 2*PI;
+	}
+}
+
 void	recalc_player_pos(t_storage *dat, t_player *player)
 {
-	(void)dat;
-	if (player->up && no_collission(dat, UP))
-		player->y -= 0.01;
-	if (player->down && no_collission(dat, DOWN))
-		player->y += 0.01;
-	if (player->left && no_collission(dat, LEFT))
-		player->x -= 0.01;
-	if (player->right) //&& no_collission(dat, RIGHT))
-		player->x += 0.01;
+	if (player->up && !player->down && no_collission(dat, UP))
+		player->y -= 0.05;
+	if (player->down && !player->up && no_collission(dat, DOWN))
+		player->y += 0.05;
+	if (player->left && !player->right &&no_collission(dat, LEFT))
+		player->x -= 0.05;
+	if (player->right && !player->left && no_collission(dat, RIGHT))
+		player->x += 0.05;
+	if (player->turn_right || player->turn_left)
+		calculate_rotation(player);
 }

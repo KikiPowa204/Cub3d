@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/21 14:34:14 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/22 12:49:41 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include "libft.h"
 # include <X11/keysym.h>
 
+# define PI 3.141592653589793
+# define TWOPI PI/2
+# define THREEPI 3*PI/2
 # define TILE_SIZE 90
 # define PLAYER_SIZE 8
 # define WALL 1
@@ -31,27 +34,46 @@
 # define KEY_RELEASE 3
 //# define FPS 60
 
+typedef struct	s_algo
+{
+	int	dx;
+	int	dy;
+	int	d_p;
+	int	dirx;
+	int	diry;
+}				t_algo;
+
+typedef struct	s_coordinates
+{
+	int		x;
+	int		y;
+	int		z;
+	size_t	colour;
+}				t_coordinates;
+
 typedef	enum e_direction
 {
 	UP,
 	LEFT,
 	RIGHT,
-	DOWN
+	DOWN,
 } t_dir;
 extern char map[]; 
 
 typedef	struct s_player
 {
-	double	pos;
 	double	x;
 	double	y;
 	bool	left;
 	bool	right;
 	bool	down;
 	bool	up;
-	//float	dx;
-	//float	dy;
-	//float	z;
+	bool	turn_left;
+	bool	turn_right;
+	double	dx;
+	double	dy;
+	double	z;
+	double	a;
 }	t_player;
 
 
