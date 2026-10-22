@@ -67,13 +67,13 @@ void	calculate_ray(t_player *player)
 
 void	recalc_player_pos(t_storage *dat, t_player *player)
 {
-	if (player->up && !player->down && no_collission(dat, UP))
+	if (player->up && no_collission(dat, UP))
 		player->y -= 0.05;
-	if (player->down && !player->up && no_collission(dat, DOWN))
+	if (player->down && no_collission(dat, DOWN))
 		player->y += 0.05;
-	if (player->left && !player->right &&no_collission(dat, LEFT))
+	if (player->left && no_collission(dat, LEFT))
 		player->x -= 0.05;
-	if (player->right && !player->left && no_collission(dat, RIGHT))
+	if (player->right && no_collission(dat, RIGHT))
 		player->x += 0.05;
 	calculate_ray(player);
 }
