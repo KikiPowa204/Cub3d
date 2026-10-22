@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
+/*   By: knajmech <knajmech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:13:40 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/22 12:50:15 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/22 15:15:52 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool	no_collission(t_storage *dat, t_dir dir)
 			return (false);
 	return (true);
 }
-
+#include <stdio.h>
 void	calculate_rotation(t_player *player)
 {
 	if (player->turn_right)
@@ -56,6 +56,11 @@ void	calculate_rotation(t_player *player)
 		if (player->a > 2*PI)
 			player->a -= 2*PI;
 	}
+	player->p1.x = player->x;
+	player->p1.y = player->y;
+	player->p2.x = player->x + cos(player->a) * 20;
+	player->p2.y = player->y + sin(player->a) * 20;
+	printf("x: %d, %d\n y:%d, %d\n", player->p1.x, player->p2.x, player->p1.y, player->p2.y);
 }
 
 void	recalc_player_pos(t_storage *dat, t_player *player)

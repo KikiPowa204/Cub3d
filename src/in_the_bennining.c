@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   in_the_bennining.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
+/*   By: knajmech <knajmech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:03:09 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/21 14:41:49 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/22 15:22:41 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <stdio.h>
 
 void	draw_player(double x, double y, t_constants *img)
 {
@@ -29,6 +30,7 @@ void	draw_player(double x, double y, t_constants *img)
 		xo = (unsigned int)(x * TILE_SIZE - PLAYER_SIZE / 2);
 		while(xo < xo_limit - 1)
 		{
+				printf("player x: %d, player y: %d \n", xo, yo);
 			put_pixel(img, xo, yo, colour);
 			xo++;
 		}
@@ -78,6 +80,7 @@ int	fill_map(t_storage *dat)
 		y++;
 	}
 	draw_player(dat->player->x, dat->player->y, dat->img);
+	bresenham_algo(dat->player->p1, dat->player->p2, dat);
 	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr, dat->img->img, 0, 0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/22 12:49:41 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/22 15:00:33 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,20 @@ extern char map[];
 
 typedef	struct s_player
 {
-	double	x;
-	double	y;
-	bool	left;
-	bool	right;
-	bool	down;
-	bool	up;
-	bool	turn_left;
-	bool	turn_right;
-	double	dx;
-	double	dy;
-	double	z;
-	double	a;
+	double		x;
+	double		y;
+	bool		left;
+	bool		right;
+	bool		down;
+	bool		up;
+	bool		turn_left;
+	bool		turn_right;
+	double		dx;
+	double		dy;
+	double		z;
+	double		a;
+	t_coordinates	p1;
+	t_coordinates	p2;
 }	t_player;
 
 
@@ -97,6 +99,7 @@ typedef	struct s_storage
 	t_constants	*img;
 } t_storage;
 
+void	bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
 void	recalc_player_pos(t_storage *dat, t_player *player);
 int		stop_player(int keycode, t_storage *dat);
 int		move_player(int keycode, t_storage *dat);
