@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:13:40 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/21 15:36:56 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/22 10:31:27 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 unsigned int normalise(t_player *player, int max_d, t_dir type)
 {
 	if (type == UP)
-		return (unsigned int) (player->y * max_d + player->y - 0.1);
+		return (unsigned int) ((player->y / 0.13) * max_d);
 	if (type == DOWN)
-		return (unsigned int) (player->y * max_d + player->y + 0.1);
+		return (unsigned int) ((player->y) * max_d * 100);
 	if (type == LEFT)
-		return (unsigned int) (player->x * max_d + player->x - 0.1);
+		return (unsigned int) ((player->x / 0.1) * max_d);
 	if (type == RIGHT)
-		return (unsigned int) (player->x * max_d + player->x + 0.1);
+		return (unsigned int) (player->x * max_d + player->x + 0.001);
 	return (0);
 }
 
@@ -41,17 +41,16 @@ bool	no_collission(t_storage *dat, t_dir dir)
 			return (false);
 	return (true);
 }
-#include <stdio.h>
+
 void	recalc_player_pos(t_storage *dat, t_player *player)
 {
 	(void)dat;
-	//printf("here\n");
-	if (player->up)// && no_collission(dat, UP))
-		player->y -= 0.1;
-	if (player->down) //&& no_collission(dat, DOWN))
-		player->y += 0.1;
-	if (player->left) //&& no_collission(dat, LEFT))
-		player->x -= 0.1;
+	if (player->up && no_collission(dat, UP))
+		player->y -= 0.01;
+	if (player->down && no_collission(dat, DOWN))
+		player->y += 0.01;
+	if (player->left && no_collission(dat, LEFT))
+		player->x -= 0.01;
 	if (player->right) //&& no_collission(dat, RIGHT))
-		player->x += 0.1;
+		player->x += 0.01;
 }
