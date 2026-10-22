@@ -29,7 +29,7 @@ void	draw_player(double x, double y, t_constants *img)
 	int	yo_limit;
 	int	xo_limit;
 
-	colour = 0xFFFF00;
+	colour = 0xAB1D6F;
 	yo = (unsigned int)(y * TILE_SIZE - PLAYER_SIZE / 2);
 	yo_limit = yo + PLAYER_SIZE;
 	xo_limit = (unsigned int)(x * TILE_SIZE - PLAYER_SIZE / 2)+ PLAYER_SIZE;
