@@ -49,6 +49,10 @@ void	init(t_player *player, t_storage *dat, t_constants *img)
 	img->max_h = 9;
 	img->max_w = 9;
 	grab_player_coordinates(dat);
+	player->p1.x = player->x;
+	player->p1.y = player->y;
+	player->p2.x = player->x + (player->x * cos(player->a) * 5 - player->y * sin(player->a) * 5);
+	player->p2.y = player->y + (player->x * sin(player->a) * 5 + player->y * cos(player->a) * 5);
 }
 
 int main(void)
