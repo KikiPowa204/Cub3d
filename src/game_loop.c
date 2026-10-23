@@ -62,7 +62,7 @@ void	calculate_ray(t_player *player)
 	player->p1.x = player->x * TILE_SIZE;
 	player->p1.y = player->y * TILE_SIZE;
 	player->p2.x = player->x * TILE_SIZE + cos(player->a) * 20;
-	player->p2.y = player->y * TILE_SIZE + sin(player->a) * 20;
+	player->p2.y = (player->y * TILE_SIZE + sin(player->a) * -20);
 }
 
 void	recalc_player_pos(t_storage *dat, t_player *player)
