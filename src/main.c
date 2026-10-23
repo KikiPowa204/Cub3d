@@ -6,7 +6,7 @@ char	map[] =
   1, 0, 0, 0, 1, 1, 1, 0, 1,
   1, 0, 0, 0, 1, 1, 0, 0, 1,
   1, 0, 0, 0, 1, 1, 0, 0, 1,
-  1, 0, 1, 0,'S', 0, 1, 0, 1,
+  1, 0, 1, 0,'N', 0, 1, 0, 1,
   1, 0, 1, 1, 0, 0, 1, 0, 1,
   1, 0, 0, 0, 1, 0, 0, 0, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1,};
@@ -22,11 +22,11 @@ void	grab_player_coordinates(t_storage *dat)
 		x = 0;
 		while(x < dat->img->max_w)
 		{
-			if (map[y * dat->img->max_w + x] == 'S')
+			if (map[y * dat->img->max_w + x] == 'N')
 			{
 				dat->player->x = x + 0.5;
 				dat->player->y = y + 0.5;
-				dat->player->a = THREEPI;
+				dat->player->a = TWOPI;
 			}
 			x++;
 		}

@@ -15,13 +15,13 @@
 unsigned int normalise(t_player *player, int max_d, t_dir type)
 {
 	if (type == UP)
-		return ((unsigned int)(player->y - 0.1) * max_d + (unsigned int)player->x);
+		return ((unsigned int)(player->y - 0.2) * max_d + (unsigned int)player->x);
 	if (type == DOWN)
-		return ((unsigned int)(player->y + 0.1) * max_d + (unsigned int)player->x);
+		return ((unsigned int)(player->y + 0.2) * max_d + (unsigned int)player->x);
 	if (type == LEFT)
-		return ((unsigned int)player->y * max_d + (unsigned int)(player->x - 0.1));
+		return ((unsigned int)player->y * max_d + (unsigned int)(player->x - 0.2));
 	if (type == RIGHT)
-		return ((unsigned int)player->y * max_d + (unsigned int)(player->x + 0.1));
+		return ((unsigned int)player->y * max_d + (unsigned int)(player->x + 0.2));
 	return (0);
 }
 
@@ -62,7 +62,7 @@ void	calculate_ray(t_player *player)
 	player->p1.x = player->x * TILE_SIZE;
 	player->p1.y = player->y * TILE_SIZE;
 	player->p2.x = player->x * TILE_SIZE + cos(player->a) * 20;
-	player->p2.y = (player->y * TILE_SIZE + sin(player->a) * -20);
+	player->p2.y = player->y * TILE_SIZE + sin(player->a) * -20;
 }
 
 void	recalc_player_pos(t_storage *dat, t_player *player)
