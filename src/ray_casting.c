@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 12:34:52 by bastalze          #+#    #+#             */
-/*   Updated: 2026/10/23 14:59:01 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/10/23 15:49:14 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ray_casting_horizontal(t_player *player, t_storage *data)
 		r2.y = ((unsigned int)player->y + 1) * TILE_SIZE;
 		r2.x = ((r1.y - r2.y) * atan + player->x * TILE_SIZE);
 	}
-	while (map[r2.y / TILE_SIZE * data->img->max_w + r2.x / TILE_SIZE] != WALL)
+	while (dir && map[r2.y / TILE_SIZE * data->img->max_w + r2.x / TILE_SIZE] != WALL)
 	{
 		r2.y = r2.y + dir;
 		r2.x = ((r1.y - r2.y) * atan + r1.x);
@@ -52,21 +52,32 @@ void	ray_casting_vertical(t_player *player, t_storage *data)
 	t_coordinates	r1;
 	t_coordinates	r2;
 	double			atan;
+	int				dir;
 
-	atan = 1/tan(player->a);
+	atan = tan(player->a);
 	r1.x = player->x * TILE_SIZE;
 	r1.y = player->y * TILE_SIZE;
 	r2.x = player->x * TILE_SIZE;
 	r2.y = player->y * TILE_SIZE;
-	if (player->a < PI)
+	dir = 0;
+	if (player->a < TWOPI || player->a > THREEPI)
 	{
-		r2.y = (unsigned int)player->y * TILE_SIZE;
-		r2.x = ((r1.y - r2.y) * atan + player->x * TILE_SIZE);
+		dir = 1;
+		r2.x = ((unsigned int)player->x + 1) * TILE_SIZE;
+		r2.y = ((r1.x - r2.x) * atan + player->y * TILE_SIZE);
 	}
-	else if (player->a > PI)
+	else if (player->a > TWOPI && player->a < THREEPI)
 	{
-		r2.y = ((unsigned int)player->y + 1) * TILE_SIZE;
-		r2.x = ((r1.y - r2.y) * atan + player->x * TILE_SIZE);
+		dir = -1;
+		r2.x = (unsigned int)player->y * TILE_SIZE;
+		r2.y = ((r1.x - r2.x) * atan + player->y * TILE_SIZE);
+	}
+	while (dir && map[r2.y / TILE_SIZE * data->img->max_h + r2.x / TILE_SIZE] != WALL)
+	{
+		r2.x = r2.x + dir;
+		r2.y = ((r1.x - r2.x) * atan + r1.y);
+		// if (r2.x == 8)
+		// 	break;
 	}
 	printf("x:%d y:%d atan:%lf\n", r2.x, r2.y, atan);
 	bresenham_algo(r1, r2, data);
