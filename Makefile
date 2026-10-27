@@ -13,7 +13,7 @@ LIBFT_DIR := libft/
 SRCS_DIR := src/
 HEADER_DIR := headers/
 
-SRCS_main := main.c hooks.c in_the_bennining.c game_loop.c draw_funcs.c
+SRCS_main := main.c hooks.c in_the_bennining.c game_loop.c draw_funcs.c ray_casting.c
 SRCS := $(SRCS_main)
 SRCS := $(addprefix $(SRCS_DIR), $(SRCS))
 OBJS := $(patsubst $(SRCS_DIR)%.c, $(OBJ_DIR)%.o, $(SRCS))

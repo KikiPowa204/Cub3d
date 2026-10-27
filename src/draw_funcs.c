@@ -26,7 +26,6 @@ void	init_algo_vals(t_algo *algo, t_coordinates p1, t_coordinates p2)
 		algo->diry = -1;
 	algo->d_p = algo->dx + algo->dy;
 }
-#include "stdio.h"
 
 void	bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *data)
 {
@@ -36,8 +35,7 @@ void	bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *data)
 	init_algo_vals(&algo, p1, p2);
 	while (1)
 	{
-		printf("x: %d, y: %d \n", p1.x, p1.y);
-		put_pixel(data->img, p1.x, p1.y, 0xFFFF00);
+		put_pixel(data->img, p1.x, p1.y, 0xAB1D6F);
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
 		error_temp = 2 * algo.d_p;

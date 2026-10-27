@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
+/*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/22 15:00:33 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/23 14:39:04 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ typedef	struct s_storage
 	t_constants	*img;
 } t_storage;
 
+void	ray_casting_horizontal(t_player *player, t_storage *data);
+void	ray_casting_vertical(t_player *player, t_storage *data);
 void	bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
 void	recalc_player_pos(t_storage *dat, t_player *player);
 int		stop_player(int keycode, t_storage *dat);

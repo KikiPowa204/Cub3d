@@ -6,18 +6,10 @@ char	map[] =
   1, 0, 0, 0, 1, 1, 1, 0, 1,
   1, 0, 0, 0, 1, 1, 0, 0, 1,
   1, 0, 0, 0, 1, 1, 0, 0, 1,
-  1, 0, 1, 0,'E', 0, 1, 0, 1,
+  1, 0, 1, 0,'N', 0, 1, 0, 1,
   1, 0, 1, 1, 0, 0, 1, 0, 1,
   1, 0, 0, 0, 1, 0, 0, 0, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1,};
-
-void	put_pixel(t_constants *img, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
 
 void	grab_player_coordinates(t_storage *dat)
 {
@@ -30,10 +22,11 @@ void	grab_player_coordinates(t_storage *dat)
 		x = 0;
 		while(x < dat->img->max_w)
 		{
-			if (map[y * dat->img->max_w + x] == 'E')
+			if (map[y * dat->img->max_w + x] == 'N')
 			{
 				dat->player->x = x + 0.5;
 				dat->player->y = y + 0.5;
+				dat->player->a = TWOPI;
 			}
 			x++;
 		}
@@ -49,10 +42,6 @@ void	init(t_player *player, t_storage *dat, t_constants *img)
 	img->max_h = 9;
 	img->max_w = 9;
 	grab_player_coordinates(dat);
-	player->p1.x = player->x;
-	player->p1.y = player->y;
-	player->p2.x = player->x + (player->x * cos(player->a) * 5 - player->y * sin(player->a) * 5);
-	player->p2.y = player->y + (player->x * sin(player->a) * 5 + player->y * cos(player->a) * 5);
 }
 
 int main(void)

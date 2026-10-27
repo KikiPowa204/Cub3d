@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   in_the_bennining.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knajmech <knajmech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:03:09 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/22 15:22:41 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/23 15:46:07 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdio.h>
+
+void	put_pixel(t_constants *img, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
 
 void	draw_player(double x, double y, t_constants *img)
 {
@@ -21,7 +29,7 @@ void	draw_player(double x, double y, t_constants *img)
 	int	yo_limit;
 	int	xo_limit;
 
-	colour = 0xFFFF00;
+	colour = 0xAB1D6F;
 	yo = (unsigned int)(y * TILE_SIZE - PLAYER_SIZE / 2);
 	yo_limit = yo + PLAYER_SIZE;
 	xo_limit = (unsigned int)(x * TILE_SIZE - PLAYER_SIZE / 2)+ PLAYER_SIZE;
@@ -30,7 +38,6 @@ void	draw_player(double x, double y, t_constants *img)
 		xo = (unsigned int)(x * TILE_SIZE - PLAYER_SIZE / 2);
 		while(xo < xo_limit - 1)
 		{
-				printf("player x: %d, player y: %d \n", xo, yo);
 			put_pixel(img, xo, yo, colour);
 			xo++;
 		}
@@ -81,6 +88,8 @@ int	fill_map(t_storage *dat)
 	}
 	draw_player(dat->player->x, dat->player->y, dat->img);
 	bresenham_algo(dat->player->p1, dat->player->p2, dat);
+	//ray_casting_horizontal(dat->player, dat);
+	ray_casting_vertical(dat->player, dat);
 	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr, dat->img->img, 0, 0);
 	return (0);
 }
