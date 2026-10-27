@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/23 14:39:04 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/10/27 15:33:29 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef	struct s_storage
 	t_constants	*img;
 } t_storage;
 
+int	get_map_index(int rx, int ry, int max_d);
 void	ray_casting_horizontal(t_player *player, t_storage *data);
 void	ray_casting_vertical(t_player *player, t_storage *data);
 void	bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);

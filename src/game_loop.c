@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:13:40 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/22 15:15:52 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/27 10:01:39 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	calculate_ray(t_player *player)
 		if (player->turn_right)
 		{
 			player->a -= 0.1;
-			if (player->a < 0)
+			if (player->a <= 0)
 				player->a += 2*PI;
 		}
 		if (player->turn_left)
 		{
 			player->a += 0.1;
-			if (player->a > 2*PI)
+			if (player->a >= 2*PI)
 				player->a -= 2*PI;
 		}
 	}
