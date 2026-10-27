@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/23 14:39:04 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/10/27 16:56:53 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <X11/keysym.h>
 
 # define PI 3.141592653589793
-# define TWOPI PI/2
-# define THREEPI 3*PI/2
+# define HALF_PI PI/2
+# define THREE_HALF_PI 3*PI/2
 # define TILE_SIZE 90
 # define PLAYER_SIZE 8
 # define WALL 1
