@@ -88,7 +88,7 @@ int	fill_map(t_storage *dat)
 	}
 	draw_player(dat->player->x, dat->player->y, dat->img);
 	bresenham_algo(dat->player->p1, dat->player->p2, dat);
-	//ray_casting_horizontal(dat->player, dat);
+	ray_casting_horizontal(dat->player, dat);
 	ray_casting_vertical(dat->player, dat);
 	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr, dat->img->img, 0, 0);
 	return (0);

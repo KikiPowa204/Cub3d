@@ -99,6 +99,7 @@ typedef	struct s_storage
 	t_constants	*img;
 } t_storage;
 
+int	get_map_index(int rx, int ry, int max_d);
 void	ray_casting_horizontal(t_player *player, t_storage *data);
 void	ray_casting_vertical(t_player *player, t_storage *data);
 void	bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
