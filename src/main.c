@@ -22,7 +22,7 @@ void	grab_player_coordinates(t_storage *dat)
 		x = 0;
 		while(x < dat->img->max_w)
 		{
-			if (map[y * dat->img->max_w + x] == 'N')
+			if (map[y * dat->img->max_w + x] == 'E')
 			{
 				dat->player->x = x + 0.5;
 				dat->player->y = y + 0.5;
