@@ -6,12 +6,120 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 12:34:52 by bastalze          #+#    #+#             */
-/*   Updated: 2026/10/28 10:43:43 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/28 17:27:00 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "stdio.h"
+
+double	distance(double x1, double y1, double x2, double y2)
+{
+	return (sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2)));
+}
+/*
+void	send_to_bresenham();
+
+void	start_horizontal(double cot, u_cotype *rh, int *dir_h)
+{
+	
+}
+*/
+
+bool	both_collide(u_cotype rh, u_cotype rv, t_player *player)
+{
+	if (rh.t_map.x >= data->img->max_w || rh.t_map.y >= data->img->max_h
+		|| rh.t_map.x < 0 || rh.t_map.y < 0
+		|| rv.t_map.x >= data->img->max_w || rv.t_map.y >= data->img->max_h
+		|| rv.t_map.x < 0 || rv.t_map.y < 0)
+		return (0);
+	if (ray_collision(rv.t_map.x, rv.t_map.y, player->a, map)
+			&& ray_collision(rv->t_map.x, rv.t_map.y, player->a, map))
+		return (1);
+	return (0);
+}
+bool	collide_horizontal(u_cotype rh, t_player *player)
+{
+	if (!(rh.t_map.x >= data->img->max_w || rh.t_map.x < 0)
+		&& ray_collision(rh.t_map.x, rh.t_map.y, player->a, map))
+		return (1);
+	return (0);
+}
+
+bool	collide_vertical(u_cotype rv, t_player *player)
+{
+	if (!(rv.t_map.y >= data->img->max_h || rv.t_map.y < 0)
+		&& ray_collision(rv.t_map.x, rv.t_map.y, player->a, map))
+		return (1);
+	return (0);
+}
+
+void	ray_casting(t_player *player)
+{
+	double		cot;
+	double		tan;
+	u_cotype	rh;
+	u_cotype	rv;
+	int			dir_h;
+	int			dir_v;
+	
+	// rh.t_map.x = player->x;
+	// rh.t_map.y = player->y;
+	// rv.t_map.x = player->x;
+	// rv.t_map.y = player->y;
+	if (tan(player->a) < 0.001 && tan(player->a) > -0.001)
+		return;
+	cot = 1/tan(player->a);
+	tan = tan(player->a);
+	if (player->a < PI)
+	{
+		dir_h = -1;
+		rh.t_map.y = (int)player->y;
+	}
+	else if (player->a > PI)
+	{
+		dir_v = 1;
+		rh.t_map.y = (int)player->y + 1;
+	}
+	rh.t_map.x = ((player->y - rh.t_map.y) * cot + player->x);
+	rh.length = distance(player->x, player->y, rh.t_map.x, rh.t_map.y);
+	if (player->a < HALF_PI || player->a > THREE_HALF_PI)
+	{
+		dir_v = 1;
+		rv.t_map.x = (int)player->x + 1;
+	}
+	else if (player->a > HALF_PI && player->a < THREE_HALF_PI)
+	{
+		dir_v = -1;
+		rv.t_mapx = (int)player->x;
+	}
+	rv.t_map.y = ((player->x - rv.x) * tan + player->y);
+	rh.length = distance(player->x, player->y, rv.t_map.x, rv.t_map.y);
+	if (both_collide(rh, rv, player))
+	{
+		if (rh.length > rh.length)
+			return (bresenham_algo(rh));
+		else
+			return (bresenham_algo(rv));
+	}
+	while (42)
+	{
+		if (collide_horizontal(rh, player))
+			return (bresenham_algo(rh));
+		if (collide_vertical(rv, player))
+			return (bresenham_algo(rv));
+		if (rh.length > rv.length)
+		{
+			rv.t_map.x += dir_rv;
+			rv.t_map.y = ((player->x - rv.t_map.x) * tan + player->y);
+		}
+		else
+		{
+			rh.t_map.x += dir_hv;
+			rh.t_map.y = ((player->x - rh.t_map.x) * cot + player->y);
+		}
+	}
+}
 
 void	ray_casting_horizontal(t_player *player, t_storage *data)
 {
