@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/28 10:44:16 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/28 11:46:21 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,23 @@ typedef struct	s_algo
 	int	diry;
 }				t_algo;
 
-typedef struct	s_coordinates
+typedef union	u_cotype
 {
-	int		x;
-	int		y;
-	int		z;
-	size_t	colour;
-}				t_coordinates;
+	typedef struct	s_pixel
+	{
+		int		x;
+		int		y;
+		int		z;
+		size_t	colour;
+	}				t_pixel;
+	typedef struct	s_map
+	{
+		double	x;
+		double	y;
+		double	z;
+		size_t	colour;
+	}				t_map;
+}
 
 typedef	enum e_direction
 {
