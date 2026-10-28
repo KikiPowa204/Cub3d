@@ -6,17 +6,12 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 12:34:52 by bastalze          #+#    #+#             */
-/*   Updated: 2026/10/27 18:18:40 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/10/28 10:43:43 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "stdio.h"
-
-int	map_to_screen(double coordinate)
-{
-	return (coordinate * TILE_SIZE);
-}
 
 void	ray_casting_horizontal(t_player *player, t_storage *data)
 {
@@ -106,7 +101,7 @@ void	ray_casting_vertical(t_player *player, t_storage *data)
 	}
 	if (player->a == HALF_PI || player->a == HALF_PI + PI)
 		return ;
-	while (dir && map[get_map_index(r2.x, r2.y, data->img->max_h)] != WALL)
+	while (dir && check_if_wall(r2.x, r2.y, data->img->max_h, map))
 	{
 		if (r2.x < TILE_SIZE || r2.y < TILE_SIZE || r2.x >= data->img->max_w * TILE_SIZE || r2.y >= data->img->max_h * TILE_SIZE)
 			return ;
