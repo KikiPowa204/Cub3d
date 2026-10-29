@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/28 10:16:55 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/29 09:50:21 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	init(t_player *player, t_storage *dat, t_constants *img)
 	ft_bzero(player, sizeof(t_player));
 	dat->img = img;
 	dat->player = player;
+	dat->map = map;
 	img->max_h = 9;
 	img->max_w = 9;
 	grab_player_coordinates(dat);

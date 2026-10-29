@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/28 11:46:21 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/29 11:47:43 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@
 # define KEY_RELEASE 3
 //# define FPS 60
 
+typedef enum	e_voh
+{
+	none,
+	ver,
+	hor,
+	both
+}				t_voh;
+
 typedef struct	s_algo
 {
 	int	dx;
@@ -43,24 +51,35 @@ typedef struct	s_algo
 	int	diry;
 }				t_algo;
 
-typedef union	u_cotype
+typedef struct	s_coordinates
 {
-	typedef struct	s_pixel
+	int		x;
+	int		y;
+	int		z;
+	size_t	colour;
+}			t_coordinates;
+/*
+typedef struct s_coordinates
+{
+	union	u_cotype
 	{
-		int		x;
-		int		y;
-		int		z;
-		size_t	colour;
-	}				t_pixel;
-	typedef struct	s_map
-	{
-		double	x;
-		double	y;
-		double	z;
-		size_t	colour;
-	}				t_map;
-}
-
+		typedef struct	s_pix
+		{
+			int		x;
+			int		y;
+			int		z;
+		}				t_pix;
+		typedef struct	s_map
+		{
+			double	x;
+			double	y;
+			double	z;
+		}				t_map;
+	}
+	double	length;
+	size_t	colour;
+}			t_coordinates;
+*/
 typedef	enum e_direction
 {
 	UP,
@@ -80,8 +99,6 @@ typedef	struct s_player
 	bool		up;
 	bool		turn_left;
 	bool		turn_right;
-	double		dx;
-	double		dy;
 	double		z;
 	double		a;
 	t_coordinates	p1;
@@ -107,8 +124,11 @@ typedef	struct s_storage
 {
 	t_player	*player;
 	t_constants	*img;
+	char		*map;
 } t_storage;
 
+t_voh	ray_collision(t_storage *dat, t_voh voh, int x, int y);
+//bool	ray_collision(int x, int y, double a, t_storage *dat);
 bool	check_if_wall(int x, int y, int max_d, char *map);
 int		map_to_screen(double coordinate);
 int		get_map_index(int rx, int ry, int max_d);
