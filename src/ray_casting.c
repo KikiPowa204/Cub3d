@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 12:34:52 by bastalze          #+#    #+#             */
-/*   Updated: 2026/10/28 17:27:00 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/10/29 14:37:49 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,30 @@ void	start_horizontal(double cot, u_cotype *rh, int *dir_h)
 }
 */
 
+bool	ray_collision(double x, double y, double angle, char *map, t_dir dir)
+{
+	if (dir == HORI && angle < PI)
+	{
+		if (map[(int)((y - 1) * max_w + x)])
+			return (1);
+	}
+	else if (dir == HORI && angle > PI)
+	{
+		if (map[(int)(y * max_w + x)])
+			return (1);
+	}
+	else if (dir == VERT && (player->a < HALF_PI || player->a > THREE_HALF_PI))
+	{
+		if (map[(int)(y * max_w + x)])
+			return (1);
+	}
+	else 
+	{
+		if (map[(int)(y * max_w + (x - 1))])
+			return (1);
+	}
+}
+
 bool	both_collide(u_cotype rh, u_cotype rv, t_player *player)
 {
 	if (rh.t_map.x >= data->img->max_w || rh.t_map.y >= data->img->max_h
@@ -33,15 +57,15 @@ bool	both_collide(u_cotype rh, u_cotype rv, t_player *player)
 		|| rv.t_map.x >= data->img->max_w || rv.t_map.y >= data->img->max_h
 		|| rv.t_map.x < 0 || rv.t_map.y < 0)
 		return (0);
-	if (ray_collision(rv.t_map.x, rv.t_map.y, player->a, map)
-			&& ray_collision(rv->t_map.x, rv.t_map.y, player->a, map))
+	if (ray_collision(rv.t_map.x, rv.t_map.y, player->a, map, VERT)
+			&& ray_collision(rv->t_map.x, rv.t_map.y, player->a, map, HORI))
 		return (1);
 	return (0);
 }
 bool	collide_horizontal(u_cotype rh, t_player *player)
 {
 	if (!(rh.t_map.x >= data->img->max_w || rh.t_map.x < 0)
-		&& ray_collision(rh.t_map.x, rh.t_map.y, player->a, map))
+		&& ray_collision(rh.t_map.x, rh.t_map.y, player->a, map, HORI))
 		return (1);
 	return (0);
 }
@@ -49,7 +73,7 @@ bool	collide_horizontal(u_cotype rh, t_player *player)
 bool	collide_vertical(u_cotype rv, t_player *player)
 {
 	if (!(rv.t_map.y >= data->img->max_h || rv.t_map.y < 0)
-		&& ray_collision(rv.t_map.x, rv.t_map.y, player->a, map))
+		&& ray_collision(rv.t_map.x, rv.t_map.y, player->a, map, VERT))
 		return (1);
 	return (0);
 }
@@ -67,22 +91,23 @@ void	ray_casting(t_player *player)
 	// rh.t_map.y = player->y;
 	// rv.t_map.x = player->x;
 	// rv.t_map.y = player->y;
-	if (tan(player->a) < 0.001 && tan(player->a) > -0.001)
-		return;
-	cot = 1/tan(player->a);
+	if (!(tan(player->a) < 0.001 && tan(player->a) > -0.001))
+	{
+		cot = 1/tan(player->a);
+		if (player->a < PI)
+		{
+			dir_h = -1;
+			rh.t_map.y = (int)player->y;
+		}
+		else if (player->a > PI)
+		{
+			dir_v = 1;
+			rh.t_map.y = (int)player->y + 1;
+		}
+		rh.t_map.x = ((player->y - rh.t_map.y) * cot + player->x);
+		rh.length = distance(player->x, player->y, rh.t_map.x, rh.t_map.y);
+	}
 	tan = tan(player->a);
-	if (player->a < PI)
-	{
-		dir_h = -1;
-		rh.t_map.y = (int)player->y;
-	}
-	else if (player->a > PI)
-	{
-		dir_v = 1;
-		rh.t_map.y = (int)player->y + 1;
-	}
-	rh.t_map.x = ((player->y - rh.t_map.y) * cot + player->x);
-	rh.length = distance(player->x, player->y, rh.t_map.x, rh.t_map.y);
 	if (player->a < HALF_PI || player->a > THREE_HALF_PI)
 	{
 		dir_v = 1;
@@ -121,6 +146,7 @@ void	ray_casting(t_player *player)
 	}
 }
 
+/*
 void	ray_casting_horizontal(t_player *player, t_storage *data)
 {
 	t_coordinates	r1;
@@ -173,12 +199,6 @@ void	ray_casting_horizontal(t_player *player, t_storage *data)
 	r2.x++;
 	bresenham_algo(r1, r2, data);
 }
-/*
-void	ray_casting_vertical(t_player *p, t_storage *data)
-{
-	
-}
-*/
 
 void	ray_casting_vertical(t_player *player, t_storage *data)
 {
@@ -223,3 +243,4 @@ void	ray_casting_vertical(t_player *player, t_storage *data)
 	r1.colour = 0x2F7A2A;
 	bresenham_algo(r1, r2, data);
 }
+*/
