@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/28 10:44:16 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/29 14:31:15 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef	enum e_direction
 	LEFT,
 	RIGHT,
 	DOWN,
+	VERT,
+	HORI
 } t_dir;
 extern char map[]; 
 
