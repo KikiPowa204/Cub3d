@@ -4,7 +4,7 @@ BOLD   = \033[1m
 GREEN  = \033[32m
 BLUE   = \033[34m
 
-NAME := cub3d
+NAME := cub3D
 CC := cc
 
 DEP_DIR := dep/
