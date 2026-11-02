@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ray_collision.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
+/*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/29 09:43:52 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/29 11:12:14 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/30 14:05:32 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdbool.h>
 
+/*
 t_voh	ray_collision(t_storage *dat, t_voh voh, int x, int y)
 {
 	bool	vert;
@@ -35,3 +36,4 @@ t_voh	ray_collision(t_storage *dat, t_voh voh, int x, int y)
 	t_coordinates	ver;
 	t_coordinates	hor;
 }
+*/

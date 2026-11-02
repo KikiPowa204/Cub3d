@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knajmech <knajmech@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:13:40 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/27 10:01:39 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/30 15:09:56 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void	calculate_ray(t_player *player)
 				player->a -= 2*PI;
 		}
 	}
-	player->p1.x = player->x * TILE_SIZE;
-	player->p1.y = player->y * TILE_SIZE;
-	player->p2.x = player->x * TILE_SIZE + cos(player->a) * 20;
-	player->p2.y = player->y * TILE_SIZE + sin(player->a) * -20;
+	player->p1.pix.x = player->x * TILE_SIZE;
+	player->p1.pix.y = player->y * TILE_SIZE;
+	player->p2.pix.x = player->x * TILE_SIZE + cos(player->a) * 20;
+	player->p2.pix.y = player->y * TILE_SIZE + sin(player->a) * -20;
 }
 
 void	recalc_player_pos(t_storage *dat, t_player *player)
