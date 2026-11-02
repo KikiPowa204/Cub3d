@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/29 14:49:21 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/02 17:48:20 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define FLOOR 0
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
+# define DESTROY_NOTIFY 17
 //# define FPS 60
 
 typedef enum	e_voh
@@ -59,28 +60,32 @@ typedef struct	s_algo
 // 	size_t	colour;
 // }			t_coordinates;
 
+typedef struct	s_pix
+{
+	int		x;
+	int		y;
+	int		z;
+}				t_pix;
+
+typedef struct	s_map
+{
+	double	x;
+	double	y;
+	double	z;
+}				t_map;
+
 typedef struct s_coordinates
 {
-	union	u_cotype
+	union
 	{
-		typedef struct	s_pix
-		{
-			int		x;
-			int		y;
-			int		z;
-		}				t_pix;
-		typedef struct	s_map
-		{
-			double	x;
-			double	y;
-			double	z;
-		}				t_map;
-	}
+		t_pix	pix;
+		t_map	map;
+	};
 	double	length;
 	size_t	colour;
-}			t_coordinates;
+}	t_coordinates;
 
-typedef	enum e_direction
+typedef	enum e_dir
 {
 	UP,
 	LEFT,
@@ -88,7 +93,8 @@ typedef	enum e_direction
 	DOWN,
 	VERT,
 	HORI
-} t_dir;
+}	t_dir;
+
 extern char map[]; 
 
 typedef	struct s_player
@@ -129,13 +135,19 @@ typedef	struct s_storage
 	char		*map;
 } t_storage;
 
-t_voh	ray_collision(t_storage *dat, t_voh voh, int x, int y);
+//t_voh	ray_collision(t_storage *dat, t_voh voh, int x, int y);
 //bool	ray_collision(int x, int y, double a, t_storage *dat);
+
+//Ray casting:
+void	ray_casting(t_player *player, t_storage *data);
 bool	check_if_wall(int x, int y, int max_d, char *map);
+double	distance(double x1, double y1, double x2, double y2);
 int		map_to_screen(double coordinate);
 int		get_map_index(int rx, int ry, int max_d);
-void	ray_casting_horizontal(t_player *player, t_storage *data);
-void	ray_casting_vertical(t_player *player, t_storage *data);
+t_coordinates	bres_transform(double x, double y);
+//void	ray_casting_horizontal(t_player *player, t_storage *data);
+//void	ray_casting_vertical(t_player *player, t_storage *data);
+
 void	bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
 void	recalc_player_pos(t_storage *dat, t_player *player);
 int		stop_player(int keycode, t_storage *dat);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
+/*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 10:02:37 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/22 11:45:17 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/02 17:47:59 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,15 @@ int	move_player(int keycode, t_storage *dat)
 	return (1);
 }
 
+int	close_game(t_storage *dat)
+{
+	(void)dat;
+	exit(0);
+}
+
 void	setup_hooks(t_storage *dat)
 {
+	mlx_hook(dat->img->win_ptr, DESTROY_NOTIFY, 0, close_game, dat);
 	mlx_hook(dat->img->win_ptr, KEY_PRESS, 1L<<0, move_player, dat);
 	mlx_hook(dat->img->win_ptr, KEY_RELEASE, 1L<<1, stop_player, dat);
 	mlx_loop_hook(dat->img->mlx_ptr, fill_map, dat);
