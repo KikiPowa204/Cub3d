@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/02 18:06:27 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/03 09:25:41 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/time.h>
 # include "libft.h"
 # include <X11/keysym.h>
+# include <assert.h>
 
 # define PI 3.141592653589793
 # define HALF_PI PI/2
