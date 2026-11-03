@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 16:41:12 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/02 18:35:12 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/02 18:36:13 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,13 @@ void	top_right(t_player *player, t_storage *data)
 	double			tan_a;
 	t_coordinates	rh;
 	t_coordinates	rv;
-	bool			hor;
-	bool			vert;
 	
-	hor = false;
 	cot = 0;
 	if (player->a > 0.01)
 	{
 		cot = 1/tan(player->a);
 		rh.map.y = (int)player->y;
 		rh.map.x = ((player->y - rh.map.y) * cot + player->x);
-		hor = true;
 		rh.length = distance(player->x, player->y, rh.map.x, rh.map.y);
 	}
 	else
