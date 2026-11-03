@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/29 09:43:52 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/30 14:05:32 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/03 09:26:59 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@
 /*
 t_voh	ray_collision(t_storage *dat, t_voh voh, int x, int y)
 {
-	bool	vert;
-	bool	hort;
+	double	a;
 
-	vert = false;
-	hort = false;
 	if (voh == ver)
 		if (check_if_wall(x, y, dat->img->max_h, dat->map))
 			return (ver);
@@ -29,7 +26,8 @@ t_voh	ray_collision(t_storage *dat, t_voh voh, int x, int y)
 			return (hor);
 	return (none);
 }
-
+*/
+/*
 t_voh	ray_collision(t_storage *dat, t_voh voh, int x, int y)
 {
 	t_voh			voh;
