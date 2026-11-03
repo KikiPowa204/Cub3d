@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/03 14:54:42 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/03 17:27:47 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	grab_player_coordinates(t_storage *dat)
 			{
 				dat->player->x = x + 0.5;
 				dat->player->y = y + 0.5;
-				dat->player->a = HALF_PI;
+				dat->player->dir = HALF_PI;
 			}
 			x++;
 		}
@@ -68,7 +68,7 @@ int main(void)
 	//validity checker part 2
 	init(&player, &dat, &img);
 	img.mlx_ptr = mlx_init();
-	img.win_ptr = mlx_new_window(img.mlx_ptr, 1920, 1080, "cub3D");
+	img.win_ptr = mlx_new_window(img.mlx_ptr, WINDOW_WIDTH, 1080, "cub3D");
 	img.img = mlx_new_image(img.mlx_ptr, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	setup_hooks(&dat);

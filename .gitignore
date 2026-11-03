@@ -2,3 +2,4 @@ cub3D
 dep/
 obj/
 libft/*.o
+libft/libft.a

@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/03 15:14:16 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/03 17:27:39 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <X11/keysym.h>
 # include <assert.h>
 
+# define WINDOW_WIDTH 1920
 # define PI 3.141592653589793
 # define HALF_PI PI/2
 # define THREE_HALF_PI 3*PI/2
@@ -110,6 +111,7 @@ typedef	struct s_player
 	bool		turn_right;
 	double		z;
 	double		a;
+	double		dir;
 	t_coordinates	p1;
 	t_coordinates	p2;
 }	t_player;
@@ -150,6 +152,8 @@ int				get_map_index(int rx, int ry, int max_d);
 t_coordinates	bres_transform(double x, double y);
 //void	ray_casting_horizontal(t_player *player, t_storage *data);
 //void	ray_casting_vertical(t_player *player, t_storage *data);
+
+void		cone_casting(t_storage *dat);
 
 void		bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
 void		recalc_player_pos(t_storage *dat, t_player *player);
