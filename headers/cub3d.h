@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/05 10:25:57 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/05 10:34:58 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <X11/keysym.h>
 # include <assert.h>
 
+# define WINDOW_WIDTH 1920
 # define PI 3.141592653589793
 # define HALF_PI PI/2
 # define THREE_HALF_PI 3*PI/2
@@ -110,6 +111,7 @@ typedef	struct s_player
 	bool		turn_right;
 	double		z;
 	double		a;
+	double		dir;
 	t_coordinates	p1;
 	t_coordinates	p2;
 }	t_player;
@@ -151,13 +153,14 @@ t_coordinates	bres_transform(double x, double y);
 //void	ray_casting_horizontal(t_player *player, t_storage *data);
 //void	ray_casting_vertical(t_player *player, t_storage *data);
 void			model3d(t_coordinates ray, t_storage *data);
-void			bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
-void			recalc_player_pos(t_storage *dat, t_player *player);
-int				stop_player(int keycode, t_storage *dat);
-int				move_player(int keycode, t_storage *dat);
-void			setup_hooks(t_storage *dat);
-int				fill_map(t_storage *dat);
-void			fill_tile(int x, int y, int colour, t_constants *img);
-void			put_pixel(t_constants *img, int x, int y, int color);
+void		cone_casting(t_storage *dat);
+void		bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
+void		recalc_player_pos(t_storage *dat, t_player *player);
+int			stop_player(int keycode, t_storage *dat);
+int			move_player(int keycode, t_storage *dat);
+void		setup_hooks(t_storage *dat);
+int			fill_map(t_storage *dat);
+void		fill_tile(int x, int y, int colour, t_constants *img);
+void		put_pixel(t_constants *img, int x, int y, int color);
 
 #endif

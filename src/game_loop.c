@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:13:40 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/30 15:09:56 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/03 17:30:32 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ void	calculate_ray(t_player *player)
 	{
 		if (player->turn_right)
 		{
-			player->a -= 0.1;
-			if (player->a <= 0)
-				player->a += 2*PI;
+			player->dir -= 0.1;
+			if (player->dir <= 0)
+				player->dir += 2*PI;
 		}
 		if (player->turn_left)
 		{
-			player->a += 0.1;
-			if (player->a >= 2*PI)
-				player->a -= 2*PI;
+			player->dir += 0.1;
+			if (player->dir >= 2*PI)
+				player->dir -= 2*PI;
 		}
 	}
 	player->p1.pix.x = player->x * TILE_SIZE;
