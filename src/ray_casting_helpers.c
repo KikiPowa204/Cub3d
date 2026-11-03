@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 12:34:52 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/02 16:53:19 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/03 15:20:38 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,33 @@ void	start_horizontal(double cot, u_cotype *rh, int *dir_h)
 }
 */
 
-bool	ray_collision(double x, double y, t_player *player, t_dir dir, t_storage *data)
+static bool	is_wall(double x, double y, t_storage *d)
+{
+	if (x < 0 || y < 0 || x >= d->img->max_w || y >= d->img->max_h)
+		return (true);               // outside the map ends the ray
+	return (map[(int)y * d->img->max_w + (int)x] == WALL);
+}
+
+bool	ray_collision(t_map ray, t_player *player, t_dir dir, t_storage *data)
 {
 	if (dir == HORI && player->a < PI)
 	{
-		if (map[(int)((y - 1) * data->img->max_w + x)])
+		if (map[(((int)ray.y - 1) * data->img->max_w + (int)ray.x)] == WALL)
 			return (1);
 	}
 	else if (dir == HORI && player->a > PI)
 	{
-		if (map[(int)(y * data->img->max_w + x)])
+		if (map[((int)ray.y * data->img->max_w + (int)ray.x)] == WALL)
 			return (1);
 	}
 	else if (dir == VERT && (player->a < HALF_PI || player->a > THREE_HALF_PI))
 	{
-		if (map[(int)(y * data->img->max_w + x)])
+		if (map[((int)ray.y * data->img->max_w + (int)ray.x + 1)] == WALL)
 			return (1);
 	}
 	else 
 	{
-		if (map[(int)(y * data->img->max_w + (x - 1))])
+		if (map[((int)ray.y * data->img->max_w + ((int)ray.x - 1))] == WALL)
 			return (1);
 	}
 	return (0);
@@ -57,27 +64,41 @@ bool	both_collide(t_coordinates rh, t_coordinates rv, t_player *player, t_storag
 		|| rh.map.x < 0 || rh.map.y < 0
 		|| rv.map.x >= data->img->max_w || rv.map.y >= data->img->max_h
 		|| rv.map.x < 0 || rv.map.y < 0)
-		return (0);
-	if (ray_collision(rv.map.x, rv.map.y, player, VERT, data)
-			&& ray_collision(rh.map.x, rh.map.y, player, HORI, data))
-		return (1);
-	return (0);
+		return (false);
+	if (ray_collision(rv.map, player, VERT, data)
+			&& ray_collision(rh.map, player, HORI, data))
+		return (true);
+	return (false);
 }
 
-bool	collide_horizontal(t_coordinates rh, t_player *player, t_storage *data)
+bool	collide_horizontal(t_coordinates *rh, t_player *player, t_storage *data, t_dir dir)
 {
-	if (!(rh.map.x >= data->img->max_w || rh.map.x < 0)
-		&& ray_collision(rh.map.x, rh.map.y, player, HORI, data))
-		return (1);
-	return (0);
+	if (dir == UP && is_wall(rh->map.x, rh->map.y - 1, data)) //ray_collision(rh->map, player, HORI, data))
+	{
+		rh->length = distance(player->x, player->y, rh->map.x, rh->map.y);
+		return (true);
+	}
+	if (dir == DOWN && is_wall(rh->map.x, rh->map.y, data)) //ray_collision(rh->map, player, HORI, data))
+	{
+		rh->length = distance(player->x, player->y, rh->map.x, rh->map.y);
+		return (true);
+	}
+	return (false);
 }
 
-bool	collide_vertical(t_coordinates rv, t_player *player, t_storage *data)
+bool	collide_vertical(t_coordinates *rv, t_player *player, t_storage *data, t_dir dir)
 {
-	if (!(rv.map.y >= data->img->max_h || rv.map.y < 0)
-		&& ray_collision(rv.map.x, rv.map.y, player, VERT, data))
-		return (1);
-	return (0);
+	if (dir == RIGHT && is_wall(rv->map.x, rv->map.y, data)) //&& ray_collision(rv->map, player, VERT, data))
+	{
+		rv->length = distance(player->x, player->y, rv->map.x, rv->map.y);
+		return (true);
+	}
+	if (dir == LEFT && is_wall(rv->map.x - 1, rv->map.y, data)) //&& ray_collision(rv->map, player, VERT, data))
+	{
+		rv->length = distance(player->x, player->y, rv->map.x, rv->map.y);
+		return (true);
+	}
+	return (false);
 }
 
 t_coordinates	bres_transform(double x, double y)
