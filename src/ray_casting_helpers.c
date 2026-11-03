@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 12:34:52 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/03 15:20:38 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/03 17:02:32 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ t_coordinates	bres_transform(double x, double y)
 	p.pix.x = map_to_screen(x);
 	p.pix.y = map_to_screen(y);
 	p.pix.z = 0;
+	p.colour = 0xff59fe;
 	return (p);
 }
 
