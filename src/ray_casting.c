@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 16:41:12 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/03 09:26:24 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/03 09:29:13 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,7 @@ t_map	ray_casting_horizontal(t_storage *data, double rx, double ry)
 	}
 }
 
-/*
 void	ray_casting_vertical(t_player *p, t_storage *data)
->>>>>>> 84b93a2 (just a backup for safety)
 {
 	double			cot;
 	double			tan_a;
