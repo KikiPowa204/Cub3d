@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/28 10:44:16 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/03 15:14:16 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/time.h>
 # include "libft.h"
 # include <X11/keysym.h>
+# include <assert.h>
 
 # define PI 3.141592653589793
 # define HALF_PI PI/2
@@ -32,7 +33,16 @@
 # define FLOOR 0
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
+# define DESTROY_NOTIFY 17
 //# define FPS 60
+
+typedef enum	e_voh
+{
+	none,
+	hor,
+	ver,
+	both
+}				t_voh;
 
 typedef struct	s_algo
 {
@@ -43,21 +53,49 @@ typedef struct	s_algo
 	int	diry;
 }				t_algo;
 
-typedef struct	s_coordinates
+// typedef struct	s_coordinates
+// {
+// 	int		x;
+// 	int		y;
+// 	int		z;
+// 	size_t	colour;
+// }			t_coordinates;
+
+typedef struct	s_pix
 {
 	int		x;
 	int		y;
 	int		z;
-	size_t	colour;
-}				t_coordinates;
+}				t_pix;
 
-typedef	enum e_direction
+typedef struct	s_map
+{
+	double	x;
+	double	y;
+	double	z;
+}				t_map;
+
+typedef struct s_coordinates
+{
+	union
+	{
+		t_pix	pix;
+		t_map	map;
+	};
+	double	length;
+	size_t	colour;
+}	t_coordinates;
+
+typedef	enum e_dir
 {
 	UP,
 	LEFT,
 	RIGHT,
 	DOWN,
-} t_dir;
+	VERT,
+	HORI
+}	t_dir;
+
 extern char map[]; 
 
 typedef	struct s_player
@@ -70,8 +108,6 @@ typedef	struct s_player
 	bool		up;
 	bool		turn_left;
 	bool		turn_right;
-	double		dx;
-	double		dy;
 	double		z;
 	double		a;
 	t_coordinates	p1;
@@ -97,20 +133,31 @@ typedef	struct s_storage
 {
 	t_player	*player;
 	t_constants	*img;
+	char		*map;
 } t_storage;
 
-bool	check_if_wall(int x, int y, int max_d, char *map);
-int		map_to_screen(double coordinate);
-int		get_map_index(int rx, int ry, int max_d);
-void	ray_casting_horizontal(t_player *player, t_storage *data);
-void	ray_casting_vertical(t_player *player, t_storage *data);
-void	bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
-void	recalc_player_pos(t_storage *dat, t_player *player);
-int		stop_player(int keycode, t_storage *dat);
-int		move_player(int keycode, t_storage *dat);
-void	setup_hooks(t_storage *dat);
-int		fill_map(t_storage *dat);
-void	fill_tile(int x, int y, int colour, t_constants *img);
-void	put_pixel(t_constants *img, int x, int y, int color);
+//t_voh	ray_collision(t_storage *dat, t_voh voh, int x, int y);
+//bool	ray_collision(int x, int y, double a, t_storage *dat);
+
+//Rayyy casting:
+bool			collide_horizontal(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);
+bool			collide_vertical(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);
+void			ray_casting(t_player *player, t_storage *data);
+bool			check_if_wall(int x, int y, int max_d, char *map);
+double			distance(double x1, double y1, double x2, double y2);
+int				map_to_screen(double coordinate);
+int				get_map_index(int rx, int ry, int max_d);
+t_coordinates	bres_transform(double x, double y);
+//void	ray_casting_horizontal(t_player *player, t_storage *data);
+//void	ray_casting_vertical(t_player *player, t_storage *data);
+
+void		bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
+void		recalc_player_pos(t_storage *dat, t_player *player);
+int			stop_player(int keycode, t_storage *dat);
+int			move_player(int keycode, t_storage *dat);
+void		setup_hooks(t_storage *dat);
+int			fill_map(t_storage *dat);
+void		fill_tile(int x, int y, int colour, t_constants *img);
+void		put_pixel(t_constants *img, int x, int y, int color);
 
 #endif

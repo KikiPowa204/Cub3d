@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/27 15:27:22 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/28 11:29:50 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/10/29 09:43:20 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,5 @@ bool	check_if_wall(int x, int y, int max_d, char *map)
 {
 	return (map[get_map_index(x, y, max_d)] != WALL);
 }
+
 

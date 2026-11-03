@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
+/*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/28 10:16:55 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/03 14:54:42 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 char	map[] =
 { 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 0, 1, 0, 0, 0, 1, 0, 1,
-  1, 0, 0, 0, 0, 0, 0, 0, 1,
+  1, 0,'N',0, 0, 0, 0, 0, 1,
   1, 0, 1, 0, 0, 1, 1, 1, 1,
   1, 0, 0, 1, 0, 0, 0, 0, 1,
-  1, 0, 0, 0,'E',0, 0, 0, 1,
+  1, 0, 0, 0, 0, 0, 0, 0, 1,
   1, 0, 1, 0, 0, 0, 1, 0, 1,
   1, 0, 0, 0, 1, 0, 0, 0, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1,};
@@ -34,11 +34,11 @@ void	grab_player_coordinates(t_storage *dat)
 		x = 0;
 		while(x < dat->img->max_w)
 		{
-			if (map[y * dat->img->max_w + x] == 'E')
+			if (map[y * dat->img->max_w + x] == 'N')
 			{
 				dat->player->x = x + 0.5;
 				dat->player->y = y + 0.5;
-				dat->player->a = 0;
+				dat->player->a = HALF_PI;
 			}
 			x++;
 		}
@@ -51,6 +51,7 @@ void	init(t_player *player, t_storage *dat, t_constants *img)
 	ft_bzero(player, sizeof(t_player));
 	dat->img = img;
 	dat->player = player;
+	dat->map = map;
 	img->max_h = 9;
 	img->max_w = 9;
 	grab_player_coordinates(dat);
