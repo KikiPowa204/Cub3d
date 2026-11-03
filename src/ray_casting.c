@@ -6,14 +6,13 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 16:41:12 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/03 09:29:13 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/03 09:32:32 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "stdio.h"
 
-void	top_right(t_player *player, t_storage *data)
 /*
 void	ray_casting_horizontal(t_player *player, t_storage *data)
 {
@@ -67,7 +66,7 @@ void	ray_casting_horizontal(t_player *player, t_storage *data)
 	r2.x++;
 	bresenham_algo(r1, r2, data);
 }*/
-
+/*
 t_map	ray_casting_horizontal(t_storage *data, double rx, double ry)
 {
 	t_map	start_pos;
@@ -79,9 +78,10 @@ t_map	ray_casting_horizontal(t_storage *data, double rx, double ry)
 	{
 		
 	}
-}
+}*/
 
-void	ray_casting_vertical(t_player *p, t_storage *data)
+//void	ray_casting_vertical(t_player *p, t_storage *data)
+void	top_right(t_player *player, t_storage *data)
 {
 	double			cot;
 	double			tan_a;
