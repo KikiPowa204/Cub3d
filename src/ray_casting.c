@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 16:41:12 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/05 10:34:04 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/05 10:36:49 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,11 +149,13 @@ void	bottom_right(t_player *player, t_storage *data, t_coordinates ray_h,
 	}
 }
 
-void	ray_casting(t_player *player, t_storage *data)
+void	ray_casting(t_player *player, t_storage *data, int pos)
 {
 	t_coordinates	ray_h;
 	t_coordinates	ray_v;
 
+	ray_h.pos = pos;
+	ray_v.pos = pos;
 	if (player->a >= 0 && player->a < HALF_PI)
 	{
 		ray_h.map.y = floor(player->y);

@@ -6,11 +6,12 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/05 10:35:14 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/05 10:37:33 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <mlx.h>
 
 char	map[] =
 { 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -68,12 +69,14 @@ int main(void)
 	//validity checker part 2
 	init(&player, &dat, &img);
 	img.mlx_ptr = mlx_init();
-	img.win_ptr = mlx_new_window(img.mlx_ptr, WINDOW_WIDTH, 1080, "cub3D");
-	img.img = mlx_new_image(img.mlx_ptr, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	img.win_ptr = mlx_new_window(img.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
+	img.img_mini = mlx_new_image(img.mlx_ptr, img.max_w * TILE_SIZE, TILE_SIZE * img.max_h);
+	img.img_3d = mlx_new_image(img.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	img.addr_mini = mlx_get_data_addr(img.img_mini, &img.bits_per_pixel, &img.line_length_mini, &img.endian);
+	img.addr_3d = mlx_get_data_addr(img.img_3d, &img.bits_per_pixel, &img.line_length_3d, &img.endian);
 	setup_hooks(&dat);
 	mlx_loop(img.mlx_ptr);
-	mlx_destroy_image(img.mlx_ptr, img.img);
+	mlx_destroy_image(img.mlx_ptr, img.img_mini);
 	mlx_destroy_window(img.mlx_ptr, img.win_ptr);
 	mlx_destroy_display(img.mlx_ptr);
 	free(img.mlx_ptr);
