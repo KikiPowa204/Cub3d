@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 16:41:12 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/03 16:47:44 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/04 16:09:40 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,18 +126,26 @@ void	bottom_right(t_player *player, t_storage *data, t_coordinates ray_h,
 		ray_v.map.y -= tan_a;
 	}
 	if (ray_v.length > ray_h.length)
+	{
+		model3d(ray_h, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_h.map.x, ray_h.map.y), data);
+	}
 	else
+	{
+		model3d(ray_v, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_v.map.x, ray_v.map.y), data);
+	}
 }
 
-void	ray_casting(t_player *player, t_storage *data)
+void	ray_casting(t_player *player, t_storage *data, int pos)
 {
 	t_coordinates	ray_h;
 	t_coordinates	ray_v;
 
+	ray_h.pos = pos;
+	ray_v.pos = pos;
 	if (player->a >= 0 && player->a < HALF_PI)
 	{
 		ray_h.map.y = floor(player->y);

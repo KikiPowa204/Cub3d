@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/04 14:26:51 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/04 16:10:10 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@
 # include <assert.h>
 
 # define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 # define PI 3.141592653589793
 # define HALF_PI PI/2
 # define THREE_HALF_PI 3*PI/2
-# define TILE_SIZE 90
+# define TILE_SIZE 30
 # define PLAYER_SIZE 8
 # define WALL 1
 # define FLOOR 0
@@ -85,6 +86,7 @@ typedef struct s_coordinates
 	};
 	double	length;
 	size_t	colour;
+	int		pos;
 }	t_coordinates;
 
 typedef	enum e_dir
@@ -116,16 +118,18 @@ typedef	struct s_player
 	t_coordinates	p2;
 }	t_player;
 
-
 typedef	struct s_constants
 {
-	void		*img;
+	void		*img_mini;
+	void		*img_3d;
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_player	*player;
-	char		*addr;
+	char		*addr_mini;
+	char		*addr_3d;
 	int			bits_per_pixel;
-	int			line_length;
+	int			line_length_3d;
+	int			line_length_mini;
 	int			endian;
 	int			max_w;
 	int			max_h;
@@ -144,7 +148,7 @@ typedef	struct s_storage
 //Rayyy casting:
 bool			collide_horizontal(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);
 bool			collide_vertical(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);
-void			ray_casting(t_player *player, t_storage *data);
+void			ray_casting(t_player *player, t_storage *data, int pos);
 bool			check_if_wall(int x, int y, int max_d, char *map);
 double			distance(double x1, double y1, double x2, double y2);
 int				map_to_screen(double coordinate);
@@ -154,7 +158,7 @@ t_coordinates	bres_transform(double x, double y);
 //void	ray_casting_vertical(t_player *player, t_storage *data);
 
 void		cone_casting(t_storage *dat);
-
+void		model3d(t_coordinates ray, t_storage *data);
 void		bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
 void		recalc_player_pos(t_storage *dat, t_player *player);
 int			stop_player(int keycode, t_storage *dat);
@@ -163,6 +167,6 @@ void		setup_hooks(t_storage *dat);
 void		fill_map(t_storage *dat);
 int			frame_per_second(t_storage *dat);
 void		fill_tile(int x, int y, int colour, t_constants *img);
-void		put_pixel(t_constants *img, int x, int y, int color);
-
+void		put_pixel_mini(t_constants *img, int x, int y, int color);
+void		put_pixel_3d(t_constants *img, int x, int y, int color);
 #endif

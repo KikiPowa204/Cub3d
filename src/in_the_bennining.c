@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:03:09 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/04 14:31:11 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/04 15:41:45 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,19 @@
 #include <stdio.h>
 #include <time.h>
 
-void	put_pixel(t_constants *img, int x, int y, int color)
+void	put_pixel_3d(t_constants *img, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	dst = img->addr_3d + (y * img->line_length_3d + x * (img->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
+
+void	put_pixel_mini(t_constants *img, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = img->addr_mini + (y * img->line_length_mini + x * (img->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
@@ -39,7 +47,7 @@ void	draw_player(double x, double y, t_constants *img)
 		xo = (unsigned int)(x * TILE_SIZE - PLAYER_SIZE / 2);
 		while(xo < xo_limit - 1)
 		{
-			put_pixel(img, xo, yo, colour);
+			put_pixel_mini(img, xo, yo, colour);
 			xo++;
 		}
 		yo++;
@@ -61,10 +69,37 @@ void	fill_tile(int x, int y, int colour, t_constants *img)
 		xo = x * TILE_SIZE;
 		while(xo < xo_limit - 1)
 		{
-			put_pixel(img, xo, yo, colour);
+			put_pixel_mini(img, xo, yo, colour);
 			xo++;
 		}
 		yo++;
+	}
+}
+void	draw_background(t_storage *dat)
+{
+	int x;
+	int y;
+	
+	y = 0;
+	while(y < WINDOW_HEIGHT / 2)
+	{
+		x = 0;
+		while(x < WINDOW_WIDTH)
+		{
+			put_pixel_3d(dat->img, x, y, 0xffc0cb);
+			x++;
+		}
+		y++;	
+	}
+	while(y < WINDOW_HEIGHT)
+	{
+		x = 0;
+		while(x < WINDOW_WIDTH)
+		{
+			put_pixel_3d(dat->img, x, y, 0x000000);
+			x++;
+		}
+		y++;	
 	}
 }
 
@@ -89,8 +124,10 @@ void	fill_map(t_storage *dat)
 	}
 	draw_player(dat->player->x, dat->player->y, dat->img);
 	bresenham_algo(dat->player->p1, dat->player->p2, dat);
+	draw_background(dat);
 	cone_casting(dat);
-	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr, dat->img->img, 0, 0);
+	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr, dat->img->img_3d, 0, 0);
+	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr, dat->img->img_mini, 0, 0);
 }
 
 int	frame_per_second(t_storage *dat)

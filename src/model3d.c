@@ -1,0 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   model3d.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/11/04 14:34:42 by bastalze          #+#    #+#             */
+/*   Updated: 2026/11/04 16:16:44 by bastalze         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
+#include <math.h>
+
+void	model3d(t_coordinates ray, t_storage *data)
+{
+	double	height;
+	int			x;
+	int			y;
+	
+	height = TILE_SIZE * WINDOW_HEIGHT / ray.length * TILE_SIZE;
+	if (height > WINDOW_HEIGHT)
+		height = WINDOW_HEIGHT;
+	y = WINDOW_HEIGHT / 2 - height / 2;
+	x = ray.pos;
+	while (y < (WINDOW_HEIGHT / 2 - height / 2) + height)
+	{
+		put_pixel_3d(data->img, x, y, 0x000010);
+		y++;
+	}
+}
