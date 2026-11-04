@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/05 10:34:58 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/05 10:36:03 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,8 @@ void		recalc_player_pos(t_storage *dat, t_player *player);
 int			stop_player(int keycode, t_storage *dat);
 int			move_player(int keycode, t_storage *dat);
 void		setup_hooks(t_storage *dat);
-int			fill_map(t_storage *dat);
+void		fill_map(t_storage *dat);
+int			frame_per_second(t_storage *dat);
 void		fill_tile(int x, int y, int colour, t_constants *img);
 void		put_pixel(t_constants *img, int x, int y, int color);
 

@@ -6,12 +6,13 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:03:09 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/03 17:29:19 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/04 14:31:11 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdio.h>
+#include <time.h>
 
 void	put_pixel(t_constants *img, int x, int y, int color)
 {
@@ -67,7 +68,7 @@ void	fill_tile(int x, int y, int colour, t_constants *img)
 	}
 }
 
-int	fill_map(t_storage *dat)
+void	fill_map(t_storage *dat)
 {
 	int	x;
 	int	y;
@@ -88,9 +89,24 @@ int	fill_map(t_storage *dat)
 	}
 	draw_player(dat->player->x, dat->player->y, dat->img);
 	bresenham_algo(dat->player->p1, dat->player->p2, dat);
-	//ray_casting_horizontal(dat->player, dat);
-	//ray_casting_vertical(dat->player, dat);
 	cone_casting(dat);
 	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr, dat->img->img, 0, 0);
+}
+
+int	frame_per_second(t_storage *dat)
+{
+	struct timeval	tv;
+	time_t			milliseconds;
+	time_t			limit;
+
+	gettimeofday(&tv, NULL);
+	milliseconds = (tv.tv_usec / 1000 + tv.tv_sec * 1000);
+	limit = milliseconds + 16;
+	while ((tv.tv_usec / 1000 + tv.tv_sec * 1000) < limit)
+	{
+		usleep(200);
+		gettimeofday(&tv, NULL);
+	}
+	fill_map(dat);
 	return (0);
 }
