@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/03 15:14:16 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/05 10:25:57 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,14 +150,14 @@ int				get_map_index(int rx, int ry, int max_d);
 t_coordinates	bres_transform(double x, double y);
 //void	ray_casting_horizontal(t_player *player, t_storage *data);
 //void	ray_casting_vertical(t_player *player, t_storage *data);
-
-void		bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
-void		recalc_player_pos(t_storage *dat, t_player *player);
-int			stop_player(int keycode, t_storage *dat);
-int			move_player(int keycode, t_storage *dat);
-void		setup_hooks(t_storage *dat);
-int			fill_map(t_storage *dat);
-void		fill_tile(int x, int y, int colour, t_constants *img);
-void		put_pixel(t_constants *img, int x, int y, int color);
+void			model3d(t_coordinates ray, t_storage *data);
+void			bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
+void			recalc_player_pos(t_storage *dat, t_player *player);
+int				stop_player(int keycode, t_storage *dat);
+int				move_player(int keycode, t_storage *dat);
+void			setup_hooks(t_storage *dat);
+int				fill_map(t_storage *dat);
+void			fill_tile(int x, int y, int colour, t_constants *img);
+void			put_pixel(t_constants *img, int x, int y, int color);
 
 #endif

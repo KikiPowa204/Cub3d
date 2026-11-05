@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 16:41:12 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/03 15:54:32 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/05 10:24:36 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,29 @@ void	top_right(t_player *player, t_storage *data, t_coordinates ray_h,
 	ray_h.length = INFINITY;
 	cot = 1/tan(player->a);
 	tan_a = tan(player->a);
-	if (player->a > 0.000001 && player->a <= PI)
-	{
+	if (player->a > 0.000001)
 		while (collide_horizontal(&ray_h, player, data, UP) == false)
 		{
 			ray_h.map.y -= 1;
 			ray_h.map.x += cot;
 		}
-	}
 	while (collide_vertical(&ray_v, player, data, RIGHT) == false)
 	{
 		ray_v.map.x += 1;
 		ray_v.map.y -= tan_a;
 	}
 	if (ray_v.length > ray_h.length)
+	{
+		model3d(ray_h, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_h.map.x, ray_h.map.y), data);
+	}
 	else
+	{
+		model3d(ray_v, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_v.map.x, ray_v.map.y), data);
+	}
 }
 
 void	top_left(t_player *player, t_storage *data, t_coordinates ray_h,
@@ -55,13 +59,10 @@ void	top_left(t_player *player, t_storage *data, t_coordinates ray_h,
 	ray_h.length = INFINITY;
 	cot = 1/tan(player->a);
 	tan_a = tan(player->a);
-	if (player->a > 0.000001)
+	while (collide_horizontal(&ray_h, player, data, UP) == false)
 	{
-		while (collide_horizontal(&ray_h, player, data, UP) == false)
-		{
-			ray_h.map.y -= 1;
-			ray_h.map.x += cot;
-		}
+		ray_h.map.y -= 1;
+		ray_h.map.x += cot;
 	}
 	while (collide_vertical(&ray_v, player, data, LEFT) == false)
 	{
@@ -69,11 +70,17 @@ void	top_left(t_player *player, t_storage *data, t_coordinates ray_h,
 		ray_v.map.y += tan_a;
 	}
 	if (ray_v.length > ray_h.length)
+	{
+		model3d(ray_h, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_h.map.x, ray_h.map.y), data);
+	}
 	else
+	{
+		model3d(ray_v, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_v.map.x, ray_v.map.y), data);
+	}
 }
 
 void	bottom_left(t_player *player, t_storage *data, t_coordinates ray_h,
@@ -96,11 +103,17 @@ void	bottom_left(t_player *player, t_storage *data, t_coordinates ray_h,
 		ray_v.map.y += tan_a;
 	}
 	if (ray_v.length > ray_h.length)
+	{
+		model3d(ray_h, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_h.map.x, ray_h.map.y), data);
+	}
 	else
+	{
+		model3d(ray_v, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_v.map.x, ray_v.map.y), data);
+	}
 }
 
 void	bottom_right(t_player *player, t_storage *data, t_coordinates ray_h,
@@ -112,13 +125,10 @@ void	bottom_right(t_player *player, t_storage *data, t_coordinates ray_h,
 	ray_h.length = INFINITY;
 	cot = 1/tan(player->a);
 	tan_a = tan(player->a);
-	if (player->a > 0.000001)
+	while (collide_horizontal(&ray_h, player, data, DOWN) == false)
 	{
-		while (collide_horizontal(&ray_h, player, data, DOWN) == false)
-		{
-			ray_h.map.y += 1;
-			ray_h.map.x -= cot;
-		}
+		ray_h.map.y += 1;
+		ray_h.map.x -= cot;
 	}
 	while (collide_vertical(&ray_v, player, data, RIGHT) == false)
 	{
@@ -126,11 +136,17 @@ void	bottom_right(t_player *player, t_storage *data, t_coordinates ray_h,
 		ray_v.map.y -= tan_a;
 	}
 	if (ray_v.length > ray_h.length)
+	{
+		model3d(ray_h, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_h.map.x, ray_h.map.y), data);
+	}
 	else
+	{
+		model3d(ray_v, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_v.map.x, ray_v.map.y), data);
+	}
 }
 
 void	ray_casting(t_player *player, t_storage *data)
