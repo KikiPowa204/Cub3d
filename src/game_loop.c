@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:13:40 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/03 17:30:32 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/04 16:44:25 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	calculate_ray(t_player *player)
 	}
 	player->p1.pix.x = player->x * TILE_SIZE;
 	player->p1.pix.y = player->y * TILE_SIZE;
-	player->p2.pix.x = player->x * TILE_SIZE + cos(player->a) * 20;
-	player->p2.pix.y = player->y * TILE_SIZE + sin(player->a) * -20;
+	player->p2.pix.x = player->x * TILE_SIZE + cos(player->dir) * 20;
+	player->p2.pix.y = player->y * TILE_SIZE + sin(player->dir) * -20;
 }
 
 void	recalc_player_pos(t_storage *dat, t_player *player)

@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/22 12:33:28 by knajmech          #+#    #+#             */
-/*   Updated: 2026/10/29 16:59:55 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/04 15:26:34 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *data)
 	init_algo_vals(&algo, p1, p2);
 	while (1)
 	{
-		put_pixel(data->img, p1.pix.x, p1.pix.y, p1.colour);
+		put_pixel_mini(data->img, p1.pix.x, p1.pix.y, p1.colour);
 		if (p1.pix.x == p2.pix.x && p1.pix.y == p2.pix.y)
 			break ;
 		error_temp = 2 * algo.d_p;
