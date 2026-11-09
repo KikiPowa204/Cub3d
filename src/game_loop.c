@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:13:40 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/09 14:51:08 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/09 17:14:18 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,13 @@ void	calculate_dir(t_player *player)
 	}
 }
 
-void	move(t_storage *dat, t_player *player, t_dir direction)
+void	move(t_storage *dat, t_player *player, double orient_x, double orient_y)
 {
 	double	dx;
 	double	dy;
-	int		sign;
-
-	sign = 1;
-	if (direction == DOWN)
-		sign = -1;
-	dx = sign * player->orient.map.x * (double)SPEED;
-	dy = sign * player->orient.map.y * (double)SPEED;
+	
+	dx = orient_x * (double)SPEED;
+	dy = orient_y * (double)SPEED;
 	if (!is_wall(player->x + dx + copysign(0.2, dx), player->y, dat))
 		player->x += dx;
 	if (!is_wall(player->x, player->y + dy + copysign(0.2, dy), dat))
@@ -96,20 +92,19 @@ void	recalc_player_pos(t_storage *dat, t_player *player)
 {
 	calculate_dir(player);
 	if (player->up == true)
-		move(dat, player, UP);
+		move(dat, player, player->orient.map.x, player->orient.map.y);
 	if (player->down == true)
-		move(dat, player, DOWN);
-	if (player->right == true)
-	{
-		player->orient.map.y = -player->orient.map.y;
-		move(dat, player, LEFT);
-	}
+		move(dat, player, -player->orient.map.x, -player->orient.map.y);
 	if (player->left == true)
-	{
-		player->orient.map.x = -player->orient.map.x;
-		move(dat, player, RIGHT);
-	}
+		move(dat, player, -player->orient.map.y, player->orient.map.x);
+	if (player->right == true)
+		move(dat, player, player->orient.map.y, -player->orient.map.x);
 }
+
+// To move forward you add the direction vector (player->orientation)
+// to move back you substract that vector
+// moving sideways (transforming the vector perpendicular)
+// it swaps x and y and for right you do a negative y and left you do a negative x
 
 /*
 void	recalc_player_pos(t_storage *dat, t_player *player)
