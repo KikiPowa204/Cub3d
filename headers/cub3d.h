@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/04 16:10:10 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/09 10:48:54 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,9 +156,8 @@ int				get_map_index(int rx, int ry, int max_d);
 t_coordinates	bres_transform(double x, double y);
 //void	ray_casting_horizontal(t_player *player, t_storage *data);
 //void	ray_casting_vertical(t_player *player, t_storage *data);
-
+void			model3d(t_coordinates ray, t_storage *data);
 void		cone_casting(t_storage *dat);
-void		model3d(t_coordinates ray, t_storage *data);
 void		bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
 void		recalc_player_pos(t_storage *dat, t_player *player);
 int			stop_player(int keycode, t_storage *dat);

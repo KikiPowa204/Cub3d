@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:34:42 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/04 16:16:44 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/09 10:48:34 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ void	model3d(t_coordinates ray, t_storage *data)
 	double	height;
 	int			x;
 	int			y;
-	
-	height = TILE_SIZE * WINDOW_HEIGHT / ray.length * TILE_SIZE;
+
+	height = WINDOW_HEIGHT / ray.length;
 	if (height > WINDOW_HEIGHT)
 		height = WINDOW_HEIGHT;
 	y = WINDOW_HEIGHT / 2 - height / 2;
 	x = ray.pos;
 	while (y < (WINDOW_HEIGHT / 2 - height / 2) + height)
 	{
-		put_pixel_3d(data->img, x, y, 0x000010);
+		put_pixel_3d(data->img, x, y, 0x00FFFF);
 		y++;
 	}
 }
