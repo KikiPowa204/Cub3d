@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 17:11:30 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/04 16:10:16 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/10 10:16:30 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	cone_casting(t_storage *dat)
 	if (dat->player->a < 0)
 		dat->player->a += (2 * PI);
 	end_point = dat->player->a + PI / 3;
-	if (end_point > 2 * PI)
+	if (end_point >= 2 * PI)
 		end_point -= (2 * PI);
 	angle_between_each_ray = PI / 3 / WINDOW_WIDTH;
 	i = 0;
