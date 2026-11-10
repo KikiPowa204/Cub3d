@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/05 10:37:20 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/09 14:23:03 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
 # define DESTROY_NOTIFY 17
+# define SPEED 0.05
 //# define FPS 60
 
 typedef enum	e_voh
@@ -114,8 +115,7 @@ typedef	struct s_player
 	double		z;
 	double		a;
 	double		dir;
-	t_coordinates	p1;
-	t_coordinates	p2;
+	t_coordinates	orient;
 }	t_player;
 
 typedef	struct s_constants
@@ -156,6 +156,7 @@ int				get_map_index(int rx, int ry, int max_d);
 t_coordinates	bres_transform(double x, double y);
 //void	ray_casting_horizontal(t_player *player, t_storage *data);
 //void	ray_casting_vertical(t_player *player, t_storage *data);
+bool			is_wall(double x, double y, t_storage *d);
 void			model3d(t_coordinates ray, t_storage *data);
 void		cone_casting(t_storage *dat);
 void		bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);

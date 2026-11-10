@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/05 10:39:11 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/09 11:46:16 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	grab_player_coordinates(t_storage *dat)
 				dat->player->x = x + 0.5;
 				dat->player->y = y + 0.5;
 				dat->player->dir = HALF_PI;
+				dat->player->orient.map.x = 0;
+				dat->player->orient.map.y = -1;
 			}
 			x++;
 		}

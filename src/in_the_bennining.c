@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:03:09 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/04 15:41:45 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/09 11:09:27 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	fill_map(t_storage *dat)
 		y++;
 	}
 	draw_player(dat->player->x, dat->player->y, dat->img);
-	bresenham_algo(dat->player->p1, dat->player->p2, dat);
+	//bresenham_algo(dat->player->p1, dat->player->p2, dat);
 	draw_background(dat);
 	cone_casting(dat);
 	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr, dat->img->img_3d, 0, 0);

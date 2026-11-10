@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 12:34:52 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/03 17:02:32 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/09 14:22:45 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	start_horizontal(double cot, u_cotype *rh, int *dir_h)
 }
 */
 
-static bool	is_wall(double x, double y, t_storage *d)
+bool	is_wall(double x, double y, t_storage *d)
 {
 	if (x < 0 || y < 0 || x >= d->img->max_w || y >= d->img->max_h)
 		return (true);               // outside the map ends the ray
