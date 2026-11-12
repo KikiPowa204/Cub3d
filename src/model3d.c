@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:34:42 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/12 12:55:29 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/12 14:45:01 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ double	pos_on_texture(t_coordinates ray)
 	if (ray.tex == SOUTH)
 		return (1- (ray.map.x - floor(ray.map.x)));
 	if (ray.tex == EAST)
-		return (ray.map.y - floor(ray.map.y));
-	if (ray.tex == WEST)
 		return (1- (ray.map.y - floor(ray.map.y)));
+	if (ray.tex == WEST)
+		return (ray.map.y - floor(ray.map.y));
 	else
 		return (0);
 }
@@ -138,13 +138,13 @@ void	model3d(t_coordinates ray, t_storage *data)
 	t_coordinates	screen;
 
 	ray.norm_length = remove_distortion(ray.length, data->player);
-	virtual_height = WINDOW_HEIGHT / ray.norm_length;
+	virtual_height = WINDOW_WIDTH / ray.norm_length;
 	if (virtual_height > WINDOW_HEIGHT)
 		height_on_screen = WINDOW_HEIGHT;
 	else
 	 	height_on_screen = virtual_height;
 	screen.pix.y = (int)((double)WINDOW_HEIGHT / 2 - height_on_screen / 2);
-	screen.pix.x = ray.pos;
+	screen.pix.x = WINDOW_WIDTH - ray.pos;
 	//if (ray.tex == NORTH)
 		scale(ray, data, height_on_screen, virtual_height, screen);
 	// else
