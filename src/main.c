@@ -6,11 +6,12 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/09 11:46:16 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/10 12:31:31 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "libft.h"
 #include <mlx.h>
 
 char	map[] =
@@ -52,12 +53,25 @@ void	grab_player_coordinates(t_storage *dat)
 void	init(t_player *player, t_storage *dat, t_constants *img)
 {
 	ft_bzero(player, sizeof(t_player));
+	ft_bzero(dat, sizeof(t_storage));
 	dat->img = img;
 	dat->player = player;
 	dat->map = map;
 	img->max_h = 9;
 	img->max_w = 9;
 	grab_player_coordinates(dat);
+}
+
+int	init_textures(t_storage	*dat)
+{
+	dat->walls.north.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr, "textures/horror1.xpm", &dat->walls.north.width, &dat->walls.north.height);
+	dat->walls.south.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr, "textures/horror2.xpm", &dat->walls.south.width, &dat->walls.south.height);
+	dat->walls.west.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr, "textures/horror3.xpm", &dat->walls.west.width, &dat->walls.west.height);
+	dat->walls.east.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr, "textures/horror4.xpm", &dat->walls.east.width, &dat->walls.east.height);
+	if (dat->walls.north.txt_ptr && dat->walls.south.txt_ptr && dat->walls.west.txt_ptr && dat->walls.east.txt_ptr)
+		return (1);
+	else
+		return (0);//(cleanup(dat), 0);
 }
 
 int main(void)
@@ -71,6 +85,8 @@ int main(void)
 	//validity checker part 2
 	init(&player, &dat, &img);
 	img.mlx_ptr = mlx_init();
+	if (!init_textures(&dat))
+		return (1);
 	img.win_ptr = mlx_new_window(img.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
 	img.img_mini = mlx_new_image(img.mlx_ptr, img.max_w * TILE_SIZE, TILE_SIZE * img.max_h);
 	img.img_3d = mlx_new_image(img.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
