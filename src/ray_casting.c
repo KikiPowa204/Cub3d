@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 16:41:12 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/09 10:48:11 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/11 10:58:29 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ void	top_right(t_player *player, t_storage *data, t_coordinates ray_h,
 	}
 	if (ray_v.length > ray_h.length)
 	{
+		ray_h.tex = NORTH;
 		model3d(ray_h, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_h.map.x, ray_h.map.y), data);
 	}
 	else
 	{
+		ray_v.tex = WEST;
 		model3d(ray_v, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_v.map.x, ray_v.map.y), data);
@@ -71,12 +73,14 @@ void	top_left(t_player *player, t_storage *data, t_coordinates ray_h,
 	}
 	if (ray_v.length > ray_h.length)
 	{
+		ray_h.tex = NORTH;
 		model3d(ray_h, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_h.map.x, ray_h.map.y), data);
 	}
 	else
 	{
+		ray_v.tex = EAST;
 		model3d(ray_v, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_v.map.x, ray_v.map.y), data);
@@ -104,12 +108,14 @@ void	bottom_left(t_player *player, t_storage *data, t_coordinates ray_h,
 	}
 	if (ray_v.length > ray_h.length)
 	{
+		ray_h.tex = SOUTH;
 		model3d(ray_h, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_h.map.x, ray_h.map.y), data);
 	}
 	else
 	{
+		ray_v.tex = EAST;
 		model3d(ray_v, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_v.map.x, ray_v.map.y), data);
@@ -137,12 +143,14 @@ void	bottom_right(t_player *player, t_storage *data, t_coordinates ray_h,
 	}
 	if (ray_v.length > ray_h.length)
 	{
+		ray_h.tex = SOUTH;
 		model3d(ray_h, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_h.map.x, ray_h.map.y), data);
 	}
 	else
 	{
+		ray_v.tex = WEST;
 		model3d(ray_v, data);
 		bresenham_algo(bres_transform(player->x, player->y),
 				bres_transform(ray_v.map.x, ray_v.map.y), data);
@@ -189,6 +197,7 @@ void	ray_casting(t_player *player, t_storage *data, int pos)
 		bottom_right(player, data, ray_h, ray_v);
 	}
 }
+
 /*
 #define FOV		(PI / 3)		// 60 degrees
 #define NUM_RAYS	60

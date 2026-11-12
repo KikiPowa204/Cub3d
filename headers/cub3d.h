@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/09 14:23:03 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/11 16:41:26 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,20 @@ typedef struct	s_algo
 // 	size_t	colour;
 // }			t_coordinates;
 
+typedef	enum e_dir
+{
+	UP,
+	LEFT,
+	RIGHT,
+	DOWN,
+	VERT,
+	HORI,
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+}	t_dir;
+
 typedef struct	s_pix
 {
 	int		x;
@@ -85,20 +99,13 @@ typedef struct s_coordinates
 		t_pix	pix;
 		t_map	map;
 	};
-	double	length;
-	size_t	colour;
-	int		pos;
+	double		length;
+	double_t	norm_length;
+	size_t		colour;
+	int			pos;
+	enum e_dir	tex;
+	int			tex_size;
 }	t_coordinates;
-
-typedef	enum e_dir
-{
-	UP,
-	LEFT,
-	RIGHT,
-	DOWN,
-	VERT,
-	HORI
-}	t_dir;
 
 extern char map[]; 
 
@@ -128,19 +135,40 @@ typedef	struct s_constants
 	char		*addr_mini;
 	char		*addr_3d;
 	int			bits_per_pixel;
+	int			bits_per_pixel_tex;
 	int			line_length_3d;
 	int			line_length_mini;
+	int			line_length_tex;
 	int			endian;
 	int			max_w;
 	int			max_h;
 }	t_constants;
+
+typedef struct s_texture
+{
+	void	*txt_ptr;
+	//int	line_length;
+	int		width;
+	int		height;
+	//int	size;
+} t_texture;
+
+typedef struct s_walls
+{
+	struct s_texture	north;
+	struct s_texture	south;
+	struct s_texture	east;
+	struct s_texture	west;
+} t_walls;
 
 typedef	struct s_storage
 {
 	t_player	*player;
 	t_constants	*img;
 	char		*map;
+	t_walls		walls;
 } t_storage;
+
 
 //t_voh	ray_collision(t_storage *dat, t_voh voh, int x, int y);
 //bool	ray_collision(int x, int y, double a, t_storage *dat);
