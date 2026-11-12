@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:13:40 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/09 17:14:18 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/12 14:24:04 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	calculate_dir(t_player *player)
 	
 	if (player->turn_right || player->turn_left)
 	{
-		if (player->turn_right)
+		if (player->turn_left)
 		{
 			player->dir += 0.1;
 			if (player->dir >= 2*PI)
@@ -61,7 +61,7 @@ void	calculate_dir(t_player *player)
 			// player->orient.map.x = player->orient.map.x * cos(-player->dir) - player->orient.map.y * sin(-player->dir);
       		// player->orient.map.y = old_orient_x * sin(-player->dir) + player->orient.map.y * cos(-player->dir);
 		}
-		if (player->turn_left)
+		if (player->turn_right)
 		{
 			player->dir -= 0.1;
 			if (player->dir <= 0)
@@ -96,9 +96,9 @@ void	recalc_player_pos(t_storage *dat, t_player *player)
 	if (player->down == true)
 		move(dat, player, -player->orient.map.x, -player->orient.map.y);
 	if (player->left == true)
-		move(dat, player, -player->orient.map.y, player->orient.map.x);
-	if (player->right == true)
 		move(dat, player, player->orient.map.y, -player->orient.map.x);
+	if (player->right == true)
+		move(dat, player, -player->orient.map.y, player->orient.map.x);
 }
 
 // To move forward you add the direction vector (player->orientation)
