@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/10 12:31:31 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/13 13:16:27 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,21 @@ int	init_textures(t_storage	*dat)
 		return (0);//(cleanup(dat), 0);
 }
 
-int main(void)
+int main(int ac, char **av)
 {
 	t_constants	img;
 	t_player	player;
 	t_storage	dat;
+	char		*texture_paths[4];
 
 	//validity checker part 1
 	//parsing
 	//validity checker part 2
+	if (ac != 2)
+		return (error("Incorrect amount of arguments", false), 1);
 	init(&player, &dat, &img);
+	if (!parse_description_file(av[1], &dat, texture_paths))
+		return (1);
 	img.mlx_ptr = mlx_init();
 	if (!init_textures(&dat))
 		return (1);

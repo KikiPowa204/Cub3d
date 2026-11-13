@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/11 16:41:26 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/13 13:18:58 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # include "libft.h"
 # include <X11/keysym.h>
 # include <assert.h>
+# include <stdio.h> //perror
+# include <sys/stat.h> //open
+# include <fcntl.h> //open
+
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
@@ -38,6 +42,18 @@
 # define DESTROY_NOTIFY 17
 # define SPEED 0.05
 //# define FPS 60
+
+//Parsing
+
+typedef enum	e_compass
+{
+	NO,
+	SO,
+	WE,
+	EA
+}	t_compass;
+
+//Execution
 
 typedef enum	e_voh
 {
@@ -140,6 +156,8 @@ typedef	struct s_constants
 	int			line_length_mini;
 	int			line_length_tex;
 	int			endian;
+	int			floor_c;
+	int			ceiling_c;
 	int			max_w;
 	int			max_h;
 }	t_constants;
@@ -173,6 +191,8 @@ typedef	struct s_storage
 //t_voh	ray_collision(t_storage *dat, t_voh voh, int x, int y);
 //bool	ray_collision(int x, int y, double a, t_storage *dat);
 
+//Parsing:
+int				parse_description_file(char *path, t_storage *dat, char **texture_paths);
 //Rayyy casting:
 bool			collide_horizontal(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);
 bool			collide_vertical(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);
@@ -197,4 +217,6 @@ int			frame_per_second(t_storage *dat);
 void		fill_tile(int x, int y, int colour, t_constants *img);
 void		put_pixel_mini(t_constants *img, int x, int y, int color);
 void		put_pixel_3d(t_constants *img, int x, int y, int color);
+//Error and cleanup funcs
+void		error(const char *msg, bool perr);
 #endif
