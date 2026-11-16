@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:13:40 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/12 14:24:04 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/16 11:18:18 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ bool	no_collission(t_storage *dat, t_dir dir)
 
 void	calculate_dir(t_player *player)
 {
-//	double old_orient_x;
-	
 	if (player->turn_right || player->turn_left)
 	{
 		if (player->turn_left)
@@ -57,18 +55,12 @@ void	calculate_dir(t_player *player)
 			player->dir += 0.1;
 			if (player->dir >= 2*PI)
 				player->dir -= 2*PI;
-			// old_orient_x = player->orient.map.x;
-			// player->orient.map.x = player->orient.map.x * cos(-player->dir) - player->orient.map.y * sin(-player->dir);
-      		// player->orient.map.y = old_orient_x * sin(-player->dir) + player->orient.map.y * cos(-player->dir);
 		}
 		if (player->turn_right)
 		{
 			player->dir -= 0.1;
 			if (player->dir <= 0)
 				player->dir += 2*PI;
-			// old_orient_x = player->orient.map.x;
-			// player->orient.map.x = player->orient.map.x * cos(player->dir) - player->orient.map.y * sin(player->dir);
-      		// player->orient.map.y = old_orient_x * sin(player->dir) + player->orient.map.y * cos(player->dir);
 		}
 		player->orient.map.x = cos(player->dir);
 		player->orient.map.y = - sin(player->dir);

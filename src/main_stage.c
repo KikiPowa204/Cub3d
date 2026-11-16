@@ -1,34 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   in_the_bennining.c                                 :+:      :+:    :+:   */
+/*   main_stage.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:03:09 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/11 14:21:34 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/16 10:55:52 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <stdio.h>
-#include <time.h>
-
-void	put_pixel_3d(t_constants *img, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = img->addr_3d + (y * img->line_length_3d + x * (img->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
-void	put_pixel_mini(t_constants *img, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = img->addr_mini + (y * img->line_length_mini + x * (img->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
 
 void	draw_player(double x, double y, t_constants *img)
 {
@@ -75,6 +57,7 @@ void	fill_tile(int x, int y, int colour, t_constants *img)
 		yo++;
 	}
 }
+
 void	draw_background(t_storage *dat)
 {
 	int x;
@@ -123,27 +106,11 @@ void	fill_map(t_storage *dat)
 		y++;
 	}
 	draw_player(dat->player->x, dat->player->y, dat->img);
-	//bresenham_algo(dat->player->p1, dat->player->p2, dat);
 	draw_background(dat);
 	cone_casting(dat);
-	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr, dat->img->img_3d, 0, 0);
-	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr, dat->img->img_mini, 0, 0);
+	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr,
+			dat->img->img_3d, 0, 0);
+	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr,
+			dat->img->img_mini, 0, 0);
 }
 
-int	frame_per_second(t_storage *dat)
-{
-	struct timeval	tv;
-	time_t			milliseconds;
-	time_t			limit;
-
-	gettimeofday(&tv, NULL);
-	milliseconds = (tv.tv_usec / 1000 + tv.tv_sec * 1000);
-	limit = milliseconds + 16;
-	while ((tv.tv_usec / 1000 + tv.tv_sec * 1000) < limit)
-	{
-		usleep(200);
-		gettimeofday(&tv, NULL);
-	}
-	fill_map(dat);
-	return (0);
-}

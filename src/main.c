@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/10 12:31:31 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/16 10:41:19 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,20 @@ void	grab_player_coordinates(t_storage *dat)
 	}
 }
 
-void	init(t_player *player, t_storage *dat, t_constants *img)
+int	init(t_player *player, t_storage *dat, t_constants *img)
 {
 	ft_bzero(player, sizeof(t_player));
 	ft_bzero(dat, sizeof(t_storage));
+	img->mlx_ptr = mlx_init();
+	if (!img->mlx_ptr)
+		return (0);
 	dat->img = img;
 	dat->player = player;
 	dat->map = map;
 	img->max_h = 9;
 	img->max_w = 9;
 	grab_player_coordinates(dat);
+	return (1);
 }
 
 int	init_textures(t_storage	*dat)
@@ -71,27 +75,41 @@ int	init_textures(t_storage	*dat)
 	if (dat->walls.north.txt_ptr && dat->walls.south.txt_ptr && dat->walls.west.txt_ptr && dat->walls.east.txt_ptr)
 		return (1);
 	else
-		return (0);//(cleanup(dat), 0);
+		return (0);
 }
 
-int main(void)
+int	mlx_setup(t_constants *img)
+{
+	img->win_ptr = mlx_new_window(img->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT,
+			"cub3D");
+	if (!img->win_ptr)
+		return (0);
+	img->img_mini = mlx_new_image(img->mlx_ptr,
+			img->max_w * TILE_SIZE, TILE_SIZE * img->max_h);
+	if (!img->img_mini)
+		return (0);
+	img->img_3d = mlx_new_image(img->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!img->img_3d)
+		return (0);
+	img->addr_mini = mlx_get_data_addr(img->img_mini, &img->bits_per_pixel,
+			&img->line_length_mini, &img->endian);
+	if (!img->addr_mini)
+		return (0);
+	img->addr_3d = mlx_get_data_addr(img->img_3d, &img->bits_per_pixel,
+			&img->line_length_3d, &img->endian);
+	if (!img->addr_3d)
+		return (0);
+	return (1);
+}
+
+int	main(void)
 {
 	t_constants	img;
 	t_player	player;
 	t_storage	dat;
 
-	//validity checker part 1
-	//parsing
-	//validity checker part 2
-	init(&player, &dat, &img);
-	img.mlx_ptr = mlx_init();
-	if (!init_textures(&dat))
-		return (1);
-	img.win_ptr = mlx_new_window(img.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
-	img.img_mini = mlx_new_image(img.mlx_ptr, img.max_w * TILE_SIZE, TILE_SIZE * img.max_h);
-	img.img_3d = mlx_new_image(img.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
-	img.addr_mini = mlx_get_data_addr(img.img_mini, &img.bits_per_pixel, &img.line_length_mini, &img.endian);
-	img.addr_3d = mlx_get_data_addr(img.img_3d, &img.bits_per_pixel, &img.line_length_3d, &img.endian);
+	if (!init(&player, &dat, &img) || !init_textures(&dat))
+		return (cleanup(&dat), 1);
 	setup_hooks(&dat);
 	mlx_loop(img.mlx_ptr);
 	mlx_destroy_image(img.mlx_ptr, img.img_mini);

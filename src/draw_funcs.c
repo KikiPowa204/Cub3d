@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/22 12:33:28 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/04 15:26:34 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/16 11:03:31 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,3 @@ void	bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *data)
 		}
 	}
 }
-
-

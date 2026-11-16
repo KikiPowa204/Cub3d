@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 10:02:37 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/09 12:16:38 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/16 11:04:59 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	stop_player(int keycode, t_storage *dat)
 int	move_player(int keycode, t_storage *dat)
 {
 	if (keycode == XK_Escape)
-		exit(0);
+		close_game(dat);
 	else if ((keycode == XK_a || keycode == XK_A))
 		dat->player->left = true;
 	else if ((keycode == XK_d || keycode == XK_D))
@@ -48,12 +48,6 @@ int	move_player(int keycode, t_storage *dat)
 		dat->player->turn_right = true;
 	recalc_player_pos(dat, dat->player);
 	return (1);
-}
-
-int	close_game(t_storage *dat)
-{
-	(void)dat;
-	exit(0);
 }
 
 void	setup_hooks(t_storage *dat)
