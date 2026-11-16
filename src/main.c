@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/16 10:41:19 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/16 12:58:49 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ int	init_textures(t_storage	*dat)
 	dat->walls.west.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr, "textures/horror3.xpm", &dat->walls.west.width, &dat->walls.west.height);
 	dat->walls.east.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr, "textures/horror4.xpm", &dat->walls.east.width, &dat->walls.east.height);
 	if (dat->walls.north.txt_ptr && dat->walls.south.txt_ptr && dat->walls.west.txt_ptr && dat->walls.east.txt_ptr)
+	{
+		
 		return (1);
+	}
 	else
 		return (0);
 }

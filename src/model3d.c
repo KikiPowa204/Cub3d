@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:34:42 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/16 11:32:20 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/16 12:58:10 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ double	remove_distortion(double length, t_player *player)
 	return (length * cos(alpha));
 }
 
-char	*get_texture_adress(t_coordinates ray, t_storage *data)
+char	*get_texture_address(t_coordinates ray, t_storage *data)
 {
 	if (ray.tex == NORTH)
 		return (mlx_get_data_addr(data->walls.north.txt_ptr, &data->img->bits_per_pixel_tex,

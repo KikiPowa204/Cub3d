@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/11 16:41:26 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/16 12:57:35 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ typedef	struct s_constants
 typedef struct s_texture
 {
 	void	*txt_ptr;
+	char	*txt_addr;
 	//int	line_length;
 	int		width;
 	int		height;
@@ -197,4 +198,5 @@ int			frame_per_second(t_storage *dat);
 void		fill_tile(int x, int y, int colour, t_constants *img);
 void		put_pixel_mini(t_constants *img, int x, int y, int color);
 void		put_pixel_3d(t_constants *img, int x, int y, int color);
+char		*get_texture_address(t_coordinates ray, t_storage *data);
 #endif
