@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 09:53:37 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/16 10:54:32 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/17 14:40:56 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ void	cleanup(t_storage *dat)
 int	close_game(t_storage *dat)
 {
 	cleanup(dat);
-		exit(0);
+	exit(0);
 }
-

@@ -6,13 +6,11 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/17 13:49:51 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/17 15:21:55 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "libft.h"
-#include <mlx.h>
 
 char	map[] =
 { 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -24,31 +22,6 @@ char	map[] =
   1, 0, 1, 0, 0, 0, 1, 0, 1,
   1, 0, 0, 0, 1, 0, 0, 0, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1,};
-
-void	grab_player_coordinates(t_storage *dat)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while(y < dat->img->max_h)
-	{
-		x = 0;
-		while(x < dat->img->max_w)
-		{
-			if (map[y * dat->img->max_w + x] == 'N')
-			{
-				dat->player->x = x + 0.5;
-				dat->player->y = y + 0.5;
-				dat->player->dir = HALF_PI;
-				dat->player->orient.map.x = 0;
-				dat->player->orient.map.y = -1;
-			}
-			x++;
-		}
-		y++;
-	}
-}
 
 int	init(t_player *player, t_storage *dat, t_constants *img)
 {
@@ -68,19 +41,36 @@ int	init(t_player *player, t_storage *dat, t_constants *img)
 
 void	store_texture_addresses(t_storage *dat)
 {
-	dat->walls.north.txt_addr = mlx_get_data_addr(dat->walls.north.txt_ptr, &dat->walls.north.bits_per_pixel, &dat->walls.north.line_length, &dat->img->endian);
-	dat->walls.south.txt_addr = mlx_get_data_addr(dat->walls.south.txt_ptr, &dat->walls.south.bits_per_pixel, &dat->walls.south.line_length, &dat->img->endian);
-	dat->walls.east.txt_addr = mlx_get_data_addr(dat->walls.east.txt_ptr, &dat->walls.east.bits_per_pixel, &dat->walls.east.line_length, &dat->img->endian);
-	dat->walls.west.txt_addr = mlx_get_data_addr(dat->walls.west.txt_ptr, &dat->walls.west.bits_per_pixel, &dat->walls.west.line_length, &dat->img->endian);
+	dat->walls.north.txt_addr = mlx_get_data_addr(dat->walls.north.txt_ptr,
+			&dat->walls.north.bits_per_pixel, &dat->walls.north.line_length,
+			&dat->img->endian);
+	dat->walls.south.txt_addr = mlx_get_data_addr(dat->walls.south.txt_ptr,
+			&dat->walls.south.bits_per_pixel, &dat->walls.south.line_length,
+			&dat->img->endian);
+	dat->walls.east.txt_addr = mlx_get_data_addr(dat->walls.east.txt_ptr,
+			&dat->walls.east.bits_per_pixel, &dat->walls.east.line_length,
+			&dat->img->endian);
+	dat->walls.west.txt_addr = mlx_get_data_addr(dat->walls.west.txt_ptr,
+			&dat->walls.west.bits_per_pixel, &dat->walls.west.line_length,
+			&dat->img->endian);
 }
 
 int	init_textures(t_storage	*dat)
 {
-	dat->walls.north.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr, "textures/horror1.xpm", &dat->walls.north.width, &dat->walls.north.height);
-	dat->walls.south.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr, "textures/horror2.xpm", &dat->walls.south.width, &dat->walls.south.height);
-	dat->walls.west.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr, "textures/horror3.xpm", &dat->walls.west.width, &dat->walls.west.height);
-	dat->walls.east.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr, "textures/horror4.xpm", &dat->walls.east.width, &dat->walls.east.height);
-	if (dat->walls.north.txt_ptr && dat->walls.south.txt_ptr && dat->walls.west.txt_ptr && dat->walls.east.txt_ptr)
+	dat->walls.north.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr,
+			"textures/horror1.xpm", &dat->walls.north.width,
+			&dat->walls.north.height);
+	dat->walls.south.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr,
+			"textures/horror2.xpm", &dat->walls.south.width,
+			&dat->walls.south.height);
+	dat->walls.west.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr,
+			"textures/horror3.xpm", &dat->walls.west.width,
+			&dat->walls.west.height);
+	dat->walls.east.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr,
+			"textures/horror4.xpm", &dat->walls.east.width,
+			&dat->walls.east.height);
+	if (dat->walls.north.txt_ptr && dat->walls.south.txt_ptr
+		&& dat->walls.west.txt_ptr && dat->walls.east.txt_ptr)
 	{
 		store_texture_addresses(dat);
 		return (1);

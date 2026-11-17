@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/17 13:47:23 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/17 15:28:47 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define SPEED 0.05
 //# define FPS 60
 
-typedef enum	e_voh
+typedef enum e_voh
 {
 	none,
 	hor,
@@ -47,7 +47,7 @@ typedef enum	e_voh
 	both
 }				t_voh;
 
-typedef struct	s_algo
+typedef struct s_algo
 {
 	int	dx;
 	int	dy;
@@ -56,15 +56,7 @@ typedef struct	s_algo
 	int	diry;
 }				t_algo;
 
-// typedef struct	s_coordinates
-// {
-// 	int		x;
-// 	int		y;
-// 	int		z;
-// 	size_t	colour;
-// }			t_coordinates;
-
-typedef	enum e_dir
+typedef enum e_dir
 {
 	UP,
 	LEFT,
@@ -78,14 +70,14 @@ typedef	enum e_dir
 	WEST
 }	t_dir;
 
-typedef struct	s_pix
+typedef struct s_pix
 {
 	int		x;
 	int		y;
 	int		z;
 }				t_pix;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	double	x;
 	double	y;
@@ -126,7 +118,7 @@ typedef	struct s_player
 	t_coordinates	orient;
 }	t_player;
 
-typedef	struct s_constants
+typedef struct s_constants
 {
 	void		*img_mini;
 	void		*img_3d;
@@ -174,9 +166,6 @@ typedef	struct s_storage
 } t_storage;
 
 
-//t_voh	ray_collision(t_storage *dat, t_voh voh, int x, int y);
-//bool	ray_collision(int x, int y, double a, t_storage *dat);
-
 //Rayyy casting:
 bool			collide_horizontal(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);
 bool			collide_vertical(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);
@@ -186,8 +175,6 @@ double			distance(double x1, double y1, double x2, double y2);
 int				map_to_screen(double coordinate);
 int				get_map_index(int rx, int ry, int max_d);
 t_coordinates	bres_transform(double x, double y);
-//void	ray_casting_horizontal(t_player *player, t_storage *data);
-//void	ray_casting_vertical(t_player *player, t_storage *data);
 bool			is_wall(double x, double y, t_storage *d);
 void			model3d(t_coordinates ray, t_storage *data);
 void			cone_casting(t_storage *dat);
@@ -204,4 +191,10 @@ void			put_pixel_3d(t_constants *img, int x, int y, int color);
 char			*get_texture_address(t_coordinates ray, t_storage *data);
 void			cleanup(t_storage *data);
 int				close_game(t_storage *data);
+char			*get_texture_address(t_coordinates ray, t_storage *data);
+int				texture_size(t_coordinates ray, t_storage *data);
+double			pos_on_texture(t_coordinates ray);
+int				get_colour_from_tex(t_coordinates ray, t_storage *dat, int x_tex, int y_tex);
+void			grab_player_coordinates(t_storage *dat);
+
 #endif

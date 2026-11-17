@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:03:09 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/16 10:55:52 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/17 14:37:25 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	draw_player(double x, double y, t_constants *img)
 	colour = 0xAB1D6F;
 	yo = (unsigned int)(y * TILE_SIZE - PLAYER_SIZE / 2);
 	yo_limit = yo + PLAYER_SIZE;
-	xo_limit = (unsigned int)(x * TILE_SIZE - PLAYER_SIZE / 2)+ PLAYER_SIZE;
-	while(yo < yo_limit - 1)
+	xo_limit = (unsigned int)(x * TILE_SIZE - PLAYER_SIZE / 2) + PLAYER_SIZE;
+	while (yo < yo_limit - 1)
 	{
 		xo = (unsigned int)(x * TILE_SIZE - PLAYER_SIZE / 2);
-		while(xo < xo_limit - 1)
+		while (xo < xo_limit - 1)
 		{
 			put_pixel_mini(img, xo, yo, colour);
 			xo++;
@@ -46,10 +46,10 @@ void	fill_tile(int x, int y, int colour, t_constants *img)
 	yo = y * TILE_SIZE ;
 	yo_limit = yo + TILE_SIZE;
 	xo_limit = x * TILE_SIZE + TILE_SIZE;
-	while(yo < yo_limit - 1)
+	while (yo < yo_limit - 1)
 	{
 		xo = x * TILE_SIZE;
-		while(xo < xo_limit - 1)
+		while (xo < xo_limit - 1)
 		{
 			put_pixel_mini(img, xo, yo, colour);
 			xo++;
@@ -60,29 +60,29 @@ void	fill_tile(int x, int y, int colour, t_constants *img)
 
 void	draw_background(t_storage *dat)
 {
-	int x;
-	int y;
-	
+	int	x;
+	int	y;
+
 	y = 0;
-	while(y < WINDOW_HEIGHT / 2)
+	while (y < WINDOW_HEIGHT / 2)
 	{
 		x = 0;
-		while(x < WINDOW_WIDTH)
+		while (x < WINDOW_WIDTH)
 		{
 			put_pixel_3d(dat->img, x, y, 0xffc0cb);
 			x++;
 		}
-		y++;	
+		y++;
 	}
-	while(y < WINDOW_HEIGHT)
+	while (y < WINDOW_HEIGHT)
 	{
 		x = 0;
-		while(x < WINDOW_WIDTH)
+		while (x < WINDOW_WIDTH)
 		{
 			put_pixel_3d(dat->img, x, y, 0x000000);
 			x++;
 		}
-		y++;	
+		y++;
 	}
 }
 
@@ -92,10 +92,10 @@ void	fill_map(t_storage *dat)
 	int	y;
 
 	y = 0;
-	while(y < 9)
+	while (y < 9)
 	{
 		x = 0;
-		while(x < 9)
+		while (x < 9)
 		{
 			if (map[y * 9 + x] == WALL)
 				fill_tile(x, y, 0x00FFFFFF, dat->img);
@@ -109,8 +109,7 @@ void	fill_map(t_storage *dat)
 	draw_background(dat);
 	cone_casting(dat);
 	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr,
-			dat->img->img_3d, 0, 0);
+		dat->img->img_3d, 0, 0);
 	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr,
-			dat->img->img_mini, 0, 0);
+		dat->img->img_mini, 0, 0);
 }
-

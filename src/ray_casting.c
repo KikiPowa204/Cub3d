@@ -6,11 +6,21 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 16:41:12 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/16 13:39:58 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/17 15:40:54 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	alter_values(double vector, double *map_coordi, int dir, double *count)
+{
+	*count += dir;
+	if (dir < 0)
+		*map_coordi += vector;
+	else
+		*map_coordi -= vector;
+}
+
 
 void	top_right(t_player *player, t_storage *data, t_coordinates ray_h,
 		t_coordinates ray_v)
@@ -23,10 +33,7 @@ void	top_right(t_player *player, t_storage *data, t_coordinates ray_h,
 	tan_a = tan(player->a);
 	if (player->a > 0.000001)
 		while (collide_horizontal(&ray_h, player, data, UP) == false)
-		{
-			ray_h.map.y -= 1;
-			ray_h.map.x += cot;
-		}
+			alter_values(cot, &ray_h.map.x, -1, &ray_h.map.y)
 	while (collide_vertical(&ray_v, player, data, RIGHT) == false)
 	{
 		ray_v.map.x += 1;

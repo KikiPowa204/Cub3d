@@ -6,11 +6,36 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 10:45:44 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/16 10:52:10 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/17 15:10:32 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	grab_player_coordinates(t_storage *dat)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < dat->img->max_h)
+	{
+		x = 0;
+		while (x < dat->img->max_w)
+		{
+			if (map[y * dat->img->max_w + x] == 'N')
+			{
+				dat->player->x = x + 0.5;
+				dat->player->y = y + 0.5;
+				dat->player->dir = HALF_PI;
+				dat->player->orient.map.x = 0;
+				dat->player->orient.map.y = -1;
+			}
+			x++;
+		}
+		y++;
+	}
+}
 
 int	frame_per_second(t_storage *dat)
 {
@@ -34,16 +59,16 @@ void	put_pixel_3d(t_constants *img, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = img->addr_3d +
-		(y * img->line_length_3d + x * (img->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	dst = img->addr_3d
+		+ (y * img->line_length_3d + x * (img->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
 
 void	put_pixel_mini(t_constants *img, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = img->addr_mini +
-		(y * img->line_length_mini + x * (img->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	dst = img->addr_mini
+		+ (y * img->line_length_mini + x * (img->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
