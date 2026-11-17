@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 16:41:12 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/17 15:40:54 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/17 16:09:05 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	alter_values(double vector, double *map_coordi, int dir, double *count)
 		*map_coordi -= vector;
 }
 
-
 void	top_right(t_player *player, t_storage *data, t_coordinates ray_h,
 		t_coordinates ray_v)
 {
@@ -29,29 +28,26 @@ void	top_right(t_player *player, t_storage *data, t_coordinates ray_h,
 	double			cot;
 
 	ray_h.length = INFINITY;
-	cot = 1/tan(player->a);
+	cot = 1 / tan(player->a);
 	tan_a = tan(player->a);
 	if (player->a > 0.000001)
 		while (collide_horizontal(&ray_h, player, data, UP) == false)
-			alter_values(cot, &ray_h.map.x, -1, &ray_h.map.y)
+			alter_values(cot, &ray_h.map.x, -1, &ray_h.map.y);
 	while (collide_vertical(&ray_v, player, data, RIGHT) == false)
-	{
-		ray_v.map.x += 1;
-		ray_v.map.y -= tan_a;
-	}
+		alter_values(tan_a, &ray_v.map.y, 1, &ray_v.map.x);
 	if (ray_v.length > ray_h.length)
 	{
 		ray_h.tex = NORTH;
 		model3d(ray_h, data);
 		bresenham_algo(bres_transform(player->x, player->y),
-				bres_transform(ray_h.map.x, ray_h.map.y), data);
+			bres_transform(ray_h.map.x, ray_h.map.y), data);
 	}
 	else
 	{
 		ray_v.tex = WEST;
 		model3d(ray_v, data);
 		bresenham_algo(bres_transform(player->x, player->y),
-				bres_transform(ray_v.map.x, ray_v.map.y), data);
+			bres_transform(ray_v.map.x, ray_v.map.y), data);
 	}
 }
 
@@ -62,18 +58,12 @@ void	top_left(t_player *player, t_storage *data, t_coordinates ray_h,
 	double			cot;
 
 	ray_h.length = INFINITY;
-	cot = 1/tan(player->a);
+	cot = 1 / tan(player->a);
 	tan_a = tan(player->a);
 	while (collide_horizontal(&ray_h, player, data, UP) == false)
-	{
-		ray_h.map.y -= 1;
-		ray_h.map.x += cot;
-	}
+		alter_values(cot, &ray_h.map.x, -1, &ray_h.map.y);
 	while (collide_vertical(&ray_v, player, data, LEFT) == false)
-	{
-		ray_v.map.x -= 1;
-		ray_v.map.y += tan_a;
-	}
+		alter_values(tan_a, &ray_v.map.y, -1, &ray_v.map.x);
 	if (ray_v.length > ray_h.length)
 	{
 		ray_h.tex = NORTH;
