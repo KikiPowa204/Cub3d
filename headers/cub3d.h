@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/16 12:57:35 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/17 12:11:47 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_coordinates
 	int			pos;
 	enum e_dir	tex;
 	int			tex_size;
+	char		*tex_addr;
 }	t_coordinates;
 
 extern char map[]; 
@@ -146,11 +147,11 @@ typedef	struct s_constants
 
 typedef struct s_texture
 {
-	void	*txt_ptr;
-	char	*txt_addr;
-	//int	line_length;
-	int		width;
-	int		height;
+	void			*txt_ptr;
+	char			*txt_addr;
+	int				line_length;
+	int				width;
+	int				height;
 	//int	size;
 } t_texture;
 
@@ -160,14 +161,16 @@ typedef struct s_walls
 	struct s_texture	south;
 	struct s_texture	east;
 	struct s_texture	west;
+	enum e_dir			curr_dir;
 } t_walls;
 
 typedef	struct s_storage
 {
-	t_player	*player;
-	t_constants	*img;
-	char		*map;
-	t_walls		walls;
+	t_player		*player;
+	t_constants		*img;
+	t_coordinates	*curr_screen;
+	char			*map;
+	t_walls			walls;
 } t_storage;
 
 
@@ -187,16 +190,18 @@ t_coordinates	bres_transform(double x, double y);
 //void	ray_casting_vertical(t_player *player, t_storage *data);
 bool			is_wall(double x, double y, t_storage *d);
 void			model3d(t_coordinates ray, t_storage *data);
-void		cone_casting(t_storage *dat);
-void		bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
-void		recalc_player_pos(t_storage *dat, t_player *player);
-int			stop_player(int keycode, t_storage *dat);
-int			move_player(int keycode, t_storage *dat);
-void		setup_hooks(t_storage *dat);
-void		fill_map(t_storage *dat);
-int			frame_per_second(t_storage *dat);
-void		fill_tile(int x, int y, int colour, t_constants *img);
-void		put_pixel_mini(t_constants *img, int x, int y, int color);
-void		put_pixel_3d(t_constants *img, int x, int y, int color);
-char		*get_texture_address(t_coordinates ray, t_storage *data);
+void			cone_casting(t_storage *dat);
+void			bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
+void			recalc_player_pos(t_storage *dat, t_player *player);
+int				stop_player(int keycode, t_storage *dat);
+int				move_player(int keycode, t_storage *dat);
+void			setup_hooks(t_storage *dat);
+void			fill_map(t_storage *dat);
+int				frame_per_second(t_storage *dat);
+void			fill_tile(int x, int y, int colour, t_constants *img);
+void			put_pixel_mini(t_constants *img, int x, int y, int color);
+void			put_pixel_3d(t_constants *img, int x, int y, int color);
+char			*get_texture_address(t_coordinates ray, t_storage *data);
+void			cleanup(t_storage *data);
+int				close_game(t_storage *data);
 #endif

@@ -6,15 +6,11 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 16:41:12 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/11 10:58:29 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/16 13:39:58 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "stdio.h"
-
-t_map	get_horizontal();
-t_map	get_vertical();
 
 void	top_right(t_player *player, t_storage *data, t_coordinates ray_h,
 		t_coordinates ray_v)

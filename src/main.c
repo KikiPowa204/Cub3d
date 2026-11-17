@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/16 12:58:49 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/17 12:35:18 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,14 @@ int	init(t_player *player, t_storage *dat, t_constants *img)
 	return (1);
 }
 
+void	store_texture_addresses(t_storage *dat)
+{
+	dat->walls.north.txt_addr = mlx_get_data_addr(dat->walls.north.txt_ptr, &dat->img->bits_per_pixel, &dat->walls.north.line_length, &dat->img->endian);
+	dat->walls.south.txt_addr = mlx_get_data_addr(dat->walls.south.txt_ptr, &dat->img->bits_per_pixel, &dat->walls.south.line_length, &dat->img->endian);
+	dat->walls.east.txt_addr = mlx_get_data_addr(dat->walls.east.txt_ptr, &dat->img->bits_per_pixel, &dat->walls.east.line_length, &dat->img->endian);
+	dat->walls.west.txt_addr = mlx_get_data_addr(dat->walls.west.txt_ptr, &dat->img->bits_per_pixel, &dat->walls.west.line_length, &dat->img->endian);
+}
+
 int	init_textures(t_storage	*dat)
 {
 	dat->walls.north.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr, "textures/horror1.xpm", &dat->walls.north.width, &dat->walls.north.height);
@@ -74,7 +82,7 @@ int	init_textures(t_storage	*dat)
 	dat->walls.east.txt_ptr = mlx_xpm_file_to_image(dat->img->mlx_ptr, "textures/horror4.xpm", &dat->walls.east.width, &dat->walls.east.height);
 	if (dat->walls.north.txt_ptr && dat->walls.south.txt_ptr && dat->walls.west.txt_ptr && dat->walls.east.txt_ptr)
 	{
-		
+		store_texture_addresses(dat);
 		return (1);
 	}
 	else
@@ -111,7 +119,7 @@ int	main(void)
 	t_player	player;
 	t_storage	dat;
 
-	if (!init(&player, &dat, &img) || !init_textures(&dat))
+	if (!init(&player, &dat, &img) || !init_textures(&dat) || !mlx_setup(&img))
 		return (cleanup(&dat), 1);
 	setup_hooks(&dat);
 	mlx_loop(img.mlx_ptr);
