@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 16:41:12 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/17 16:09:05 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/17 16:33:45 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ void	top_left(t_player *player, t_storage *data, t_coordinates ray_h,
 		ray_h.tex = NORTH;
 		model3d(ray_h, data);
 		bresenham_algo(bres_transform(player->x, player->y),
-				bres_transform(ray_h.map.x, ray_h.map.y), data);
+			bres_transform(ray_h.map.x, ray_h.map.y), data);
 	}
 	else
 	{
 		ray_v.tex = EAST;
 		model3d(ray_v, data);
 		bresenham_algo(bres_transform(player->x, player->y),
-				bres_transform(ray_v.map.x, ray_v.map.y), data);
+			bres_transform(ray_v.map.x, ray_v.map.y), data);
 	}
 }
 
@@ -87,31 +87,25 @@ void	bottom_left(t_player *player, t_storage *data, t_coordinates ray_h,
 	double			cot;
 
 	ray_h.length = INFINITY;
-	cot = 1/tan(player->a);
+	cot = 1 / tan(player->a);
 	tan_a = tan(player->a);
 	while (collide_horizontal(&ray_h, player, data, DOWN) == false)
-	{
-		ray_h.map.y += 1;
-		ray_h.map.x -= cot;
-	}
+		alter_values(cot, &ray_h.map.x, 1, &ray_h.map.y);
 	while (collide_vertical(&ray_v, player, data, LEFT) == false)
-	{
-		ray_v.map.x -= 1;
-		ray_v.map.y += tan_a;
-	}
+		alter_values(tan_a, &ray_v.map.y, -1, &ray_v.map.x);
 	if (ray_v.length > ray_h.length)
 	{
 		ray_h.tex = SOUTH;
 		model3d(ray_h, data);
 		bresenham_algo(bres_transform(player->x, player->y),
-				bres_transform(ray_h.map.x, ray_h.map.y), data);
+			bres_transform(ray_h.map.x, ray_h.map.y), data);
 	}
 	else
 	{
 		ray_v.tex = EAST;
 		model3d(ray_v, data);
 		bresenham_algo(bres_transform(player->x, player->y),
-				bres_transform(ray_v.map.x, ray_v.map.y), data);
+			bres_transform(ray_v.map.x, ray_v.map.y), data);
 	}
 }
 
@@ -122,31 +116,25 @@ void	bottom_right(t_player *player, t_storage *data, t_coordinates ray_h,
 	double			cot;
 
 	ray_h.length = INFINITY;
-	cot = 1/tan(player->a);
+	cot = 1 / tan(player->a);
 	tan_a = tan(player->a);
 	while (collide_horizontal(&ray_h, player, data, DOWN) == false)
-	{
-		ray_h.map.y += 1;
-		ray_h.map.x -= cot;
-	}
+		alter_values(cot, &ray_h.map.x, 1, &ray_h.map.y);
 	while (collide_vertical(&ray_v, player, data, RIGHT) == false)
-	{
-		ray_v.map.x += 1;
-		ray_v.map.y -= tan_a;
-	}
+		alter_values(tan_a, &ray_v.map.y, 1, &ray_v.map.x);
 	if (ray_v.length > ray_h.length)
 	{
 		ray_h.tex = SOUTH;
 		model3d(ray_h, data);
 		bresenham_algo(bres_transform(player->x, player->y),
-				bres_transform(ray_h.map.x, ray_h.map.y), data);
+			bres_transform(ray_h.map.x, ray_h.map.y), data);
 	}
 	else
 	{
 		ray_v.tex = WEST;
 		model3d(ray_v, data);
 		bresenham_algo(bres_transform(player->x, player->y),
-				bres_transform(ray_v.map.x, ray_v.map.y), data);
+			bres_transform(ray_v.map.x, ray_v.map.y), data);
 	}
 }
 
@@ -160,7 +148,8 @@ void	ray_casting(t_player *player, t_storage *data, int pos)
 	if (player->a >= 0 && player->a < HALF_PI)
 	{
 		ray_h.map.y = floor(player->y);
-		ray_h.map.x = ((player->y - ray_h.map.y) * 1/tan(player->a) + player->x);
+		ray_h.map.x = ((player->y - ray_h.map.y)
+				* 1 / tan(player->a) + player->x);
 		ray_v.map.x = floor(player->x) + 1;
 		ray_v.map.y = ((player->x - ray_v.map.x) * tan(player->a) + player->y);
 		top_right(player, data, ray_h, ray_v);
@@ -168,7 +157,8 @@ void	ray_casting(t_player *player, t_storage *data, int pos)
 	else if (player->a >= HALF_PI && player->a < PI)
 	{
 		ray_h.map.y = floor(player->y);
-		ray_h.map.x = ((player->y - ray_h.map.y) * 1/tan(player->a) + player->x);
+		ray_h.map.x = ((player->y - ray_h.map.y)
+				* 1 / tan(player->a) + player->x);
 		ray_v.map.x = floor(player->x);
 		ray_v.map.y = ((player->x - ray_v.map.x) * tan(player->a) + player->y);
 		top_left(player, data, ray_h, ray_v);
@@ -176,7 +166,8 @@ void	ray_casting(t_player *player, t_storage *data, int pos)
 	else if (player->a >= PI && player->a < THREE_HALF_PI)
 	{
 		ray_h.map.y = floor(player->y) + 1;
-		ray_h.map.x = ((player->y - ray_h.map.y) * 1/tan(player->a) + player->x);
+		ray_h.map.x = ((player->y - ray_h.map.y)
+				* 1 / tan(player->a) + player->x);
 		ray_v.map.x = floor(player->x);
 		ray_v.map.y = ((player->x - ray_v.map.x) * tan(player->a) + player->y);
 		bottom_left(player, data, ray_h, ray_v);
@@ -184,7 +175,8 @@ void	ray_casting(t_player *player, t_storage *data, int pos)
 	else if (player->a >= THREE_HALF_PI && player->a < PI * 2)
 	{
 		ray_h.map.y = floor(player->y) + 1;
-		ray_h.map.x = ((player->y - ray_h.map.y) * 1/tan(player->a) + player->x);
+		ray_h.map.x = ((player->y - ray_h.map.y)
+				* 1 / tan(player->a) + player->x);
 		ray_v.map.x = floor(player->x) + 1;
 		ray_v.map.y = ((player->x - ray_v.map.x) * tan(player->a) + player->y);
 		bottom_right(player, data, ray_h, ray_v);
