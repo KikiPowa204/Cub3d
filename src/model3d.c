@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:34:42 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/17 12:40:46 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/17 14:15:12 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,35 @@ int		get_colour_from_tex(t_coordinates ray, t_storage *data, int x_tex, int y_te
 		return (*(unsigned int *)(get_texture_address(ray, data) + (y_tex * data->walls.west.line_length + x_tex * (data->img->bits_per_pixel / 8))));
 	return (0);
 }
+/*
+void	scale(t_coordinates ray, t_storage *data, double hos, double vh, t_coordinates screen)
+{
+	char	*tex_adress;
+	int		x_tex;
+	int		y_tex;
+	int		screen_y_start;
+	int		wall_top;
+	double	step;
+	int		colour;
+	int		y_wall;
+
+	x_tex = (int)(texture_size(ray, data) * pos_on_texture(ray));
+	tex_adress = get_texture_address(ray, data);
+	wall_top = WINDOW_HEIGHT / 2.0 - vh / 2.0;
+	step = texture_size(ray, data) / vh;
+	screen.pix.y = (int)(((double)WINDOW_HEIGHT / 2) - (vh / 2));
+	if (vh > hos)
+		screen.pix.y += (int)((vh - hos) / 2);
+	screen_y_start = screen.pix.y;
+	while(screen.pix.y < screen_y_start + hos)
+	{
+		y_wall = (int)(screen.pix.y - wall_top);
+		y_tex = y_wall * step;
+		colour = *(unsigned int *)(tex_adress + (y_tex * data->img->line_length_tex + x_tex * (data->img->bits_per_pixel_tex / 8)));
+		put_pixel_3d(data->img, screen.pix.x, screen.pix.y, colour);
+		screen.pix.y++;
+	}
+}*/
 
 void	scale(t_coordinates ray, t_storage *data, double hos, double vh)
 {
@@ -150,6 +179,7 @@ void	model3d(t_coordinates ray, t_storage *data)
 {
 	double			height_on_screen;
 	double			virtual_height;
+	t_coordinates	screen;
 
 	ray.norm_length = remove_distortion(ray.length, data->player);
 	virtual_height = WINDOW_WIDTH / ray.norm_length;
@@ -157,6 +187,7 @@ void	model3d(t_coordinates ray, t_storage *data)
 		height_on_screen = WINDOW_HEIGHT;
 	else
 	 	height_on_screen = virtual_height;
-	ray.pix.y = (int)((double)WINDOW_HEIGHT / 2 - height_on_screen / 2);
+	screen.pix.x = WINDOW_WIDTH - ray.pos;
+	screen.pix.y = (int)((double)WINDOW_HEIGHT / 2 - virtual_height / 2);
 	scale(ray, data, height_on_screen, virtual_height);
 }

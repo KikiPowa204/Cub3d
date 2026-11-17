@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/17 12:35:18 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/17 13:49:51 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ int	init(t_player *player, t_storage *dat, t_constants *img)
 
 void	store_texture_addresses(t_storage *dat)
 {
-	dat->walls.north.txt_addr = mlx_get_data_addr(dat->walls.north.txt_ptr, &dat->img->bits_per_pixel, &dat->walls.north.line_length, &dat->img->endian);
-	dat->walls.south.txt_addr = mlx_get_data_addr(dat->walls.south.txt_ptr, &dat->img->bits_per_pixel, &dat->walls.south.line_length, &dat->img->endian);
-	dat->walls.east.txt_addr = mlx_get_data_addr(dat->walls.east.txt_ptr, &dat->img->bits_per_pixel, &dat->walls.east.line_length, &dat->img->endian);
-	dat->walls.west.txt_addr = mlx_get_data_addr(dat->walls.west.txt_ptr, &dat->img->bits_per_pixel, &dat->walls.west.line_length, &dat->img->endian);
+	dat->walls.north.txt_addr = mlx_get_data_addr(dat->walls.north.txt_ptr, &dat->walls.north.bits_per_pixel, &dat->walls.north.line_length, &dat->img->endian);
+	dat->walls.south.txt_addr = mlx_get_data_addr(dat->walls.south.txt_ptr, &dat->walls.south.bits_per_pixel, &dat->walls.south.line_length, &dat->img->endian);
+	dat->walls.east.txt_addr = mlx_get_data_addr(dat->walls.east.txt_ptr, &dat->walls.east.bits_per_pixel, &dat->walls.east.line_length, &dat->img->endian);
+	dat->walls.west.txt_addr = mlx_get_data_addr(dat->walls.west.txt_ptr, &dat->walls.west.bits_per_pixel, &dat->walls.west.line_length, &dat->img->endian);
 }
 
 int	init_textures(t_storage	*dat)

@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/17 12:11:47 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/17 13:47:23 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ typedef struct s_texture
 {
 	void			*txt_ptr;
 	char			*txt_addr;
+	int				bits_per_pixel;
 	int				line_length;
 	int				width;
 	int				height;
@@ -161,7 +162,6 @@ typedef struct s_walls
 	struct s_texture	south;
 	struct s_texture	east;
 	struct s_texture	west;
-	enum e_dir			curr_dir;
 } t_walls;
 
 typedef	struct s_storage
