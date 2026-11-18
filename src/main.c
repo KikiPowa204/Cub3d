@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/13 13:16:27 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/18 15:24:14 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,15 @@ void	init(t_player *player, t_storage *dat, t_constants *img)
 {
 	ft_bzero(player, sizeof(t_player));
 	ft_bzero(dat, sizeof(t_storage));
+	//ft_bzero(img, sizeof(t_constants));
 	dat->img = img;
+	img->floor_c = -1;
+	img->ceiling_c = -1;
 	dat->player = player;
 	dat->map = map;
 	img->max_h = 9;
 	img->max_w = 9;
+	player->dir = -1;
 	grab_player_coordinates(dat);
 }
 
@@ -87,7 +91,7 @@ int main(int ac, char **av)
 	if (ac != 2)
 		return (error("Incorrect amount of arguments", false), 1);
 	init(&player, &dat, &img);
-	if (!parse_description_file(av[1], &dat, texture_paths))
+	if (parse_description_file(av[1], &dat, texture_paths))
 		return (1);
 	img.mlx_ptr = mlx_init();
 	if (!init_textures(&dat))

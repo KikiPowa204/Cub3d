@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/13 13:18:58 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/18 17:00:58 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <stdio.h> //perror
 # include <sys/stat.h> //open
 # include <fcntl.h> //open
-
+# include <errno.h> // errno
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
@@ -41,6 +41,7 @@
 # define KEY_RELEASE 3
 # define DESTROY_NOTIFY 17
 # define SPEED 0.05
+# define BUFFER_SIZE 10
 //# define FPS 60
 
 //Parsing
@@ -52,6 +53,13 @@ typedef enum	e_compass
 	WE,
 	EA
 }	t_compass;
+
+typedef struct	s_colours
+{
+	int	red;
+	int	green;
+	int	blue;
+}	t_colours;
 
 //Execution
 
@@ -193,6 +201,12 @@ typedef	struct s_storage
 
 //Parsing:
 int				parse_description_file(char *path, t_storage *dat, char **texture_paths);
+int				ft_str_i(const char *s, int c);
+char			*get_next_line(int fd);
+int				rgb_to_int(t_storage *dat, t_colours *rgb, bool floor);
+int				get_colour(t_storage *dat, char *line, int *elements, bool floor);
+int				map_mode(t_storage *dat, size_t lines, int fd, int map_fd);
+int				check_map(t_storage *dat, size_t max_width, size_t height);
 //Rayyy casting:
 bool			collide_horizontal(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);
 bool			collide_vertical(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);
