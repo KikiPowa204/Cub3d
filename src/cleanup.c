@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 09:53:37 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/17 14:40:56 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/18 10:32:05 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	cleanup(t_storage *dat)
 {
-	free(dat->map);
+	//free(dat->map);
 	mlx_destroy_image(dat->img->mlx_ptr, dat->walls.north.txt_ptr);
 	mlx_destroy_image(dat->img->mlx_ptr, dat->walls.south.txt_ptr);
 	mlx_destroy_image(dat->img->mlx_ptr, dat->walls.west.txt_ptr);

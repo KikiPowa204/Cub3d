@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/17 15:28:47 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/18 11:16:55 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@
 # include <sys/time.h>
 # include "libft.h"
 # include <X11/keysym.h>
-# include <assert.h>
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
 # define PI 3.141592653589793
-# define HALF_PI PI/2
-# define THREE_HALF_PI 3*PI/2
+# define HALF_PI PI / 2
+# define THREE_HALF_PI 3 * PI / 2
 # define TILE_SIZE 30
 # define PLAYER_SIZE 8
 # define WALL 1
@@ -96,25 +95,23 @@ typedef struct s_coordinates
 	size_t		colour;
 	int			pos;
 	enum e_dir	tex;
-	int			tex_size;
-	char		*tex_addr;
 }	t_coordinates;
 
-extern char map[]; 
+extern char map[];
 
-typedef	struct s_player
+typedef struct s_player
 {
-	double		x;
-	double		y;
-	bool		left;
-	bool		right;
-	bool		down;
-	bool		up;
-	bool		turn_left;
-	bool		turn_right;
-	double		z;
-	double		a;
-	double		dir;
+	double			x;
+	double			y;
+	bool			left;
+	bool			right;
+	bool			down;
+	bool			up;
+	bool			turn_left;
+	bool			turn_right;
+	double			z;
+	double			a;
+	double			dir;
 	t_coordinates	orient;
 }	t_player;
 
@@ -135,7 +132,7 @@ typedef struct s_constants
 	int			endian;
 	int			max_w;
 	int			max_h;
-}	t_constants;
+}				t_constants;
 
 typedef struct s_texture
 {
@@ -146,7 +143,7 @@ typedef struct s_texture
 	int				width;
 	int				height;
 	//int	size;
-} t_texture;
+}				t_texture;
 
 typedef struct s_walls
 {
@@ -154,21 +151,22 @@ typedef struct s_walls
 	struct s_texture	south;
 	struct s_texture	east;
 	struct s_texture	west;
-} t_walls;
+}				t_walls;
 
-typedef	struct s_storage
+typedef struct s_storage
 {
 	t_player		*player;
 	t_constants		*img;
 	t_coordinates	*curr_screen;
 	char			*map;
 	t_walls			walls;
-} t_storage;
-
+}				t_storage;
 
 //Rayyy casting:
-bool			collide_horizontal(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);
-bool			collide_vertical(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);
+bool			collide_horizontal(t_coordinates *rh, t_player *player,
+					t_storage *dat, t_dir dir);
+bool			collide_vertical(t_coordinates *rh, t_player *player,
+					t_storage *dat, t_dir dir);
 void			ray_casting(t_player *player, t_storage *data, int pos);
 bool			check_if_wall(int x, int y, int max_d, char *map);
 double			distance(double x1, double y1, double x2, double y2);
@@ -178,7 +176,8 @@ t_coordinates	bres_transform(double x, double y);
 bool			is_wall(double x, double y, t_storage *d);
 void			model3d(t_coordinates ray, t_storage *data);
 void			cone_casting(t_storage *dat);
-void			bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *img);
+void			bresenham_algo(t_coordinates p1, t_coordinates p2,
+					t_storage *img);
 void			recalc_player_pos(t_storage *dat, t_player *player);
 int				stop_player(int keycode, t_storage *dat);
 int				move_player(int keycode, t_storage *dat);
@@ -194,7 +193,18 @@ int				close_game(t_storage *data);
 char			*get_texture_address(t_coordinates ray, t_storage *data);
 int				texture_size(t_coordinates ray, t_storage *data);
 double			pos_on_texture(t_coordinates ray);
-int				get_colour_from_tex(t_coordinates ray, t_storage *dat, int x_tex, int y_tex);
+int				get_colour_from_tex(t_coordinates ray, t_storage *dat,
+					int x_tex, int y_tex);
 void			grab_player_coordinates(t_storage *dat);
+void			alter_values(double vector, double *map_coordi,
+					int dir, double *count);
+void			top_right(t_player *player, t_storage *data,
+					t_coordinates ray_h, t_coordinates ray_v);
+void			top_left(t_player *player, t_storage *data,
+					t_coordinates ray_h, t_coordinates ray_v);
+void			bottom_right(t_player *player, t_storage *data,
+					t_coordinates ray_h, t_coordinates ray_v);
+void			bottom_left(t_player *player, t_storage *data,
+					t_coordinates ray_h, t_coordinates ray_v);
 
 #endif

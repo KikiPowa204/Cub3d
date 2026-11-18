@@ -6,15 +6,19 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 12:34:52 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/17 14:40:30 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/18 10:43:04 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-double	distance(double x1, double y1, double x2, double y2)
+void	alter_values(double vector, double *map_coordi, int dir, double *count)
 {
-	return (sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2)));
+	*count += dir;
+	if (dir < 0)
+		*map_coordi += vector;
+	else
+		*map_coordi -= vector;
 }
 
 bool	is_wall(double x, double y, t_storage *d)
@@ -54,15 +58,4 @@ bool	collide_vertical(t_coordinates *rv, t_player *player,
 		return (true);
 	}
 	return (false);
-}
-
-t_coordinates	bres_transform(double x, double y)
-{
-	t_coordinates	p;
-
-	p.pix.x = map_to_screen(x);
-	p.pix.y = map_to_screen(y);
-	p.pix.z = 0;
-	p.colour = 0xff59fe;
-	return (p);
 }
