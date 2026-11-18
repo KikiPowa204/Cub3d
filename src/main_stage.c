@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:03:09 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/17 14:37:25 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/18 14:51:30 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	draw_background(t_storage *dat)
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
-			put_pixel_3d(dat->img, x, y, 0xffc0cb);
+			put_pixel_3d(dat->img_3d, x, y, 0xffc0cb);
 			x++;
 		}
 		y++;
@@ -79,11 +79,16 @@ void	draw_background(t_storage *dat)
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
-			put_pixel_3d(dat->img, x, y, 0x000000);
+			put_pixel_3d(dat->img_3d, x, y, 0x000000);
 			x++;
 		}
 		y++;
 	}
+}
+
+void	mini_map_window(t_storage *dat)
+{
+
 }
 
 void	fill_map(t_storage *dat)
@@ -92,24 +97,25 @@ void	fill_map(t_storage *dat)
 	int	y;
 
 	y = 0;
-	while (y < 9)
+	mini_map_window(dat, x, y);
+	while (y < dat->max_h)
 	{
 		x = 0;
-		while (x < 9)
+		while (x < dat->max_w)
 		{
-			if (map[y * 9 + x] == WALL)
-				fill_tile(x, y, 0x00FFFFFF, dat->img);
+			if (map[y * dat->max_w + x] == WALL)
+				fill_tile(x, y, 0x00FFFFFF, dat->img_mini);
 			else
-				fill_tile(x, y, 0x0000FFFF, dat->img);
+				fill_tile(x, y, 0x0000FFFF, dat->img_mini);
 			x++;
 		}
 		y++;
 	}
-	draw_player(dat->player->x, dat->player->y, dat->img);
+	draw_player(dat->player->x, dat->player->y, dat->img_mini);
 	draw_background(dat);
 	cone_casting(dat);
-	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr,
-		dat->img->img_3d, 0, 0);
-	mlx_put_image_to_window(dat->img->mlx_ptr, dat->img->win_ptr,
-		dat->img->img_mini, 0, 0);
+	mlx_put_image_to_window(dat->mlx_ptr, dat->win_ptr,
+		dat->img_3d->img_ptr, 0, 0);
+	mlx_put_image_to_window(dat->mlx_ptr, dat->win_ptr,
+		dat->img_mini->img_ptr, 0, 0);
 }

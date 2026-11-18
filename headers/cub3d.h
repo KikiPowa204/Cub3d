@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/18 11:16:55 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/18 14:11:27 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
 # define PI 3.141592653589793
-# define HALF_PI PI / 2
-# define THREE_HALF_PI 3 * PI / 2
+# define HALF_PI 1.5707963268
+# define THREE_HALF_PI 4.7123889804
 # define TILE_SIZE 30
 # define PLAYER_SIZE 8
 # define WALL 1
@@ -36,15 +36,6 @@
 # define KEY_RELEASE 3
 # define DESTROY_NOTIFY 17
 # define SPEED 0.05
-//# define FPS 60
-
-typedef enum e_voh
-{
-	none,
-	hor,
-	ver,
-	both
-}				t_voh;
 
 typedef struct s_algo
 {
@@ -117,21 +108,11 @@ typedef struct s_player
 
 typedef struct s_constants
 {
-	void		*img_mini;
-	void		*img_3d;
-	void		*mlx_ptr;
-	void		*win_ptr;
-	t_player	*player;
-	char		*addr_mini;
-	char		*addr_3d;
+	void		*img_ptr;
+	char		*addr;
 	int			bits_per_pixel;
-	int			bits_per_pixel_tex;
-	int			line_length_3d;
-	int			line_length_mini;
-	int			line_length_tex;
+	int			line_length;
 	int			endian;
-	int			max_w;
-	int			max_h;
 }				t_constants;
 
 typedef struct s_texture
@@ -140,9 +121,9 @@ typedef struct s_texture
 	char			*txt_addr;
 	int				bits_per_pixel;
 	int				line_length;
+	int				endian;
 	int				width;
 	int				height;
-	//int	size;
 }				t_texture;
 
 typedef struct s_walls
@@ -155,11 +136,15 @@ typedef struct s_walls
 
 typedef struct s_storage
 {
+	void			*mlx_ptr;
+	void			*win_ptr;
 	t_player		*player;
-	t_constants		*img;
-	t_coordinates	*curr_screen;
+	t_constants		*img_mini;
+	t_constants		*img_3d;
 	char			*map;
 	t_walls			walls;
+	int				max_w;
+	int				max_h;
 }				t_storage;
 
 //Rayyy casting:

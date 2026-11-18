@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 09:53:37 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/18 10:32:05 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/18 12:32:13 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 void	cleanup(t_storage *dat)
 {
 	//free(dat->map);
-	mlx_destroy_image(dat->img->mlx_ptr, dat->walls.north.txt_ptr);
-	mlx_destroy_image(dat->img->mlx_ptr, dat->walls.south.txt_ptr);
-	mlx_destroy_image(dat->img->mlx_ptr, dat->walls.west.txt_ptr);
-	mlx_destroy_image(dat->img->mlx_ptr, dat->walls.east.txt_ptr);
-	mlx_destroy_image(dat->img->mlx_ptr, dat->img->img_3d);
-	mlx_destroy_image(dat->img->mlx_ptr, dat->img->img_mini);
-	mlx_destroy_window(dat->img->mlx_ptr, dat->img->win_ptr);
-	mlx_destroy_display(dat->img->mlx_ptr);
+	mlx_destroy_image(dat->mlx_ptr, dat->walls.north.txt_ptr);
+	mlx_destroy_image(dat->mlx_ptr, dat->walls.south.txt_ptr);
+	mlx_destroy_image(dat->mlx_ptr, dat->walls.west.txt_ptr);
+	mlx_destroy_image(dat->mlx_ptr, dat->walls.east.txt_ptr);
+	mlx_destroy_image(dat->mlx_ptr, dat->img_3d->img_ptr);
+	mlx_destroy_image(dat->mlx_ptr, dat->img_mini->img_ptr);
+	mlx_destroy_window(dat->mlx_ptr, dat->win_ptr);
+	mlx_destroy_display(dat->mlx_ptr);
+	free(dat->mlx_ptr);
 }
 
 int	close_game(t_storage *dat)

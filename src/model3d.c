@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 14:34:42 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/17 15:02:45 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/18 12:39:05 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	scale(t_coordinates ray, t_storage *data, double hos, double vh)
 	while (ray.pix.y < screen_y_start + hos)
 	{
 		y_tex = (int)(ray.pix.y - wall_top) *step;
-		put_pixel_3d(data->img, ray.pix.x, ray.pix.y,
+		put_pixel_3d(data->img_3d, ray.pix.x, ray.pix.y,
 			get_colour_from_tex(ray, data, x_tex, y_tex));
 		ray.pix.y++;
 	}

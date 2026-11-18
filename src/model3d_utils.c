@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/17 14:59:36 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/17 15:03:41 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/18 12:41:52 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,18 @@ int	get_colour_from_tex(t_coordinates ray, t_storage *dat, int x_tex, int y_tex)
 	if (ray.tex == NORTH)
 		return (*(unsigned int *)(get_texture_address(ray, dat) + (y_tex
 				* dat->walls.north.line_length + x_tex
-				* (dat->img->bits_per_pixel / 8))));
+				* (dat->walls.north.bits_per_pixel / 8))));
 	if (ray.tex == SOUTH)
 		return (*(unsigned int *)(get_texture_address(ray, dat) + (y_tex
 				* dat->walls.south.line_length + x_tex
-				* (dat->img->bits_per_pixel / 8))));
+				* (dat->walls.north.bits_per_pixel / 8))));
 	if (ray.tex == EAST)
 		return (*(unsigned int *)(get_texture_address(ray, dat) + (y_tex
 				* dat->walls.east.line_length + x_tex
-				* (dat->img->bits_per_pixel / 8))));
+				* (dat->walls.north.bits_per_pixel / 8))));
 	if (ray.tex == WEST)
 		return (*(unsigned int *)(get_texture_address(ray, dat) + (y_tex
 				* dat->walls.west.line_length + x_tex
-				* (dat->img->bits_per_pixel / 8))));
+				* (dat->walls.north.bits_per_pixel / 8))));
 	return (0);
 }

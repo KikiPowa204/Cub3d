@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 10:02:37 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/17 14:38:25 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/18 12:33:52 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	move_player(int keycode, t_storage *dat)
 
 void	setup_hooks(t_storage *dat)
 {
-	mlx_hook(dat->img->win_ptr, DESTROY_NOTIFY, 0, close_game, dat);
-	mlx_hook(dat->img->win_ptr, KEY_PRESS, 1L << 0, move_player, dat);
-	mlx_hook(dat->img->win_ptr, KEY_RELEASE, 1L << 1, stop_player, dat);
-	mlx_loop_hook(dat->img->mlx_ptr, frame_per_second, dat);
+	mlx_hook(dat->win_ptr, DESTROY_NOTIFY, 0, close_game, dat);
+	mlx_hook(dat->win_ptr, KEY_PRESS, 1L << 0, move_player, dat);
+	mlx_hook(dat->win_ptr, KEY_RELEASE, 1L << 1, stop_player, dat);
+	mlx_loop_hook(dat->mlx_ptr, frame_per_second, dat);
 }

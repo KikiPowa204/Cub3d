@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 12:34:52 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/18 10:43:04 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/18 12:38:26 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	alter_values(double vector, double *map_coordi, int dir, double *count)
 
 bool	is_wall(double x, double y, t_storage *d)
 {
-	if (x < 0 || y < 0 || x >= d->img->max_w || y >= d->img->max_h)
+	if (x < 0 || y < 0 || x >= d->max_w || y >= d->max_h)
 		return (true);
-	return (map[(int)y * d->img->max_w + (int)x] == WALL);
+	return (map[(int)y * d->max_w + (int)x] == WALL);
 }
 
 bool	collide_horizontal(t_coordinates *rh, t_player *player,
