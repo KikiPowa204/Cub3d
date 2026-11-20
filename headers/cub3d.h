@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/18 17:00:58 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/19 12:32:50 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,11 +202,13 @@ typedef	struct s_storage
 //Parsing:
 int				parse_description_file(char *path, t_storage *dat, char **texture_paths);
 int				ft_str_i(const char *s, int c);
+char			*ft_strjoin2(char *s1, char const *s2);
 char			*get_next_line(int fd);
+int				get_colour(t_storage *dat, char *line, int *elements, bool floor);
 int				rgb_to_int(t_storage *dat, t_colours *rgb, bool floor);
 int				get_colour(t_storage *dat, char *line, int *elements, bool floor);
 int				map_mode(t_storage *dat, size_t lines, int fd, int map_fd);
-int				check_map(t_storage *dat, size_t max_width, size_t height);
+int				check_map(t_storage *dat);
 //Rayyy casting:
 bool			collide_horizontal(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);
 bool			collide_vertical(t_coordinates *rh, t_player *player, t_storage *dat, t_dir dir);

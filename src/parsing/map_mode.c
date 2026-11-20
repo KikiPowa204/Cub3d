@@ -6,18 +6,17 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 17:23:04 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/18 17:28:34 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/19 12:22:34 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <limits.h>
 
-int	check_size(size_t lines, int fd, size_t start_map, size_t *max_width,
-		size_t *height)
+int	check_size(size_t lines, int fd, size_t start_map, t_storage *dat)
 {
 	char	*line;
-	size_t	curr_len;
+	int	curr_len;
 	
 	errno = 0;
 	while (42)
@@ -30,22 +29,22 @@ int	check_size(size_t lines, int fd, size_t start_map, size_t *max_width,
 		curr_len = ft_strlen(line);
 		if (curr_len != 0 && line[curr_len - 1] == '\n')
 			curr_len--;
-		if (*max_width < curr_len)
-			*max_width = curr_len;
+		if (dat->img->max_w < curr_len)
+			dat->img->max_w = curr_len;
 		lines++;
-		if ((lines - start_map) * *max_width > INT_MAX)
+		if ((lines - start_map) * dat->img->max_w > INT_MAX)
 			return (error("Map is too big (more than INT_MAX tiles)",
 				false), free(line), 1);
 		free(line);
 	}
-	*height = lines - start_map;
+	dat->img->max_h = lines - start_map;
 	return (0);
 }
 
-void	copy_line(char **map_pos, char *line, size_t width)
+void	copy_line(char **map_pos, char *line, int width)
 {
-	size_t	line_len;
-	size_t	rest;
+	int	line_len;
+	int	rest;
 	
 	line_len = ft_strlen(line);
 	ft_strlcpy(*map_pos, line, line_len);
@@ -54,7 +53,7 @@ void	copy_line(char **map_pos, char *line, size_t width)
 	*map_pos += width;
 }
 
-int	copy_map(t_storage *dat, int map_fd, size_t	start_map, size_t width)
+int	copy_map(t_storage *dat, int map_fd, size_t	start_map)
 {
 	size_t	lines;
 	char	*line;
@@ -75,7 +74,7 @@ int	copy_map(t_storage *dat, int map_fd, size_t	start_map, size_t width)
 				free(line), 1);
 		lines++;
 		if (lines > start_map)
-			copy_line(&map_pos, line, width);
+			copy_line(&map_pos, line, dat->img->max_w);
 		free(line);
 	}
 	map_pos = 0;
@@ -85,19 +84,17 @@ int	copy_map(t_storage *dat, int map_fd, size_t	start_map, size_t width)
 int	map_mode(t_storage *dat, size_t lines, int fd, int map_fd)
 {
 	size_t	start_map;
-	size_t	max_width;
-	size_t	height;
 
-	max_width = 0;
+	dat->img->max_h = 0;
 	start_map = lines;
-	if (check_size(lines, fd, start_map, &max_width, &height))
+	if (check_size(lines, fd, start_map, dat))
 		return (1);
-	dat->map = malloc(max_width * height);
+	dat->map = malloc(dat->img->max_w * dat->img->max_h);
 	if (!dat->map)
 		return (error("Mallocation of map failed", true), 1);
-	if (copy_map(dat, map_fd, start_map, max_width))
+	if (copy_map(dat, map_fd, start_map))
 		return (free(dat->map), 1);
-	if (check_map(dat, max_width, height))
+	if (check_map(dat))
 		return (free(dat->map), 1);
 	return (0);
 }

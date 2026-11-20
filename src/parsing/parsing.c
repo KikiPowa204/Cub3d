@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/13 12:48:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/18 17:22:12 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/19 12:42:58 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ int	store_texture_paths(t_compass dir, char **texture_paths, char *line, int *el
 	if (texture_paths[dir] != NULL)
 		return (error("Multiple listing of same texture", false), 1);
 	texture_paths[dir] = malloc(len);
+	if (!texture_paths[dir])
+		return (error("Malloc for texture_path failed", true), 1);
 	j = 0;
-	while(line[i] != ' ' && line[i])
+	while(line[i] != ' ' && line[i] != '\n' && line[i])
 	{
 		texture_paths[dir][j] = line[i];
 		j++;
@@ -43,65 +45,48 @@ int	store_texture_paths(t_compass dir, char **texture_paths, char *line, int *el
 int	wfc(t_storage *dat, char **texture_paths, char *line, int *elements)
 {
 	if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
-	{
-		if (store_texture_paths(NO, texture_paths, line, elements))
-			return (1);
-	}
+		return (store_texture_paths(NO, texture_paths, line, elements));
 	else if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
-	{
-		if (store_texture_paths(SO, texture_paths, line, elements))
-			return (1);
-	}
+		return (store_texture_paths(SO, texture_paths, line, elements));
 	else if (line[0] == 'E' && line[1] == 'A' && line[2] == ' ')
-	{
-		if (store_texture_paths(EA, texture_paths, line, elements))
-			return (1);
-	}
+		return (store_texture_paths(EA, texture_paths, line, elements));
 	else if (line[0] == 'W' && line[1] == 'E' && line[2] == ' ')
-	{
-		if (store_texture_paths(WE, texture_paths, line, elements))
-			return (1);
-	}
+		return (store_texture_paths(WE, texture_paths, line, elements));
 	else if (line[0] == 'F' && line[1] == ' ')
-	{
-		if (get_colour(dat, line, elements, true))
-			return (1);
-	}
+		return (get_colour(dat, line, elements, true));
 	else if (line[0] == 'C' && line[1] == ' ')
-	{
-		if (get_colour(dat, line, elements, false))
-			return (1);
-	}
-	else if (line[0] != '\n')
-		return (2);
-	return (0);
+		return (get_colour(dat, line, elements, false));
+	return (error("Invalid input in description file", false), 1);
+}
+
+int	handle_line(t_storage *dat, char **texture_paths, char *line, int *elements)
+{
+	if (line[0] == '\n')
+		return (0);
+	if (ft_strlen(line) <= 3)
+		return (error("Invalid description file content", false), 1);
+	return (wfc(dat, texture_paths, line, elements));
 }
 
 int	parse_through(t_storage *dat, char **texture_paths, int fd, int map_fd)
 {
 	char	*line;
 	int		elements;
-	int		check;
 	size_t	lines;
 	
 	lines = 0;
-	errno = 0;
 	elements = 0;
 	while(elements < 7)
 	{
+		errno = 0;
 		line = get_next_line(fd);
 		if (errno != 0)
 			return (error("Read failed", true), free(line), 1);
 		if (!line)
-			return (error("Description file has missing elements", false),
-				free(line), 1);
+			return (error("Description file has missing elements", false), 1);
 		lines++;
-		check = wfc(dat, texture_paths, line, &elements);
-		if (check == 1)
+		if (handle_line(dat, texture_paths, line, &elements))
 			return (free(line), 1);
-		if (check == 2)
-			return (error("Invalid description file content", false),
-				free(line), 1);
 		free(line);
 	}
 	if (map_mode(dat, lines, fd, map_fd))
@@ -120,8 +105,9 @@ int	parse_description_file(char *path, t_storage *dat, char **texture_paths)
 		return (error("Description file could not be opened", true), 1);
 	map_fd = open(path, O_RDONLY);
 	if (map_fd == -1)
-		return (error("Description file could not be opened", true), 1);
+		return (error("Description file could not be opened", true),
+			close(fd), 1);
 	if (parse_through(dat, texture_paths, fd, map_fd))
-		return (1);
-	return (0);
+		return (close(fd), close(map_fd), 1);
+	return (close(fd), close(map_fd), 0);
 }

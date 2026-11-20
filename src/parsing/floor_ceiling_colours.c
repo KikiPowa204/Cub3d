@@ -6,13 +6,13 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 12:52:45 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/16 17:19:29 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/20 11:59:10 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	char_into_int_colous(int z, char *colour, t_colours *rgb)
+int	char_into_int_colours(int z, char *colour, t_colours *rgb)
 {
 	if (z == 0)
 		rgb->red = ft_atoi(colour);
@@ -31,7 +31,7 @@ int	parse_rgb_number(int *i, char *colour, char *line)
 	int	j;
 	
 	j = 0;
-	while (j < 3)
+	while (j < 3 && line[*i] != ',')
 	{
 		if (ft_isdigit(line[*i]))
 			colour[j] = line[*i];
@@ -52,13 +52,13 @@ int	parse_rgb_block(int *i, char *line, t_colours *rgb)
 	char	colour[4];
 	
 	z = 0;
-	while (line[*i] != ' ' && line[*i])
+	while (line[*i] != ' ' && line[*i] != '\n' && line[*i])
 	{
 		if (parse_rgb_number(i, colour, line))
 			return (1);
-		z++;
-		if (char_into_int_colous(z, colour, rgb))
+		if (char_into_int_colours(z, colour, rgb))
 			return (1);
+		z++;
 		if (z >= 3)
 			break ;
 		if (line[*i] != ',')
@@ -74,6 +74,7 @@ int	get_colour(t_storage *dat, char *line, int *elements, bool floor)
 	t_colours	rgb;
 	
 	i = 2;
+	ft_bzero(&rgb, sizeof(t_colours));
 	while (line[i] == ' ')
 		i++;
 	if (parse_rgb_block(&i, line, &rgb))

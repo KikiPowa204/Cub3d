@@ -6,11 +6,11 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:43:51 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/17 16:09:58 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/19 12:32:24 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+# include "cub3d.h"
 
 char	*remainder_from_end(char *remainder, char *line)
 {
@@ -40,7 +40,7 @@ char	*remainder_to_start(char *remainder)
 	if (!line)
 		return (NULL);
 	line[0] = 0;
-	line = ft_strjoin(line, remainder);
+	line = ft_strjoin2(line, remainder);
 	remainder[0] = 0;
 	return (line);
 }
@@ -59,7 +59,7 @@ char	*find_nl(char *remainder, char *buffer, int fd)
 		if (b_read <= 0)
 			break ;
 		buffer[b_read] = 0;
-		line = ft_strjoin(line, buffer);
+		line = ft_strjoin2(line, buffer);
 		if (!line)
 			return (NULL);
 		if (ft_str_i(buffer, '\n') != 0)
@@ -67,7 +67,7 @@ char	*find_nl(char *remainder, char *buffer, int fd)
 		else if (b_read < BUFFER_SIZE)
 			return (line);
 	}
-	if (ft_strlen(line) == 0 || errno != 0)
+	if (ft_strlen(line) == 0)
 		return (free(line), NULL);
 	return (line);
 }
