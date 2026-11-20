@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/18 14:11:27 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/20 15:22:53 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define KEY_RELEASE 3
 # define DESTROY_NOTIFY 17
 # define SPEED 0.05
+# define MINI_VIEW 10
 
 typedef struct s_algo
 {
@@ -134,6 +135,16 @@ typedef struct s_walls
 	struct s_texture	west;
 }				t_walls;
 
+typedef struct s_minimap
+{
+	double	x_start;
+	double	y_start;
+	double	curr_x;
+	double	curr_y;
+	int		mini_h;
+	int		mini_w;
+}	t_minimap;
+
 typedef struct s_storage
 {
 	void			*mlx_ptr;
@@ -145,6 +156,7 @@ typedef struct s_storage
 	t_walls			walls;
 	int				max_w;
 	int				max_h;
+	t_minimap		mini;
 }				t_storage;
 
 //Rayyy casting:
@@ -169,7 +181,7 @@ int				move_player(int keycode, t_storage *dat);
 void			setup_hooks(t_storage *dat);
 void			fill_map(t_storage *dat);
 int				frame_per_second(t_storage *dat);
-void			fill_tile(int x, int y, int colour, t_constants *img);
+//void			fill_tile(double x, double y, int colour, t_constants *img);
 void			put_pixel_mini(t_constants *img, int x, int y, int color);
 void			put_pixel_3d(t_constants *img, int x, int y, int color);
 char			*get_texture_address(t_coordinates ray, t_storage *data);
@@ -191,5 +203,8 @@ void			bottom_right(t_player *player, t_storage *data,
 					t_coordinates ray_h, t_coordinates ray_v);
 void			bottom_left(t_player *player, t_storage *data,
 					t_coordinates ray_h, t_coordinates ray_v);
+void			mini_map_window(t_storage *dat, int *x, int *y);
+void			minimap(t_storage *dat);
+void			draw_player(double x, double y, t_constants *img_mini);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:03:09 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/18 14:51:30 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/20 11:55:15 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	draw_player(double x, double y, t_constants *img)
 		yo++;
 	}
 }
-
+/*
 void	fill_tile(int x, int y, int colour, t_constants *img)
 {
 	int	xo;
@@ -43,7 +43,7 @@ void	fill_tile(int x, int y, int colour, t_constants *img)
 	int	yo_limit;
 	int	xo_limit;
 
-	yo = y * TILE_SIZE ;
+	yo = y * TILE_SIZE;
 	yo_limit = yo + TILE_SIZE;
 	xo_limit = x * TILE_SIZE + TILE_SIZE;
 	while (yo < yo_limit - 1)
@@ -56,7 +56,7 @@ void	fill_tile(int x, int y, int colour, t_constants *img)
 		}
 		yo++;
 	}
-}
+}*/
 
 void	draw_background(t_storage *dat)
 {
@@ -86,18 +86,19 @@ void	draw_background(t_storage *dat)
 	}
 }
 
-void	mini_map_window(t_storage *dat)
-{
-
-}
-
 void	fill_map(t_storage *dat)
 {
-	int	x;
-	int	y;
+	minimap(dat);
+	//draw_player(dat->player->x, dat->player->y, dat->img_mini);
+	draw_background(dat);
+	cone_casting(dat);
+	mlx_put_image_to_window(dat->mlx_ptr, dat->win_ptr,
+		dat->img_3d->img_ptr, 0, 0);
+	mlx_put_image_to_window(dat->mlx_ptr, dat->win_ptr,
+		dat->img_mini->img_ptr, 0, 0);
+}
 
-	y = 0;
-	mini_map_window(dat, x, y);
+/*
 	while (y < dat->max_h)
 	{
 		x = 0;
@@ -118,4 +119,4 @@ void	fill_map(t_storage *dat)
 		dat->img_3d->img_ptr, 0, 0);
 	mlx_put_image_to_window(dat->mlx_ptr, dat->win_ptr,
 		dat->img_mini->img_ptr, 0, 0);
-}
+}*/

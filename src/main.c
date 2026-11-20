@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/18 14:11:14 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/20 11:10:20 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ int	init(t_player *player, t_storage *dat, t_constants *img_mini,
 	dat->map = map;
 	dat->max_h = 9;
 	dat->max_w = 9;
+	dat->mini.mini_w = dat->max_h;
+	if (dat->mini.mini_w > MINI_VIEW)
+		dat->mini.mini_w = MINI_VIEW;
+	dat->mini.mini_h = dat->max_w;
+	if (dat->mini.mini_h > MINI_VIEW)
+		dat->mini.mini_h = MINI_VIEW;
 	grab_player_coordinates(dat);
 	return (1);
 }
