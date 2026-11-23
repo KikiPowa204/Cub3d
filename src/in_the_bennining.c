@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:03:09 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/11 14:21:34 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/23 17:58:50 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	draw_background(t_storage *dat)
 		x = 0;
 		while(x < WINDOW_WIDTH)
 		{
-			put_pixel_3d(dat->img, x, y, 0xffc0cb);
+			put_pixel_3d(dat->img, x, y, dat->img->ceiling_c);
 			x++;
 		}
 		y++;	
@@ -96,7 +96,7 @@ void	draw_background(t_storage *dat)
 		x = 0;
 		while(x < WINDOW_WIDTH)
 		{
-			put_pixel_3d(dat->img, x, y, 0x000000);
+			put_pixel_3d(dat->img, x, y, dat->img->floor_c);
 			x++;
 		}
 		y++;	
@@ -109,12 +109,12 @@ void	fill_map(t_storage *dat)
 	int	y;
 
 	y = 0;
-	while(y < 9)
+	while(y < dat->img->max_h)
 	{
 		x = 0;
-		while(x < 9)
+		while(x < dat->img->max_w)
 		{
-			if (map[y * 9 + x] == WALL)
+			if (dat->map[y * dat->img->max_w + x] == WALL)
 				fill_tile(x, y, 0x00FFFFFF, dat->img);
 			else
 				fill_tile(x, y, 0x0000FFFF, dat->img);

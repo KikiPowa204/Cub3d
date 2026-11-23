@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/19 12:32:50 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/23 17:57:52 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 # define THREE_HALF_PI 3*PI/2
 # define TILE_SIZE 30
 # define PLAYER_SIZE 8
-# define WALL 1
-# define FLOOR 0
+# define WALL '1'
+# define FLOOR '0'
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
 # define DESTROY_NOTIFY 17

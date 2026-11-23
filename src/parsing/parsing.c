@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/13 12:48:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/19 12:42:58 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/23 12:24:04 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	wfc(t_storage *dat, char **texture_paths, char *line, int *elements)
 
 int	handle_line(t_storage *dat, char **texture_paths, char *line, int *elements)
 {
+	//printf("Amount of elements:%d Line:%s\n", *elements, line);
 	if (line[0] == '\n')
 		return (0);
 	if (ft_strlen(line) <= 3)
@@ -76,7 +77,7 @@ int	parse_through(t_storage *dat, char **texture_paths, int fd, int map_fd)
 	
 	lines = 0;
 	elements = 0;
-	while(elements < 7)
+	while(42)
 	{
 		errno = 0;
 		line = get_next_line(fd);
@@ -84,6 +85,8 @@ int	parse_through(t_storage *dat, char **texture_paths, int fd, int map_fd)
 			return (error("Read failed", true), free(line), 1);
 		if (!line)
 			return (error("Description file has missing elements", false), 1);
+		if (line[0] != '\n' && elements == 6)
+			break ;
 		lines++;
 		if (handle_line(dat, texture_paths, line, &elements))
 			return (free(line), 1);

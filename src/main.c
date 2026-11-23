@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/19 12:11:56 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/23 14:24:59 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	init(t_player *player, t_storage *dat, t_constants *img)
 {
 	ft_bzero(player, sizeof(t_player));
 	ft_bzero(dat, sizeof(t_storage));
-	//ft_bzero(img, sizeof(t_constants));
+	ft_bzero(img, sizeof(t_constants));
 	dat->img = img;
 	img->floor_c = -1;
 	img->ceiling_c = -1;

@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 12:52:45 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/20 11:59:10 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/23 11:51:52 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	parse_rgb_number(int *i, char *colour, char *line)
 	int	j;
 	
 	j = 0;
-	while (j < 3 && line[*i] != ',')
+	while (j < 3 && line[*i] != ',' && line[*i] != '\n')
 	{
 		if (ft_isdigit(line[*i]))
 			colour[j] = line[*i];
@@ -90,5 +90,5 @@ int	get_colour(t_storage *dat, char *line, int *elements, bool floor)
 	}
 	else
 		return (error("Wall or ceiling line contains unexpected"
-			" extra information", false), 1);
+			" information", false), 1);
 }

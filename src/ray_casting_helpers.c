@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 12:34:52 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/09 14:22:45 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/23 18:01:42 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	is_wall(double x, double y, t_storage *d)
 {
 	if (x < 0 || y < 0 || x >= d->img->max_w || y >= d->img->max_h)
 		return (true);               // outside the map ends the ray
-	return (map[(int)y * d->img->max_w + (int)x] == WALL);
+	return (d->map[(int)y * d->img->max_w + (int)x] == WALL);
 }
 
 bool	ray_collision(t_map ray, t_player *player, t_dir dir, t_storage *data)
