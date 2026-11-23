@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/19 10:31:52 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/20 15:35:30 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/23 13:01:41 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	tile_colour(t_storage *dat, int tx, int ty)
 	if (tx < 0 || tx >= dat->max_w || ty < 0 || ty >= dat->max_h)
 		return (-1);
 	c = dat->map[ty * dat->max_w + tx];
-	if (c == '1')
+	if (c == WALL)
 		return (0x00FFFFFF);
 	if (c == ' ')
 		return (-1);
@@ -37,6 +37,7 @@ void	fill_tile(t_constants *img, int px, int py, int colour)
 		x = 0;
 		while (x < TILE_SIZE - 1)
 		{
+
 			put_pixel_mini(img, px + x, py + y, colour);
 			x++;
 		}
@@ -66,6 +67,7 @@ void	draw_map(t_storage *dat, t_minimap mini)
 		ty++;
 	}
 }
+
 /*
 void	fill_tile(double x, double y, int colour, t_constants *img)
 {
@@ -121,6 +123,10 @@ void	clean_canvas(t_storage *dat, t_minimap mini)
 
 	x_limit = mini.mini_w * TILE_SIZE;
 	y_limit = mini.mini_h * TILE_SIZE;
+	/*if (x_limit > MINI_VIEW)
+		x_limit = MINI_VIEW;
+	if (y_limit > MINI_VIEW)
+		y_limit = MINI_VIEW;*/
 	y = 0;
 	while (y < y_limit)
 	{

@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/20 15:22:53 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/23 12:58:42 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,8 +182,8 @@ void			setup_hooks(t_storage *dat);
 void			fill_map(t_storage *dat);
 int				frame_per_second(t_storage *dat);
 //void			fill_tile(double x, double y, int colour, t_constants *img);
-void			put_pixel_mini(t_constants *img, int x, int y, int color);
-void			put_pixel_3d(t_constants *img, int x, int y, int color);
+void			put_pixel_mini(t_storage *data, int x, int y, int color);
+void			put_pixel_3d(t_storage *data, int x, int y, int color);
 char			*get_texture_address(t_coordinates ray, t_storage *data);
 void			cleanup(t_storage *data);
 int				close_game(t_storage *data);

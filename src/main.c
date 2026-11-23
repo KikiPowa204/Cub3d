@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/20 11:10:20 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/23 12:43:23 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	map[] =
   1, 0, 0, 1, 0, 0, 0, 0, 1,
   1, 0, 0, 0,'N',0, 0, 0, 1,
   1, 0, 1, 0, 0, 0, 1, 0, 1,
+  1, 0, 0, 0, 1, 0, 0, 0, 1,
+  1, 0, 1, 1, 1, 0, 1, 0, 1,
   1, 0, 0, 0, 1, 0, 0, 0, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1,};
 
@@ -35,7 +37,7 @@ int	init(t_player *player, t_storage *dat, t_constants *img_mini,
 	dat->img_3d = img3d;
 	dat->player = player;
 	dat->map = map;
-	dat->max_h = 9;
+	dat->max_h = 11;
 	dat->max_w = 9;
 	dat->mini.mini_w = dat->max_h;
 	if (dat->mini.mini_w > MINI_VIEW)

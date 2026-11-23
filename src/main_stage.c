@@ -6,13 +6,13 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:03:09 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/20 11:55:15 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/23 14:02:40 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_player(double x, double y, t_constants *img)
+void	draw_player(double x, double y, t_storage *dat)
 {
 	int	colour;
 	int	xo;
@@ -29,7 +29,7 @@ void	draw_player(double x, double y, t_constants *img)
 		xo = (unsigned int)(x * TILE_SIZE - PLAYER_SIZE / 2);
 		while (xo < xo_limit - 1)
 		{
-			put_pixel_mini(img, xo, yo, colour);
+			put_pixel_mini(dat, xo, yo, colour);
 			xo++;
 		}
 		yo++;
@@ -69,7 +69,7 @@ void	draw_background(t_storage *dat)
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
-			put_pixel_3d(dat->img_3d, x, y, 0xffc0cb);
+			put_pixel_3d(dat, x, y, 0xffc0cb);
 			x++;
 		}
 		y++;
@@ -79,7 +79,7 @@ void	draw_background(t_storage *dat)
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
-			put_pixel_3d(dat->img_3d, x, y, 0x000000);
+			put_pixel_3d(dat, x, y, 0x000000);
 			x++;
 		}
 		y++;
