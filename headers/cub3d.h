@@ -205,6 +205,6 @@ void			bottom_left(t_player *player, t_storage *data,
 					t_coordinates ray_h, t_coordinates ray_v);
 void			mini_map_window(t_storage *dat, int *x, int *y);
 void			minimap(t_storage *dat);
-void			draw_player(double x, double y, t_constants *img_mini);
+void			draw_player(double x, double y, t_storage *data);
 
 #endif

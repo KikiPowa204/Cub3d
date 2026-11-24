@@ -13,17 +13,17 @@
 #include "cub3d.h"
 
 char	map[] =
-{ 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 0, 1, 0, 0, 0, 1, 0, 1,
-  1, 0, 0, 0, 0, 0, 0, 0, 1,
-  1, 0, 1, 0, 0, 1, 1, 1, 1,
-  1, 0, 0, 1, 0, 0, 0, 0, 1,
-  1, 0, 0, 0,'N',0, 0, 0, 1,
-  1, 0, 1, 0, 0, 0, 1, 0, 1,
-  1, 0, 0, 0, 1, 0, 0, 0, 1,
-  1, 0, 1, 1, 1, 0, 1, 0, 1,
-  1, 0, 0, 0, 1, 0, 0, 0, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1,};
+{ 1, 1, 1, 1, 1, 1, 1, 1, 1,1,1,1,
+  1, 0, 1, 0, 0, 0, 1, 0, 0,0,0,1,
+  1, 0, 0, 0,'N', 0, 0, 0, 0,0,0,1,
+  1, 0, 1, 0, 0, 1, 1, 1, 0,1,1,1,
+  1, 0, 0, 1, 0, 0, 0, 0, 0,0,0,1,
+  1, 0, 0, 0, 0,0, 0, 0, 0,0,0,1,
+  1, 0, 1, 0, 0, 0, 1, 0, 0,0,0,1,
+  1, 0, 0, 0, 1, 0, 0, 0, 0,0,0,1,
+  1, 0, 0, 0, 1, 0, 0, 0, 0,0,0,1,
+  1, 0, 1, 1, 1, 0, 1, 0, 0,0,0,1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1,1,1,1,};
 
 int	init(t_player *player, t_storage *dat, t_constants *img_mini,
 		t_constants *img3d)
@@ -38,11 +38,11 @@ int	init(t_player *player, t_storage *dat, t_constants *img_mini,
 	dat->player = player;
 	dat->map = map;
 	dat->max_h = 11;
-	dat->max_w = 9;
-	dat->mini.mini_w = dat->max_h;
+	dat->max_w = 12;
+	dat->mini.mini_w = dat->max_w;
 	if (dat->mini.mini_w > MINI_VIEW)
 		dat->mini.mini_w = MINI_VIEW;
-	dat->mini.mini_h = dat->max_w;
+	dat->mini.mini_h = dat->max_h;
 	if (dat->mini.mini_h > MINI_VIEW)
 		dat->mini.mini_h = MINI_VIEW;
 	grab_player_coordinates(dat);

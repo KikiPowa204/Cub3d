@@ -35,7 +35,7 @@ void	bresenham_algo(t_coordinates p1, t_coordinates p2, t_storage *data)
 	init_algo_vals(&algo, p1, p2);
 	while (1)
 	{
-		put_pixel_mini(data->img_mini, p1.pix.x, p1.pix.y, p1.colour);
+		put_pixel_mini(data, p1.pix.x, p1.pix.y, p1.colour);
 		if (p1.pix.x == p2.pix.x && p1.pix.y == p2.pix.y)
 			break ;
 		error_temp = 2 * algo.d_p;

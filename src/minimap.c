@@ -26,7 +26,7 @@ int	tile_colour(t_storage *dat, int tx, int ty)
 	return (0x0000FFFF);
 }
 
-void	fill_tile(t_constants *img, int px, int py, int colour)
+void	fill_tile(t_storage *data, int px, int py, int colour)
 {
 	int	x;
 	int	y;
@@ -38,7 +38,7 @@ void	fill_tile(t_constants *img, int px, int py, int colour)
 		while (x < TILE_SIZE - 1)
 		{
 
-			put_pixel_mini(img, px + x, py + y, colour);
+			put_pixel_mini(data, px + x, py + y, colour);
 			x++;
 		}
 		y++;
@@ -59,13 +59,63 @@ void	draw_map(t_storage *dat, t_minimap mini)
 		{
 			c = tile_colour(dat, tx, ty);   // -1 for void
 			if (c != -1)
-				fill_tile(dat->img_mini,
+				fill_tile(dat,
 					(int)floor((tx - mini.x_start) * TILE_SIZE),
 					(int)floor((ty - mini.y_start) * TILE_SIZE), c);
 			tx++;
 		}
 		ty++;
 	}
+}
+
+
+void	clean_canvas(t_storage *dat, t_minimap mini)
+{
+	int	x;
+	int	y;
+	int	x_limit;
+	int	y_limit;
+
+	x_limit = mini.mini_w * TILE_SIZE;
+	y_limit = mini.mini_h * TILE_SIZE;
+	/*if (x_limit > MINI_VIEW)
+		x_limit = MINI_VIEW;
+	if (y_limit > MINI_VIEW)
+		y_limit = MINI_VIEW;*/
+	y = 0;
+	while (y < y_limit)
+	{
+		x = 0;
+		while (x < x_limit)
+		{
+			put_pixel_mini(dat, x, y, 0x0);
+			x++;
+		}
+		y++;
+	}
+}
+
+static double	mini_start(double player_pos, int map_dim)
+{
+	double	start;
+
+	if (map_dim <= MINI_VIEW)
+		return (0);
+	start = player_pos - MINI_VIEW / 2.0;
+	if (start < 0)
+		start = 0;
+	if (start > map_dim - MINI_VIEW)
+		start = map_dim - MINI_VIEW;
+	return (start);
+}
+
+void	minimap(t_storage *dat)
+{
+	clean_canvas(dat, dat->mini);
+	dat->mini.x_start = mini_start(dat->player->x, dat->max_w);
+	dat->mini.y_start = mini_start(dat->player->y, dat->max_h);
+	draw_map(dat, dat->mini);
+	// player dot at ((player.x - x_start) * TILE_SIZE, (player.y - y_start) * TILE_SIZE)
 }
 
 /*
@@ -113,56 +163,6 @@ void	draw_map(t_storage *dat, t_minimap mini)
 		mini.y_start++;
 	}
 }*/
-
-void	clean_canvas(t_storage *dat, t_minimap mini)
-{
-	int	x;
-	int	y;
-	int	x_limit;
-	int	y_limit;
-
-	x_limit = mini.mini_w * TILE_SIZE;
-	y_limit = mini.mini_h * TILE_SIZE;
-	/*if (x_limit > MINI_VIEW)
-		x_limit = MINI_VIEW;
-	if (y_limit > MINI_VIEW)
-		y_limit = MINI_VIEW;*/
-	y = 0;
-	while (y < y_limit)
-	{
-		x = 0;
-		while (x < x_limit)
-		{
-			put_pixel_mini(dat->img_mini, x, y, 0x0);
-			x++;
-		}
-		y++;
-	}
-}
-
-static double	mini_start(double player_pos, int map_dim)
-{
-	double	start;
-
-	if (map_dim <= MINI_VIEW)
-		return (0);
-	start = player_pos - MINI_VIEW / 2.0;
-	if (start < 0)
-		start = 0;
-	if (start > map_dim - MINI_VIEW)
-		start = map_dim - MINI_VIEW;
-	return (start);
-}
-
-void	minimap(t_storage *dat)
-{
-	clean_canvas(dat, dat->mini);
-	dat->mini.x_start = mini_start(dat->player->x, dat->max_w);
-	dat->mini.y_start = mini_start(dat->player->y, dat->max_h);
-	draw_map(dat, dat->mini);
-	// player dot at ((player.x - x_start) * TILE_SIZE, (player.y - y_start) * TILE_SIZE)
-}
-
 /*
 void	minimap(t_storage *dat)
 {
