@@ -6,11 +6,12 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/13 12:48:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/23 12:24:04 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/24 12:15:17 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "libft.h"
 
 int	store_texture_paths(t_compass dir, char **texture_paths, char *line, int *elements)
 {
@@ -97,11 +98,26 @@ int	parse_through(t_storage *dat, char **texture_paths, int fd, int map_fd)
 	return (0);
 }
 
+int	check_path_ending(char *path)
+{
+	size_t len;
+
+	len = ft_strlen(path);
+	if (len < 4)
+		return (error("Description file doesn't end in '.cub'", false), 1);
+	path += (len - 4);
+	if (ft_strncmp(path, ".cub", 4))
+		return (error("Description file doesn't end in '.cub'", false), 1);
+	return (0);
+}
+
 int	parse_description_file(char *path, t_storage *dat, char **texture_paths)
 {
 	int	fd;
 	int	map_fd;
 
+	if (check_path_ending(path))
+		return (1);
 	ft_bzero(texture_paths, sizeof(char *) * 4);
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
