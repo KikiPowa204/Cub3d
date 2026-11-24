@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/23 12:58:42 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/24 12:00:10 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,9 +167,9 @@ bool			collide_vertical(t_coordinates *rh, t_player *player,
 void			ray_casting(t_player *player, t_storage *data, int pos);
 bool			check_if_wall(int x, int y, int max_d, char *map);
 double			distance(double x1, double y1, double x2, double y2);
-int				map_to_screen(double coordinate);
+int				map_to_screen(double coordinate, double mini_start_coor);
 int				get_map_index(int rx, int ry, int max_d);
-t_coordinates	bres_transform(double x, double y);
+t_coordinates	bres_transform(double x, double y, t_minimap mini);
 bool			is_wall(double x, double y, t_storage *d);
 void			model3d(t_coordinates ray, t_storage *data);
 void			cone_casting(t_storage *dat);
@@ -206,5 +206,6 @@ void			bottom_left(t_player *player, t_storage *data,
 void			mini_map_window(t_storage *dat, int *x, int *y);
 void			minimap(t_storage *dat);
 void			draw_player(double x, double y, t_storage *data);
+void			fill_tile(t_storage *data, int px, int py, int colour);
 
 #endif

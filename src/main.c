@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/23 12:43:23 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/24 10:32:42 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 char	map[] =
 { 1, 1, 1, 1, 1, 1, 1, 1, 1,1,1,1,
   1, 0, 1, 0, 0, 0, 1, 0, 0,0,0,1,
-  1, 0, 0, 0,'N', 0, 0, 0, 0,0,0,1,
+  1, 0, 0, 0, 0, 0, 0, 0, 0,0,0,1,
   1, 0, 1, 0, 0, 1, 1, 1, 0,1,1,1,
   1, 0, 0, 1, 0, 0, 0, 0, 0,0,0,1,
-  1, 0, 0, 0, 0,0, 0, 0, 0,0,0,1,
+  1, 0, 0, 0, 0, 0,'N',0, 0,0,0,1,
   1, 0, 1, 0, 0, 0, 1, 0, 0,0,0,1,
   1, 0, 0, 0, 1, 0, 0, 0, 0,0,0,1,
   1, 0, 0, 0, 1, 0, 0, 0, 0,0,0,1,
@@ -96,7 +96,7 @@ int	mlx_setup(t_constants *img_mini, t_constants *img_3d, t_storage *dat)
 	if (!dat->win_ptr)
 		return (0);
 	dat->img_mini->img_ptr = mlx_new_image(dat->mlx_ptr,
-			dat->max_w * TILE_SIZE, TILE_SIZE * dat->max_h);
+			dat->mini.mini_w * TILE_SIZE, TILE_SIZE * dat->mini.mini_h);
 	if (!img_mini->img_ptr)
 		return (0);
 	img_3d->img_ptr = mlx_new_image(dat->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);

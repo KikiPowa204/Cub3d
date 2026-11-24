@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 10:45:44 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/23 12:59:52 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/24 11:57:39 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,11 @@ void	put_pixel_3d(t_storage *dat, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x < 0 || y < 0
-		|| x >= dat->mini.mini_w * TILE_SIZE
-		|| y >= dat->mini.mini_h * TILE_SIZE)
+	if (x < 0 || y < 0)
 		return ;
 	dst = dat->img_3d->addr
-		+ (y * dat->img_3d->line_length + x * (dat->img_3d->bits_per_pixel / 8));
+		+ (y * dat->img_3d->line_length + x
+			* (dat->img_3d->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
 
@@ -105,6 +104,7 @@ void	put_pixel_mini(t_storage *dat, int x, int y, int color)
 		|| y >= dat->mini.mini_h * TILE_SIZE)
 		return ;
 	dst = dat->img_mini->addr
-		+ (y * dat->img_mini->line_length + x * (dat->img_mini->bits_per_pixel / 8));
+		+ (y * dat->img_mini->line_length + x
+			* (dat->img_mini->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }

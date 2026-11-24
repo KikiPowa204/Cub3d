@@ -6,11 +6,29 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/22 12:33:28 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/18 12:37:22 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/24 11:59:14 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	fill_tile(t_storage *data, int px, int py, int colour)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < TILE_SIZE - 1)
+	{
+		x = 0;
+		while (x < TILE_SIZE - 1)
+		{
+			put_pixel_mini(data, px + x, py + y, colour);
+			x++;
+		}
+		y++;
+	}
+}
 
 void	init_algo_vals(t_algo *algo, t_coordinates p1, t_coordinates p2)
 {

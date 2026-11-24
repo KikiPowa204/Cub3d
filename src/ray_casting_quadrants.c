@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/18 10:44:27 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/18 10:44:59 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/24 11:53:43 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ void	top_right(t_player *player, t_storage *data, t_coordinates ray_h,
 	{
 		ray_h.tex = NORTH;
 		model3d(ray_h, data);
-		bresenham_algo(bres_transform(player->x, player->y),
-			bres_transform(ray_h.map.x, ray_h.map.y), data);
+		bresenham_algo(bres_transform(player->x, player->y, data->mini),
+			bres_transform(ray_h.map.x, ray_h.map.y, data->mini), data);
 	}
 	else
 	{
 		ray_v.tex = WEST;
 		model3d(ray_v, data);
-		bresenham_algo(bres_transform(player->x, player->y),
-			bres_transform(ray_v.map.x, ray_v.map.y), data);
+		bresenham_algo(bres_transform(player->x, player->y, data->mini),
+			bres_transform(ray_v.map.x, ray_v.map.y, data->mini), data);
 	}
 }
 
@@ -59,15 +59,15 @@ void	top_left(t_player *player, t_storage *data, t_coordinates ray_h,
 	{
 		ray_h.tex = NORTH;
 		model3d(ray_h, data);
-		bresenham_algo(bres_transform(player->x, player->y),
-			bres_transform(ray_h.map.x, ray_h.map.y), data);
+		bresenham_algo(bres_transform(player->x, player->y, data->mini),
+			bres_transform(ray_h.map.x, ray_h.map.y, data->mini), data);
 	}
 	else
 	{
 		ray_v.tex = EAST;
 		model3d(ray_v, data);
-		bresenham_algo(bres_transform(player->x, player->y),
-			bres_transform(ray_v.map.x, ray_v.map.y), data);
+		bresenham_algo(bres_transform(player->x, player->y, data->mini),
+			bres_transform(ray_v.map.x, ray_v.map.y, data->mini), data);
 	}
 }
 
@@ -88,15 +88,15 @@ void	bottom_left(t_player *player, t_storage *data, t_coordinates ray_h,
 	{
 		ray_h.tex = SOUTH;
 		model3d(ray_h, data);
-		bresenham_algo(bres_transform(player->x, player->y),
-			bres_transform(ray_h.map.x, ray_h.map.y), data);
+		bresenham_algo(bres_transform(player->x, player->y, data->mini),
+			bres_transform(ray_h.map.x, ray_h.map.y, data->mini), data);
 	}
 	else
 	{
 		ray_v.tex = EAST;
 		model3d(ray_v, data);
-		bresenham_algo(bres_transform(player->x, player->y),
-			bres_transform(ray_v.map.x, ray_v.map.y), data);
+		bresenham_algo(bres_transform(player->x, player->y, data->mini),
+			bres_transform(ray_v.map.x, ray_v.map.y, data->mini), data);
 	}
 }
 
@@ -117,14 +117,14 @@ void	bottom_right(t_player *player, t_storage *data, t_coordinates ray_h,
 	{
 		ray_h.tex = SOUTH;
 		model3d(ray_h, data);
-		bresenham_algo(bres_transform(player->x, player->y),
-			bres_transform(ray_h.map.x, ray_h.map.y), data);
+		bresenham_algo(bres_transform(player->x, player->y, data->mini),
+			bres_transform(ray_h.map.x, ray_h.map.y, data->mini), data);
 	}
 	else
 	{
 		ray_v.tex = WEST;
 		model3d(ray_v, data);
-		bresenham_algo(bres_transform(player->x, player->y),
-			bres_transform(ray_v.map.x, ray_v.map.y), data);
+		bresenham_algo(bres_transform(player->x, player->y, data->mini),
+			bres_transform(ray_v.map.x, ray_v.map.y, data->mini), data);
 	}
 }
