@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/25 10:49:47 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 15:03:28 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,18 @@
 # define PLAYER_SIZE 8
 # define WALL '1'
 # define FLOOR '0'
+# define VOID ' '
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
 # define DESTROY_NOTIFY 17
-# define SPEED 0.05
+# define SPEED 0.4
 # define MINI_VIEW 10
 
 # define BUFFER_SIZE 10
 //# define FPS 60
 
 //Parsing
-typedef enum	e_compass
+typedef enum e_compass
 {
 	NO,
 	SO,
@@ -54,7 +55,7 @@ typedef enum	e_compass
 	EA
 }	t_compass;
 
-typedef struct	s_colours
+typedef struct s_colours
 {
 	int	red;
 	int	green;
@@ -63,15 +64,15 @@ typedef struct	s_colours
 
 //Execution
 
-typedef enum	e_voh
+typedef enum e_voh
 {
 	none,
 	hor,
 	ver,
 	both
-}				t_voh;
+}	t_voh;
 
-typedef struct	s_algo
+typedef struct s_algo
 {
 	int	dx;
 	int	dy;
@@ -122,8 +123,6 @@ typedef struct s_coordinates
 	enum e_dir	tex;
 }	t_coordinates;
 
-extern char map[];
-
 typedef struct s_player
 {
 	double			x;
@@ -134,7 +133,7 @@ typedef struct s_player
 	bool			up;
 	bool			turn_left;
 	bool			turn_right;
-	double			z;
+	double			speed;
 	double			a;
 	double			dir;
 	t_coordinates	orient;
@@ -195,15 +194,22 @@ typedef struct s_storage
 }				t_storage;
 
 //Parsing:
-int				parse_description_file(char *path, t_storage *dat, char **texture_paths);
+int				parse_description_file(char *path, t_storage *dat,
+					char **texture_paths);
 int				ft_str_i(const char *s, int c);
 char			*ft_strjoin2(char *s1, char const *s2);
 char			*get_next_line(int fd);
-int				get_colour(t_storage *dat, char *line, int *elements, bool floor);
+int				get_colour(t_storage *dat, char *line, int *elements,
+					bool floor);
 int				rgb_to_int(t_storage *dat, t_colours *rgb, bool floor);
-int				get_colour(t_storage *dat, char *line, int *elements, bool floor);
+int				get_colour(t_storage *dat, char *line, int *elements,
+					bool floor);
 int				map_mode(t_storage *dat, size_t lines, int fd, int map_fd);
 int				check_map(t_storage *dat);
+int				store_textures_paths(t_compass dir, char **texture_paths,
+					char *line, int *elements);
+int				wfc(t_storage *dat, char **texture_paths, char *line,
+					int *elements);
 //Rayyy casting:
 bool			collide_horizontal(t_coordinates *rh, t_player *player,
 					t_storage *dat, t_dir dir);
@@ -252,6 +258,7 @@ void			mini_map_window(t_storage *dat, int *x, int *y);
 void			minimap(t_storage *dat);
 void			draw_player(double x, double y, t_storage *data);
 void			fill_tile(t_storage *data, int px, int py, int colour);
+void			free_txt(char **texture_paths);
 //Error and cleanup funcs
 void			ft_error(const char *msg, bool perr);
 #endif

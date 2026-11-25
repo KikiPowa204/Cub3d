@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 12:52:45 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/25 10:52:32 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 15:05:36 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,23 @@ int	char_into_int_colours(int z, char *colour, t_colours *rgb)
 	else if (z == 2)
 		rgb->blue = ft_atoi(colour);
 	if (rgb->red > 255 || rgb->green > 255 || rgb->blue > 255)
-		return(ft_error("Invalid RGB value - higher than 255", false), 1);
+		return (ft_error("Invalid RGB value - higher than 255", false), 1);
 	else
-	 	return (0);
+		return (0);
 }
 
 int	parse_rgb_number(int *i, char *colour, char *line)
 {
 	int	j;
-	
+
 	j = 0;
 	while (j < 3 && line[*i] != ',' && line[*i] != '\n')
 	{
 		if (ft_isdigit(line[*i]))
 			colour[j] = line[*i];
 		else
-			return (ft_error("Wall or ceiling colours aren't positive numbers", false),
+			return (ft_error
+				("Wall or ceiling colours aren't positive numbers", false),
 				1);
 		(*i)++;
 		j++;
@@ -47,10 +48,9 @@ int	parse_rgb_number(int *i, char *colour, char *line)
 
 int	parse_rgb_block(int *i, char *line, t_colours *rgb)
 {
-	
 	int		z;
 	char	colour[4];
-	
+
 	z = 0;
 	while (line[*i] != ' ' && line[*i] != '\n' && line[*i])
 	{
@@ -70,9 +70,9 @@ int	parse_rgb_block(int *i, char *line, t_colours *rgb)
 
 int	get_colour(t_storage *dat, char *line, int *elements, bool floor)
 {
-	int 		i;
+	int			i;
 	t_colours	rgb;
-	
+
 	i = 2;
 	ft_bzero(&rgb, sizeof(t_colours));
 	while (line[i] == ' ')
@@ -90,5 +90,5 @@ int	get_colour(t_storage *dat, char *line, int *elements, bool floor)
 	}
 	else
 		return (ft_error("Wall or ceiling line contains unexpected"
-			" information", false), 1);
+				" information", false), 1);
 }

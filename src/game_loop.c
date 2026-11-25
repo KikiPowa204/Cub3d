@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 12:13:40 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/17 14:43:08 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 11:18:46 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	move(t_storage *dat, t_player *player, double orient_x, double orient_y)
 	double	dx;
 	double	dy;
 
-	dx = orient_x * (double)SPEED;
-	dy = orient_y * (double)SPEED;
+	dx = orient_x * (double)player->speed;
+	dy = orient_y * (double)player->speed;
 	if (!is_wall(player->x + dx + copysign(0.2, dx), player->y, dat))
 		player->x += dx;
 	if (!is_wall(player->x, player->y + dy + copysign(0.2, dy), dat))

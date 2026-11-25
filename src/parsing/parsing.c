@@ -6,62 +6,14 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/13 12:48:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/25 11:02:52 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 14:30:08 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	store_texture_paths(t_compass dir, char **texture_paths, char *line, int *elements)
-{
-	int	i;
-	int	j;
-	size_t	len;
-
-	i = 3;
-	while(line[i] == ' ')
-		i++;
-	len = ft_strlen(&line[i]);
-	if (texture_paths[dir] != NULL)
-		return (ft_error("Multiple listing of same texture", false), 1);
-	texture_paths[dir] = malloc(len);
-	if (!texture_paths[dir])
-		return (ft_error("Malloc for texture_path failed", true), 1);
-	j = 0;
-	while(line[i] != ' ' && line[i] != '\n' && line[i])
-	{
-		texture_paths[dir][j] = line[i];
-		j++;
-		i++;
-	}
-	while(line[i] == ' ')
-		i++;
-	if (line[i] == '\n')
-		return ((*elements)++, texture_paths[dir][j] = 0, 0);
-	else
-		return (ft_error("Texture path not continuous", false), 1);
-}
-
-int	wfc(t_storage *dat, char **texture_paths, char *line, int *elements)
-{
-	if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
-		return (store_texture_paths(NO, texture_paths, line, elements));
-	else if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
-		return (store_texture_paths(SO, texture_paths, line, elements));
-	else if (line[0] == 'E' && line[1] == 'A' && line[2] == ' ')
-		return (store_texture_paths(EA, texture_paths, line, elements));
-	else if (line[0] == 'W' && line[1] == 'E' && line[2] == ' ')
-		return (store_texture_paths(WE, texture_paths, line, elements));
-	else if (line[0] == 'F' && line[1] == ' ')
-		return (get_colour(dat, line, elements, true));
-	else if (line[0] == 'C' && line[1] == ' ')
-		return (get_colour(dat, line, elements, false));
-	return (ft_error("Invalid input in description file", false), 1);
-}
-
 int	handle_line(t_storage *dat, char **texture_paths, char *line, int *elements)
 {
-	//printf("Amount of elements:%d Line:%s\n", *elements, line);
 	if (line[0] == '\n')
 		return (0);
 	if (ft_strlen(line) <= 3)
@@ -74,35 +26,32 @@ int	parse_through(t_storage *dat, char **texture_paths, int fd, int map_fd)
 	char	*line;
 	int		elements;
 	size_t	lines;
-	
+
 	lines = 0;
 	elements = 0;
-	while(42)
+	while (42)
 	{
 		errno = 0;
 		line = get_next_line(fd);
 		if (errno != 0)
 			return (ft_error("Read failed", true), free(line), 1);
 		if (!line)
-			return (ft_error("Description file has missing elements", false), 1);
+			return (ft_error("Description file has missing element", false), 1);
 		if (line[0] != '\n' && elements == 6)
-		{
-			free(line);
 			break ;
-		}
 		lines++;
 		if (handle_line(dat, texture_paths, line, &elements))
 			return (free(line), 1);
 		free(line);
 	}
 	if (map_mode(dat, lines, fd, map_fd))
-		return (1);
-	return (0);
+		return (free(line), 1);
+	return (free(line), 0);
 }
 
 int	check_path_ending(char *path)
 {
-	size_t len;
+	size_t	len;
 
 	len = ft_strlen(path);
 	if (len < 4)
@@ -141,6 +90,6 @@ int	parse_description_file(char *path, t_storage *dat, char **texture_paths)
 		return (ft_error("Description file could not be opened", true),
 			close(fd), 1);
 	if (parse_through(dat, texture_paths, fd, map_fd))
-		return (close(fd), close(map_fd), free_txt(texture_paths), 1);
+		return (close(fd), close(map_fd), 1);
 	return (close(fd), close(map_fd), 0);
 }

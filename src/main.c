@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/25 11:09:19 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 15:02:37 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ int	init(t_player *player, t_storage *dat, t_constants *img_mini,
 	ft_bzero(dat, sizeof(t_storage));
 	ft_bzero(img_mini, sizeof(t_constants));
 	ft_bzero(img3d, sizeof(t_constants));
+	dat->img_mini = img_mini;
+	dat->img_3d = img3d;
+	dat->player = player;
 	dat->mlx_ptr = mlx_init();
 	if (!dat->mlx_ptr)
 		return (0);
-	dat->img_mini = img_mini;
-	dat->img_3d = img3d;
 	dat->floor_c = -1;
 	dat->ceiling_c = -1;
-	dat->player = player;
+	player->speed = SPEED;
 	player->dir = -1;
 	return (1);
 }
@@ -47,18 +48,22 @@ void	store_texture_addresses(t_storage *dat)
 			&dat->walls.west.endian);
 }
 
-
 int	init_textures(t_storage	*dat, char **texture_paths)
 {
-	dat->walls.north.txt_ptr = mlx_xpm_file_to_image(dat->mlx_ptr, texture_paths[NO], &dat->walls.north.width, &dat->walls.north.height);
-	free(texture_paths[NO]);
-	dat->walls.south.txt_ptr = mlx_xpm_file_to_image(dat->mlx_ptr, texture_paths[SO], &dat->walls.south.width, &dat->walls.south.height);
-	free(texture_paths[SO]);
-	dat->walls.west.txt_ptr = mlx_xpm_file_to_image(dat->mlx_ptr, texture_paths[WE], &dat->walls.west.width, &dat->walls.west.height);
-	free(texture_paths[WE]);
-	dat->walls.east.txt_ptr = mlx_xpm_file_to_image(dat->mlx_ptr, texture_paths[EA], &dat->walls.east.width, &dat->walls.east.height);
-	free(texture_paths[EA]);
-	if (dat->walls.north.txt_ptr && dat->walls.south.txt_ptr && dat->walls.west.txt_ptr && dat->walls.east.txt_ptr)
+	dat->walls.north.txt_ptr = mlx_xpm_file_to_image(dat->mlx_ptr,
+			texture_paths[NO], &dat->walls.north.width,
+			&dat->walls.north.height);
+	dat->walls.south.txt_ptr = mlx_xpm_file_to_image(dat->mlx_ptr,
+			texture_paths[SO], &dat->walls.south.width,
+			&dat->walls.south.height);
+	dat->walls.west.txt_ptr = mlx_xpm_file_to_image(dat->mlx_ptr,
+			texture_paths[WE], &dat->walls.west.width,
+			&dat->walls.west.height);
+	dat->walls.east.txt_ptr = mlx_xpm_file_to_image(dat->mlx_ptr,
+			texture_paths[EA], &dat->walls.east.width,
+			&dat->walls.east.height);
+	if (dat->walls.north.txt_ptr && dat->walls.south.txt_ptr
+		&& dat->walls.west.txt_ptr && dat->walls.east.txt_ptr)
 	{
 		store_texture_addresses(dat);
 		return (1);
@@ -69,14 +74,6 @@ int	init_textures(t_storage	*dat, char **texture_paths)
 
 int	mlx_setup(t_constants *img_mini, t_constants *img_3d, t_storage *dat)
 {
-	if (dat->max_h > MINI_VIEW)
-		dat->mini.mini_h = MINI_VIEW;
-	else
-		dat->mini.mini_h = dat->max_h;
-	if (dat->max_w > MINI_VIEW)
-		dat->mini.mini_w = MINI_VIEW;
-	else
-		dat->mini.mini_w = dat->max_w;
 	dat->win_ptr = mlx_new_window(dat->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT,
 			"cub3D");
 	if (!dat->win_ptr)
@@ -88,18 +85,15 @@ int	mlx_setup(t_constants *img_mini, t_constants *img_3d, t_storage *dat)
 	img_3d->img_ptr = mlx_new_image(dat->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!img_3d->img_ptr)
 		return (0);
-	img_mini->addr = mlx_get_data_addr(img_mini->img_ptr, &img_mini->bits_per_pixel,
+	img_mini->addr = mlx_get_data_addr
+		(img_mini->img_ptr, &img_mini->bits_per_pixel,
 			&img_mini->line_length, &img_mini->endian);
-	if (!img_mini->addr)
-		return (0);
 	img_3d->addr = mlx_get_data_addr(img_3d->img_ptr, &img_3d->bits_per_pixel,
 			&img_3d->line_length, &img_3d->endian);
-	if (!img_3d->addr)
-		return (0);
 	return (1);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_constants	img_mini;
 	t_constants	img_3d;
@@ -107,25 +101,14 @@ int main(int ac, char **av)
 	t_storage	dat;
 	char		*texture_paths[4];
 
-	//validity checker part 1
-	//parsing
-	//validity checker part 2
 	if (ac != 2)
 		return (ft_error("Incorrect amount of arguments", false), 1);
 	if (!init(&player, &dat, &img_mini, &img_3d)
-			|| parse_description_file(av[1], &dat, texture_paths)
-			|| !mlx_setup(&img_mini, &img_3d, &dat)
-			|| !init_textures(&dat, texture_paths))
-		return (cleanup(&dat), 1);
-	/*img.mlx_ptr = mlx_init();
-	if (!init_textures(&dat, texture_paths))
-		return (1);*/
+		|| parse_description_file(av[1], &dat, texture_paths)
+		|| !mlx_setup(&img_mini, &img_3d, &dat)
+		|| !init_textures(&dat, texture_paths))
+		return (free_txt(texture_paths), cleanup(&dat), 1);
+	free_txt(texture_paths);
 	setup_hooks(&dat);
 	mlx_loop(dat.mlx_ptr);
 }
-/*
-	mlx_destroy_image(dat.mlx_ptr, dat.img_mini);
-	mlx_destroy_window(dat.mlx_ptr, dat.win_ptr);
-	mlx_destroy_display(dat.mlx_ptr);
-	free(dat.mlx_ptr);
-}*/

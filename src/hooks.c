@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 10:02:37 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/18 12:33:52 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 11:18:00 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	stop_player(int keycode, t_storage *dat)
 		dat->player->turn_left = false;
 	else if (keycode == XK_Right)
 		dat->player->turn_right = false;
+	else if (keycode == XK_Shift_L)
+		dat->player->speed = SPEED;
 	recalc_player_pos(dat, dat->player);
 	return (1);
 }
@@ -46,6 +48,8 @@ int	move_player(int keycode, t_storage *dat)
 		dat->player->turn_left = true;
 	else if (keycode == XK_Right)
 		dat->player->turn_right = true;
+	else if (keycode == XK_Shift_L)
+		dat->player->speed += SPEED;
 	recalc_player_pos(dat, dat->player);
 	return (1);
 }

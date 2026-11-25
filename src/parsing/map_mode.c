@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 17:23:04 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/25 11:08:18 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 15:00:46 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 int	check_size(size_t lines, int fd, size_t start_map, t_storage *dat)
 {
 	char	*line;
-	int	curr_len;
-	
+	int		curr_len;
+
 	errno = 0;
 	while (42)
 	{
@@ -34,7 +34,7 @@ int	check_size(size_t lines, int fd, size_t start_map, t_storage *dat)
 		lines++;
 		if ((lines - start_map) * dat->max_w > INT_MAX)
 			return (ft_error("Map is too big (more than INT_MAX tiles)",
-				false), free(line), 1);
+					false), free(line), 1);
 		free(line);
 	}
 	dat->max_h = lines - start_map + 1;
@@ -45,7 +45,7 @@ void	copy_line(char **map_pos, char *line, int width)
 {
 	int	line_len;
 	int	rest;
-	
+
 	line_len = ft_strlen(line);
 	if (line_len > 0 && line[line_len - 1] == '\n')
 		line_len--;
@@ -55,37 +55,44 @@ void	copy_line(char **map_pos, char *line, int width)
 	*map_pos += width;
 }
 
-int	copy_map(t_storage *dat, int map_fd, size_t	start_map)
+int	skip_ahead(int map_fd, size_t start_map)
 {
 	size_t	lines;
 	char	*line;
-	char	*map_pos;
-	
+
 	errno = 0;
 	lines = 0;
-	map_pos = dat->map;
-	while (42)
+	while (lines++ <= start_map - 1)
 	{
 		line = get_next_line(map_fd);
-		//printf("Line: %s.\nMap:%s.\n", line, dat->map);
 		if (errno != 0)
 			return (ft_error("Read failed", true), free(line), 1);
-		if (!line)
-			break ;
-		lines++;
-		if (lines <= start_map)
-		{
-			free(line);
-			continue ;
-		}
-		if (line[0] == '\n')
-			return (ft_error("Empty line in map", false), free(line), 1);
-		//if (lines > start_map)
-		copy_line(&map_pos, line, dat->max_w);
 		free(line);
 	}
-	*map_pos = 0;
 	return (0);
+}
+
+int	copy_map(t_storage *dat, int map_fd, size_t	start_map)
+{
+	char	*line;
+	char	*map_pos;
+
+	errno = 0;
+	map_pos = dat->map;
+	if (skip_ahead(map_fd, start_map))
+		return (1);
+	line = get_next_line(map_fd);
+	while (line)
+	{
+		if (line[0] == '\n')
+			return (ft_error("Empty line in map", false), free(line), 1);
+		copy_line(&map_pos, line, dat->max_w);
+		free(line);
+		line = get_next_line(map_fd);
+		if (!line && errno)
+			return (ft_error("Read failed", true), free(line), 1);
+	}
+	return (free(line), *map_pos = 0, 0);
 }
 
 int	map_mode(t_storage *dat, size_t lines, int fd, int map_fd)
@@ -96,6 +103,14 @@ int	map_mode(t_storage *dat, size_t lines, int fd, int map_fd)
 	start_map = lines;
 	if (check_size(lines, fd, start_map, dat))
 		return (1);
+	if (dat->max_h > MINI_VIEW)
+		dat->mini.mini_h = MINI_VIEW;
+	else
+		dat->mini.mini_h = dat->max_h;
+	if (dat->max_w > MINI_VIEW)
+		dat->mini.mini_w = MINI_VIEW;
+	else
+		dat->mini.mini_w = dat->max_w;
 	dat->map = malloc(dat->max_w * dat->max_h + 1);
 	if (!dat->map)
 		return (ft_error("Mallocation of map failed", true), 1);

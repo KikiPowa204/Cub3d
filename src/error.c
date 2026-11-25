@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/13 13:02:50 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/25 10:49:21 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 12:29:36 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_error(const char *msg, bool perr)
 	{
 		write(2, msg, len);
 		write(2, "\n", 1);
-	}	
+	}
 	else
 		perror(msg);
 }
