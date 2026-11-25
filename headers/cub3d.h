@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/24 12:00:10 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/24 12:51:22 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # include <sys/time.h>
 # include "libft.h"
 # include <X11/keysym.h>
+# include <stdio.h> //perror
+# include <sys/stat.h> //open
+# include <fcntl.h> //open
+# include <errno.h> // errno
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
@@ -30,15 +34,44 @@
 # define THREE_HALF_PI 4.7123889804
 # define TILE_SIZE 30
 # define PLAYER_SIZE 8
-# define WALL 1
-# define FLOOR 0
+# define WALL '1'
+# define FLOOR '0'
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
 # define DESTROY_NOTIFY 17
 # define SPEED 0.05
 # define MINI_VIEW 10
 
-typedef struct s_algo
+# define BUFFER_SIZE 10
+//# define FPS 60
+
+//Parsing
+typedef enum	e_compass
+{
+	NO,
+	SO,
+	WE,
+	EA
+}	t_compass;
+
+typedef struct	s_colours
+{
+	int	red;
+	int	green;
+	int	blue;
+}	t_colours;
+
+//Execution
+
+typedef enum	e_voh
+{
+	none,
+	hor,
+	ver,
+	both
+}				t_voh;
+
+typedef struct	s_algo
 {
 	int	dx;
 	int	dy;
@@ -156,9 +189,21 @@ typedef struct s_storage
 	t_walls			walls;
 	int				max_w;
 	int				max_h;
+	int				floor_c;
+	int				ceiling_c;
 	t_minimap		mini;
 }				t_storage;
 
+//Parsing:
+int				parse_description_file(char *path, t_storage *dat, char **texture_paths);
+int				ft_str_i(const char *s, int c);
+char			*ft_strjoin2(char *s1, char const *s2);
+char			*get_next_line(int fd);
+int				get_colour(t_storage *dat, char *line, int *elements, bool floor);
+int				rgb_to_int(t_storage *dat, t_colours *rgb, bool floor);
+int				get_colour(t_storage *dat, char *line, int *elements, bool floor);
+int				map_mode(t_storage *dat, size_t lines, int fd, int map_fd);
+int				check_map(t_storage *dat);
 //Rayyy casting:
 bool			collide_horizontal(t_coordinates *rh, t_player *player,
 					t_storage *dat, t_dir dir);
@@ -207,5 +252,6 @@ void			mini_map_window(t_storage *dat, int *x, int *y);
 void			minimap(t_storage *dat);
 void			draw_player(double x, double y, t_storage *data);
 void			fill_tile(t_storage *data, int px, int py, int colour);
-
+//Error and cleanup funcs
+void			error(const char *msg, bool perr);
 #endif

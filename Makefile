@@ -16,7 +16,9 @@ HEADER_DIR := headers/
 SRCS_main := main.c hooks.c main_stage.c game_loop.c draw_funcs.c ray_casting.c ray_casting_helpers.c \
 			calc_utils.c cone_casting.c model3d.c cleanup.c utils.c model3d_utils.c math_utils.c \
 			ray_casting_quadrants.c minimap.c
-SRCS := $(SRCS_main)
+SRCS_parsing := parsing.c get_next_line_utils.c get_next_line.c rgb_to_int.c map_mode.c \
+				map_validation.c floor_ceiling_colours.c
+SRCS := $(SRCS_main) $(addprefix parsing/, $(SRCS_parsing))
 SRCS := $(addprefix $(SRCS_DIR), $(SRCS))
 OBJS := $(patsubst $(SRCS_DIR)%.c, $(OBJ_DIR)%.o, $(SRCS))
 DEPS := $(patsubst $(SRCS_DIR)%.c, $(DEP_DIR)%.d, $(SRCS))
