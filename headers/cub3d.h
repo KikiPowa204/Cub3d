@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/24 12:51:22 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 10:49:47 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,5 +253,5 @@ void			minimap(t_storage *dat);
 void			draw_player(double x, double y, t_storage *data);
 void			fill_tile(t_storage *data, int px, int py, int colour);
 //Error and cleanup funcs
-void			error(const char *msg, bool perr);
+void			ft_error(const char *msg, bool perr);
 #endif

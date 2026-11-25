@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/28 10:16:53 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/25 10:05:59 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 11:09:19 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	init(t_player *player, t_storage *dat, t_constants *img_mini,
 	ft_bzero(player, sizeof(t_player));
 	ft_bzero(dat, sizeof(t_storage));
 	ft_bzero(img_mini, sizeof(t_constants));
+	ft_bzero(img3d, sizeof(t_constants));
 	dat->mlx_ptr = mlx_init();
 	if (!dat->mlx_ptr)
 		return (0);
@@ -50,11 +51,18 @@ void	store_texture_addresses(t_storage *dat)
 int	init_textures(t_storage	*dat, char **texture_paths)
 {
 	dat->walls.north.txt_ptr = mlx_xpm_file_to_image(dat->mlx_ptr, texture_paths[NO], &dat->walls.north.width, &dat->walls.north.height);
+	free(texture_paths[NO]);
 	dat->walls.south.txt_ptr = mlx_xpm_file_to_image(dat->mlx_ptr, texture_paths[SO], &dat->walls.south.width, &dat->walls.south.height);
+	free(texture_paths[SO]);
 	dat->walls.west.txt_ptr = mlx_xpm_file_to_image(dat->mlx_ptr, texture_paths[WE], &dat->walls.west.width, &dat->walls.west.height);
+	free(texture_paths[WE]);
 	dat->walls.east.txt_ptr = mlx_xpm_file_to_image(dat->mlx_ptr, texture_paths[EA], &dat->walls.east.width, &dat->walls.east.height);
+	free(texture_paths[EA]);
 	if (dat->walls.north.txt_ptr && dat->walls.south.txt_ptr && dat->walls.west.txt_ptr && dat->walls.east.txt_ptr)
-		return (store_texture_addresses(dat), 1);
+	{
+		store_texture_addresses(dat);
+		return (1);
+	}
 	else
 		return (0);
 }
@@ -103,7 +111,7 @@ int main(int ac, char **av)
 	//parsing
 	//validity checker part 2
 	if (ac != 2)
-		return (error("Incorrect amount of arguments", false), 1);
+		return (ft_error("Incorrect amount of arguments", false), 1);
 	if (!init(&player, &dat, &img_mini, &img_3d)
 			|| parse_description_file(av[1], &dat, texture_paths)
 			|| !mlx_setup(&img_mini, &img_3d, &dat)

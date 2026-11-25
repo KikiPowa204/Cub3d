@@ -6,16 +6,16 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/13 13:02:50 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/16 12:53:16 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/25 10:49:21 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	error(const char *msg, bool perr)
+void	ft_error(const char *msg, bool perr)
 {
 	size_t	len;
-	
+
 	len = ft_strlen(msg);
 	write(2, "Error\n", 6);
 	if (perr == false)

@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 17:23:04 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/25 08:20:52 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 11:08:18 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_size(size_t lines, int fd, size_t start_map, t_storage *dat)
 	{
 		line = get_next_line(fd);
 		if (errno != 0)
-			return (error("Read failed", true), free(line), 1);
+			return (ft_error("Read failed", true), free(line), 1);
 		if (!line)
 			break ;
 		curr_len = ft_strlen(line);
@@ -33,7 +33,7 @@ int	check_size(size_t lines, int fd, size_t start_map, t_storage *dat)
 			dat->max_w = curr_len;
 		lines++;
 		if ((lines - start_map) * dat->max_w > INT_MAX)
-			return (error("Map is too big (more than INT_MAX tiles)",
+			return (ft_error("Map is too big (more than INT_MAX tiles)",
 				false), free(line), 1);
 		free(line);
 	}
@@ -69,15 +69,17 @@ int	copy_map(t_storage *dat, int map_fd, size_t	start_map)
 		line = get_next_line(map_fd);
 		//printf("Line: %s.\nMap:%s.\n", line, dat->map);
 		if (errno != 0)
-			return (error("Read failed", true), free(line), 1);
+			return (ft_error("Read failed", true), free(line), 1);
 		if (!line)
 			break ;
 		lines++;
 		if (lines <= start_map)
+		{
+			free(line);
 			continue ;
+		}
 		if (line[0] == '\n')
-			return (error("Empty line in map", false), 
-				free(line), 1);
+			return (ft_error("Empty line in map", false), free(line), 1);
 		//if (lines > start_map)
 		copy_line(&map_pos, line, dat->max_w);
 		free(line);
@@ -96,10 +98,10 @@ int	map_mode(t_storage *dat, size_t lines, int fd, int map_fd)
 		return (1);
 	dat->map = malloc(dat->max_w * dat->max_h + 1);
 	if (!dat->map)
-		return (error("Mallocation of map failed", true), 1);
+		return (ft_error("Mallocation of map failed", true), 1);
 	if (copy_map(dat, map_fd, start_map))
-		return (free(dat->map), 1);
+		return (1);
 	if (check_map(dat))
-		return (free(dat->map), 1);
+		return (1);
 	return (0);
 }

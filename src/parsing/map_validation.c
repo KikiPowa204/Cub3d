@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/18 13:58:33 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/25 08:22:18 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 10:52:00 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	set_dir(t_storage *dat, double angle, int x, int y)
 int	add_player_dir(t_storage *dat, char	dir, t_pix *inmap)
 {
 	if (dat->player->dir != -1)
-		return (error("Multiple player positions", false), 1);
+		return (ft_error("Multiple player positions", false), 1);
 	dat->player->x = inmap->x + 0.5;
 	dat->player->y = inmap->y + 0.5;
 	if (dir == 'N')
@@ -74,13 +74,13 @@ int	check_map(t_storage *dat)
 		if (map[i] == '0' || is_player(map[i]))
 		{
 			if (check_wall(map, i, dat, &inmap))
-				return (error("Map is not surrounded by walls", false), 1);
+				return (ft_error("Map is not surrounded by walls", false), 1);
 			if (is_player(map[i]))
 				if (add_player_dir(dat, map[i], &inmap))
 					return (1);
 		}
 		else if (map[i] != '1' && map[i] != ' ')
-			return (error("Unexpected character in map", false), 1);
+			return (ft_error("Unexpected character in map", false), 1);
 		i++;
 	}
 	return (0);

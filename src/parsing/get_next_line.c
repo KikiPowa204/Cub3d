@@ -3,144 +3,151 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
+/*   By: knajmech <knajmech@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/18 12:43:51 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/19 12:32:24 by bastalze         ###   ########.fr       */
+/*   Created: 2025/11/11 09:44:25 by knajmech          #+#    #+#             */
+/*   Updated: 2026/11/25 10:31:44 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3d.h"
+#include "get_next_line.h"
 
-char	*remainder_from_end(char *remainder, char *line)
+char	*ft_resize(char *line, t_l *node, unsigned int term)
 {
-	size_t	i;
-	size_t	j;
+	char	*new;
+	int		i;
 
+	new = malloc((node->l_index + node->bytes_read + 1) * sizeof(char));
+	if (!new)
+		return (free(new), free(line), NULL);
 	i = 0;
-	while (line[i] != '\n')
-		i++;
-	i++;
-	j = 0;
-	while (line[i + j] != 0)
+	while (i <= node->l_index)
 	{
-		remainder[j] = line[i + j];
-		j++;
-	}
-	remainder[j] = 0;
-	line[i] = 0;
-	return (line);
-}
-
-char	*remainder_to_start(char *remainder)
-{
-	char	*line;
-
-	line = malloc(1);
-	if (!line)
-		return (NULL);
-	line[0] = 0;
-	line = ft_strjoin2(line, remainder);
-	remainder[0] = 0;
-	return (line);
-}
-
-char	*find_nl(char *remainder, char *buffer, int fd)
-{
-	int		b_read;
-	char	*line;
-
-	line = remainder_to_start(remainder);
-	if (!line)
-		return (NULL);
-	while (1)
-	{
-		b_read = read(fd, buffer, BUFFER_SIZE);
-		if (b_read <= 0)
-			break ;
-		buffer[b_read] = 0;
-		line = ft_strjoin2(line, buffer);
-		if (!line)
-			return (NULL);
-		if (ft_str_i(buffer, '\n') != 0)
-			return (remainder_from_end(remainder, line));
-		else if (b_read < BUFFER_SIZE)
-			return (line);
-	}
-	if (ft_strlen(line) == 0)
-		return (free(line), NULL);
-	return (line);
-}
-
-char	*nl_in_remainder(char *remainder)
-{
-	char	*line;
-	size_t	i;
-	size_t	j;
-
-	line = malloc(BUFFER_SIZE + 1);
-	if (!line)
-		return (NULL);
-	i = 0;
-	while (remainder[i] != '\n')
-	{
-		line[i] = remainder[i];
+		new[i] = line[i];
 		i++;
 	}
-	line[i] = '\n';
-	i++;
-	line[i] = 0;
-	j = 0;
-	while (remainder[i + j] != 0)
-	{
-		remainder[j] = remainder[i + j];
-		j++;
-	}
-	remainder[j] = 0;
+	if (term)
+		new[i] = '\0';
+	free(line);
+	line = new;
 	return (line);
+}
+
+char	*last_run(t_l *node, char *line)
+{
+	if (node->l_index)
+		line = ft_resize(line, node, 0);
+	if (!line)
+		return (NULL);
+	while (node->b_index < node->bytes_read)
+	{
+		line[node->l_index] = node->buff[node->b_index];
+		if (line[node->l_index] == '\n')
+		{
+			if (node->b_index + 1 == node->bytes_read)
+				node->start = 0;
+			return (node->b_index++, line[node->l_index + 1] = '\0', line);
+		}
+		node->b_index++;
+		node->l_index++;
+	}
+	line[node->l_index] = '\0';
+	node->start = 0;
+	return (line);
+}
+
+void	read_buff(int fd, t_l *node)
+{
+	if (!node->start)
+	{
+		node->bytes_read = read(fd, node->buff, BUFFER_SIZE);
+		if (node->bytes_read <= 0)
+		{
+			node->start = 0;
+			return ;
+		}
+		node->start = 1;
+		return ;
+	}
+	else if (node->start == 1)
+	{
+		node->bytes_read = read(fd, node->buff, BUFFER_SIZE);
+		if (node->bytes_read == 0)
+			node->start = 2;
+		else if (node->bytes_read < 0)
+			node->start = 0;
+		return ;
+	}
+}
+
+char	*get_nl(int fd, char *line, t_l *node)
+{
+	while (node->bytes_read > 0 || !node->start)
+	{
+		if (!node->b_index)
+			read_buff(fd, node);
+		if (!node->start)
+			return (free(line), NULL);
+		if (node->start == 2)
+			return (last_run(node, line));
+		line[node->l_index] = node->buff[node->b_index];
+		if (line[node->l_index] == '\n')
+		{
+			line = ft_resize(line, node, 1);
+			return (node->b_index++, line);
+		}
+		node->b_index++;
+		node->l_index++;
+		if (node->b_index >= node->bytes_read)
+		{
+			line = ft_resize(line, node, 0);
+			if (!line)
+				return (NULL);
+			node->b_index = 0;
+		}
+	}
+	return (ft_resize(line, node, 1));
 }
 
 char	*get_next_line(int fd)
 {
-	static char	remainder[BUFFER_SIZE + 1];
-	static char	buffer[BUFFER_SIZE + 1];
+	static t_l	node[1024];
+	char		*line;
 
-	buffer[0] = 0;
-	if (ft_str_i(remainder, '\n') != 0)
-		return (nl_in_remainder(remainder));
-	else
-		return (find_nl(remainder, buffer, fd));
+	line = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!line || fd < 0)
+		return (free(line), NULL);
+	line[BUFFER_SIZE] = '\0';
+	if (node->start == 2)
+		return (last_run(&node[fd], line));
+	line = get_nl(fd, line, &node[fd]);
+	if (node[fd].b_index >= node[fd].bytes_read)
+		node[fd].b_index = 0;
+	node[fd].l_index = 0;
+	if (node[fd].bytes_read == 0 && BUFFER_SIZE == 1)
+		node[fd].start = 0;
+	if (!line)
+		return (NULL);
+	if (node[fd].bytes_read == 0 && line[0] == '\0')
+		return (free(line), NULL);
+	return (line);
 }
-
 /*
-#include <stdio.h>
 #include <fcntl.h>
-
-int main(void)
+#include <stdio.h>
+int main(int argc, char **argv)
 {
-	int fd;
-	char *result;
-
-	fd = open("empty1.txt", O_RDONLY);
-	if (fd == -1)
-		return 1;
-//	result = get_next_line(fd);
-//	if (result == NULL)
-//		printf("NULL");
+	int fd = open(argv[1], O_RDONLY);
+	int run;
+	char *result = "default";
+	
+	argc = 0;
+	run = 0;
 	while ((result = get_next_line(fd)))
 	{
-		printf("%s\n", result);
+		printf("line: %s", result);
+		run++;
 		free(result);
 	}
-	close(fd);
-	return 0;
-}
-*/
-/*
-#include <stdio.h>
-
-int main(void)
-{
-	printf("%s", (get_next_line(1)));
-}
-*/
+	//close(fd);
+}*/
