@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 10:45:44 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/24 11:57:39 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 08:23:37 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	grab_player_coordinates(t_storage *dat)
 		x = 0;
 		while (x < dat->max_w)
 		{
-			if (map[y * dat->max_w + x] == 'N')
+			if (dat->map[y * dat->max_w + x] == 'N')
 				fill_player_values(dat->player, x, y, NORTH);
-			if (map[y * dat->max_w + x] == 'S')
+			if (dat->map[y * dat->max_w + x] == 'S')
 				fill_player_values(dat->player, x, y, SOUTH);
-			if (map[y * dat->max_w + x] == 'W')
+			if (dat->map[y * dat->max_w + x] == 'W')
 				fill_player_values(dat->player, x, y, WEST);
-			if (map[y * dat->max_w + x] == 'E')
+			if (dat->map[y * dat->max_w + x] == 'E')
 				fill_player_values(dat->player, x, y, EAST);
 			x++;
 		}

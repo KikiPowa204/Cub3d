@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/18 13:58:33 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/24 12:22:45 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/25 08:22:18 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,17 @@ int	is_player(char mapi)
 
 int	check_wall(char	*map, int i, t_storage *dat, t_pix *inmap)
 {
-	inmap->x = i % dat->img->max_w;
-	inmap->y = i / dat->img->max_w;
+	inmap->x = i % dat->max_w;
+	inmap->y = i / dat->max_w;
 	//printf("x:%d, y:%d\n", inmap->x, inmap->y);
 	//printf("dat->img->max_w:%d, dat->img->max_h:%d\n", dat->img->max_w, dat->img->max_h);
 	//printf("map[i - 1]:%c, map[i + 1]:%c, map[i - dat->img->max_w]:%c, map[i + dat->img->max_w]:%c\n",
 	//	map[i - 1], map[i + 1], map[i - dat->img->max_w], map[i + dat->img->max_w]);
-	if (inmap->x == 0 || inmap->y == 0 || inmap->x + 1 == dat->img->max_w
-			|| inmap->y + 1 == dat->img->max_h)
+	if (inmap->x == 0 || inmap->y == 0 || inmap->x + 1 == dat->max_w
+			|| inmap->y + 1 == dat->max_h)
 		return (1);
-	else if (map[i - 1] == ' ' || map[i + 1] == ' ' || map[i - dat->img->max_w] == ' '
-		|| map[i + dat->img->max_w] == ' ')
+	else if (map[i - 1] == ' ' || map[i + 1] == ' ' || map[i - dat->max_w] == ' '
+		|| map[i + dat->max_w] == ' ')
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 12:34:52 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/25 08:17:26 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/25 08:22:48 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	is_wall(double x, double y, t_storage *d)
 {
 	if (x < 0 || y < 0 || x >= d->max_w || y >= d->max_h)
 		return (true);
-	return (map[(int)y * d->max_w + (int)x] == WALL);
+	return (d->map[(int)y * d->max_w + (int)x] == WALL);
 }
 
 bool	collide_horizontal(t_coordinates *rh, t_player *player,
