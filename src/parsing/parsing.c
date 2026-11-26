@@ -81,7 +81,6 @@ int	parse_description_file(char *path, t_storage *dat, char **texture_paths)
 
 	if (check_path_ending(path))
 		return (1);
-	ft_bzero(texture_paths, sizeof(char *) * 4);
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (ft_error("Description file could not be opened", true), 1);

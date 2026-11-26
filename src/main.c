@@ -24,7 +24,7 @@ int	init(t_player *player, t_storage *dat, t_constants *img_mini,
 	dat->player = player;
 	dat->mlx_ptr = mlx_init();
 	if (!dat->mlx_ptr)
-		return (0);
+		return (ft_error("mlx_init", false), 0);
 	dat->floor_c = -1;
 	dat->ceiling_c = -1;
 	player->speed = SPEED;
@@ -64,12 +64,9 @@ int	init_textures(t_storage	*dat, char **texture_paths)
 			&dat->walls.east.height);
 	if (dat->walls.north.txt_ptr && dat->walls.south.txt_ptr
 		&& dat->walls.west.txt_ptr && dat->walls.east.txt_ptr)
-	{
-		store_texture_addresses(dat);
-		return (1);
-	}
+		return (store_texture_addresses(dat), 1);
 	else
-		return (0);
+		return (ft_error("xpm image failure", false), 0);
 }
 
 int	mlx_setup(t_constants *img_mini, t_constants *img_3d, t_storage *dat)
@@ -77,14 +74,14 @@ int	mlx_setup(t_constants *img_mini, t_constants *img_3d, t_storage *dat)
 	dat->win_ptr = mlx_new_window(dat->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT,
 			"cub3D");
 	if (!dat->win_ptr)
-		return (0);
+		return (ft_error("mlx window error", false), 0);
 	dat->img_mini->img_ptr = mlx_new_image(dat->mlx_ptr,
 			dat->mini.mini_w * TILE_SIZE, TILE_SIZE * dat->mini.mini_h);
 	if (!img_mini->img_ptr)
-		return (0);
+		return (ft_error("img creation", false), 0);
 	img_3d->img_ptr = mlx_new_image(dat->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!img_3d->img_ptr)
-		return (0);
+		return (ft_error("img creation", false), 0);
 	img_mini->addr = mlx_get_data_addr
 		(img_mini->img_ptr, &img_mini->bits_per_pixel,
 			&img_mini->line_length, &img_mini->endian);
@@ -103,6 +100,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		return (ft_error("Incorrect amount of arguments", false), 1);
+	ft_bzero(texture_paths, sizeof(char *) * 4);	
 	if (!init(&player, &dat, &img_mini, &img_3d)
 		|| parse_description_file(av[1], &dat, texture_paths)
 		|| !mlx_setup(&img_mini, &img_3d, &dat)
