@@ -100,7 +100,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		return (ft_error("Incorrect amount of arguments", false), 1);
-	ft_bzero(texture_paths, sizeof(char *) * 4);	
+	ft_bzero(texture_paths, sizeof(char *) * 4);
 	if (!init(&player, &dat, &img_mini, &img_3d)
 		|| parse_description_file(av[1], &dat, texture_paths)
 		|| !mlx_setup(&img_mini, &img_3d, &dat)
