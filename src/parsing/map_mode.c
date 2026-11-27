@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 17:23:04 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/27 17:47:23 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/27 18:52:42 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int	copy_map(t_storage *dat, int map_fd, size_t	start_map)
 		if (line[0] == '\n')
 			nl = true;
 		if (line[0] != '\n' && nl)
-			return (ft_error("Empty line in map", false), free(line), 1);
+			return (ft_error("Empty line in map or unwanted content in "
+				"desciption file", false), free(line), 1);
 		if (!nl)
 			copy_line(&map_pos, line, dat->max_w);
 		free(line);

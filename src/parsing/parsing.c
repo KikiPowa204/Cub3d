@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/13 12:48:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/27 17:46:50 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/27 18:37:04 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ int	check_path_ending(char *path)
 	size_t	len;
 
 	len = ft_strlen(path);
-	if (len < 4)
-		return (ft_error("Description file doesn't end in '.cub'", false), 1);
+	if (len == 4)
+		return (1);
 	path += (len - 4);
 	if (ft_strncmp(path, ".cub", 4))
-		return (ft_error("Description file doesn't end in '.cub'", false), 1);
+		return (1);
 	return (0);
 }
 
@@ -81,7 +81,7 @@ int	parse_description_file(char *path, t_storage *dat, char **texture_paths)
 	int	map_fd;
 
 	if (check_path_ending(path))
-		return (1);
+		return (ft_error("Description file doesn't end in '.cub'", false), 1);
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (ft_error("Description file could not be opened", true), 1);
