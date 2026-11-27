@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/18 13:58:33 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/27 12:36:57 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/27 18:01:09 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,9 @@ int	check_wall(char	*map, int i, t_storage *dat, t_pix *inmap)
 int	check_map(t_storage *dat)
 {
 	int		i;
-	bool	player_found;
 	char	*map;
 	t_pix	inmap;
 
-	player_found = false;
 	map = dat->map;
 	i = 0;
 	while (dat->map[i++])
@@ -75,13 +73,11 @@ int	check_map(t_storage *dat)
 				return (ft_error("Map is not surrounded by walls", false), 1);
 			if (is_player(map[i - 1]) && add_player_dir(dat, map[i -1], &inmap))
 				return (1);
-			else
-				player_found = true;
 		}
 		else if (map[i - 1] != '1' && map[i - 1] != ' ')
 			return (ft_error("Unexpected character in map", false), 1);
 	}
-	if (player_found == false)
-		return (1);
+	if (dat->player->dir == -1)
+		return (ft_error("Map has no player", false), 1);
 	return (0);
 }
