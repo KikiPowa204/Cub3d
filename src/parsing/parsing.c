@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/13 12:48:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/27 18:37:04 by bastalze         ###   ########.fr       */
+/*   Updated: 2026/11/27 19:08:12 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,15 @@ int	parse_through(t_storage *dat, char **texture_paths, int fd, int map_fd)
 int	check_path_ending(char *path)
 {
 	size_t	len;
+	char	*ending;
 
 	len = ft_strlen(path);
 	if (len == 4)
 		return (1);
-	path += (len - 4);
-	if (ft_strncmp(path, ".cub", 4))
+	ending = path + (len - 4);
+	if (ft_strncmp(ending, ".cub", 4))
+		return (1);
+	if (len == 5 && path[0] == '.')
 		return (1);
 	return (0);
 }
