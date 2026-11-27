@@ -6,12 +6,13 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 17:23:04 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/25 15:00:46 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/27 17:47:23 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <limits.h>
+#include <stdbool.h>
 
 int	check_size(size_t lines, int fd, size_t start_map, t_storage *dat)
 {
@@ -26,9 +27,7 @@ int	check_size(size_t lines, int fd, size_t start_map, t_storage *dat)
 			return (ft_error("Read failed", true), free(line), 1);
 		if (!line)
 			break ;
-		curr_len = ft_strlen(line);
-		if (curr_len != 0 && line[curr_len - 1] == '\n')
-			curr_len--;
+		curr_len = line_len(line);
 		if (dat->max_w < curr_len)
 			dat->max_w = curr_len;
 		lines++;
@@ -76,8 +75,10 @@ int	copy_map(t_storage *dat, int map_fd, size_t	start_map)
 {
 	char	*line;
 	char	*map_pos;
+	bool	nl;
 
 	errno = 0;
+	nl = false;
 	map_pos = dat->map;
 	if (skip_ahead(map_fd, start_map))
 		return (1);
@@ -85,8 +86,11 @@ int	copy_map(t_storage *dat, int map_fd, size_t	start_map)
 	while (line)
 	{
 		if (line[0] == '\n')
+			nl = true;
+		if (line[0] != '\n' && nl)
 			return (ft_error("Empty line in map", false), free(line), 1);
-		copy_line(&map_pos, line, dat->max_w);
+		if (!nl)
+			copy_line(&map_pos, line, dat->max_w);
 		free(line);
 		line = get_next_line(map_fd);
 		if (!line && errno)

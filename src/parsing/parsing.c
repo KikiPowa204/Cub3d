@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/13 12:48:19 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/25 14:30:08 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/27 17:46:50 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	parse_through(t_storage *dat, char **texture_paths, int fd, int map_fd)
 			return (free(line), 1);
 		free(line);
 	}
+	dat->max_w = line_len(line);
 	if (map_mode(dat, lines, fd, map_fd))
 		return (free(line), 1);
 	return (free(line), 0);

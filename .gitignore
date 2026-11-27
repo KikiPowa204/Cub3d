@@ -5,3 +5,4 @@ libft/*.o
 libft/libft.a
 compile_flags.txt
 .vscode
+tester

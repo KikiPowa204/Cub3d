@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 12:52:45 by bastalze          #+#    #+#             */
-/*   Updated: 2026/11/25 15:05:36 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/27 17:11:41 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	parse_rgb_number(int *i, char *colour, char *line)
 	int	j;
 
 	j = 0;
-	while (j < 3 && line[*i] != ',' && line[*i] != '\n')
+	while (j < 3 && line[*i] != ',' && line[*i] != '\n' && line[*i] != ' ')
 	{
 		if (ft_isdigit(line[*i]))
 			colour[j] = line[*i];
@@ -64,6 +64,8 @@ int	parse_rgb_block(int *i, char *line, t_colours *rgb)
 		if (line[*i] != ',')
 			return (ft_error("Wall or ceiling invalid input", false), 1);
 		(*i)++;
+		while (line[*i] == ' ')
+			(*i)++;
 	}
 	return (0);
 }

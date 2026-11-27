@@ -6,7 +6,7 @@
 /*   By: bastalze <bastalze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/20 11:30:03 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/25 15:03:28 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/27 17:45:20 by bastalze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,8 @@ int				store_textures_paths(t_compass dir, char **texture_paths,
 					char *line, int *elements);
 int				wfc(t_storage *dat, char **texture_paths, char *line,
 					int *elements);
+int				line_len(char *line);
+
 //Rayyy casting:
 bool			collide_horizontal(t_coordinates *rh, t_player *player,
 					t_storage *dat, t_dir dir);
