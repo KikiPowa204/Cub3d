@@ -6,7 +6,7 @@
 /*   By: knajmech <knajmech@student.42vienna.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 10:45:44 by knajmech          #+#    #+#             */
-/*   Updated: 2026/11/25 08:23:37 by knajmech         ###   ########.fr       */
+/*   Updated: 2026/11/27 12:08:38 by knajmech         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	frame_per_second(t_storage *dat)
 		usleep(200);
 		gettimeofday(&tv, NULL);
 	}
+	recalc_player_pos(dat, dat->player);
 	fill_map(dat);
 	return (0);
 }
